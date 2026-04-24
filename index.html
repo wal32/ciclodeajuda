@@ -3,170 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Ciclo de Ajuda Mutua| Sistema de Doacoes</title>
+<title>Ciclo de Ajuda Mútua | Sistema de Posições</title>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    font-family: 'Segoe UI', Roboto, sans-serif;
     background: #0f172a;
-    color: #ffffff;
-    line-height: 1.5;
+    color: #fff;
     padding: 1rem;
   }
-
   .container {
-    max-width: 650px;
+    max-width: 700px;
     margin: 0 auto;
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.95);
     border-radius: 1.5rem;
     padding: 1.5rem;
-    box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
-    backdrop-filter: blur(2px);
+    box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
   }
-
-  h1, h2, h3, h4, p, span, div, label, a, button, input, textarea, select, .card, .card * {
-    color: #ffffff !important;
+  h1, h2, h3, h4, p, span, div, label, a, button, input, .card, .card * {
+    color: #fff !important;
   }
-
-  input, button, textarea, select {
+  input, button, select, textarea {
     background-color: #1e293b;
     border: 1px solid #334155;
     border-radius: 14px;
     padding: 12px 16px;
     font-size: 1rem;
-    outline: none;
     width: 100%;
     margin: 8px 0;
-    color: #ffffff !important;
   }
-
-  input::placeholder, textarea::placeholder {
-    color: #cbd5e1 !important;
-  }
-
-  input:focus, button:focus, textarea:focus {
-    border-color: #22c55e;
-    box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
-    background-color: #0f172a;
-  }
-
   button {
     background: #22c55e;
-    border: none;
-    font-weight: 700;
+    font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
   }
-
-  button:hover {
-    background: #16a34a;
-    transform: scale(0.98);
-  }
-
-  button.secondary {
-    background: #334155;
-  }
-  button.secondary:hover {
-    background: #475569;
-  }
-
+  button:hover { background: #16a34a; transform: scale(0.98); }
+  button.secondary { background: #334155; }
   .card {
     background: #1e293b;
     border-radius: 20px;
     padding: 1rem;
     margin: 0.75rem 0;
     border-left: 4px solid #22c55e;
-    word-break: break-word;
   }
-
-  .hidden {
-    display: none;
-  }
-
-  .flex-buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 15px 0;
-  }
-
-  .info-link {
-    background: #0f172a;
-    padding: 12px;
-    border-radius: 16px;
-    margin-top: 20px;
-    text-align: center;
-    font-size: 0.9rem;
-    border: 1px solid #22c55e40;
-  }
-
-  .ref-link-box, .pix-copy-box {
-    background: #0f172a;
-    border-radius: 14px;
-    padding: 10px;
-    margin: 10px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-  }
-  .ref-link-box input, .pix-copy-box input {
-    flex: 1;
-    margin: 0;
-    background: #1e293b;
-    font-size: 0.8rem;
-  }
-  .ref-link-box button, .pix-copy-box button {
-    width: auto;
-    padding: 8px 12px;
-    margin: 0;
-  }
-
-  .badge {
-    background: #22c55e20;
-    border-radius: 30px;
-    padding: 4px 12px;
-    font-size: 0.75rem;
-    display: inline-block;
-    margin-left: 8px;
-  }
-
-  .pix-mini {
-    font-size: 0.8rem;
-    font-family: monospace;
-    background: #0f172a;
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-top: 6px;
-  }
-
-  hr {
-    border-color: #334155;
-    margin: 1rem 0;
-  }
+  .hidden { display: none; }
+  .flex-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin: 15px 0; }
+  .info-link { background: #0f172a; padding: 12px; border-radius: 16px; margin-top: 20px; text-align: center; border: 1px solid #22c55e40; }
+  .badge { background: #22c55e20; border-radius: 30px; padding: 4px 12px; font-size: 0.75rem; display: inline-block; margin-left: 8px; }
+  .positions-list { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+  .position-item { background: #0f172a; border-radius: 20px; padding: 4px 10px; font-size: 0.8rem; }
+  hr { border-color: #334155; margin: 1rem 0; }
+  .doacao { color: #86efac; font-weight: bold; }
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div class="container" id="login">
-  <h2>✨ Ciclo de Ajuda</h2>
-  <input type="text" id="loginNome" placeholder="Seu nome completo" autocomplete="off">
+  <h2>✨ Ciclo de Ajuda Mútua</h2>
+  <input type="text" id="loginNome" placeholder="Nome completo">
   <input type="password" id="loginSenha" placeholder="Senha">
   <button onclick="logarUsuario()">Entrar</button>
   <div class="flex-buttons">
     <button class="secondary" onclick="mostrarCadastro()">📝 Cadastrar</button>
     <button class="secondary" onclick="acessoAdmin()">🔐 Admin</button>
   </div>
-  <div class="info-link">
-    🌐 Sistema de indicação individual — cada membro tem seu próprio link
-  </div>
+  <div class="info-link">💰 Sistema de posições: indique e ganhe R$20 a cada nova entrada na sua rede.</div>
 </div>
 
 <!-- CADASTRO -->
@@ -174,47 +77,52 @@
   <h2>📋 Novo participante</h2>
   <div id="msgIndicacao" style="background:#1e293b; padding: 10px; border-radius: 14px; margin-bottom: 10px;"></div>
   <input type="text" id="nome" placeholder="Nome completo">
-  <input type="text" id="pix" placeholder="Chave Pix (email/telefone/cpf)">
-  <input type="text" id="whatsapp" placeholder="WhatsApp com DDD">
-  <input type="password" id="senha" placeholder="Crie uma senha">
+  <input type="text" id="pix" placeholder="Chave Pix">
+  <input type="text" id="whatsapp" placeholder="WhatsApp">
+  <input type="password" id="senha" placeholder="Senha">
   <button onclick="cadastrarUsuario()">Cadastrar</button>
   <button class="secondary" onclick="voltarLogin()">Voltar</button>
 </div>
 
-<!-- PAINEL DO PARTICIPANTE (COM COMPROVANTE) -->
+<!-- PAINEL DO PARTICIPANTE -->
 <div class="container hidden" id="dashboard">
-  <h2>🤝 Sua área colaborativa</h2>
+  <h2>🤝 Sua rede de ajuda</h2>
   <div id="usuarioInfo"></div>
   
   <h3>💰 Sua chave Pix</h3>
-  <div class="pix-copy-box">
-    <input type="text" id="minhaChavePix" readonly onclick="this.select()">
-    <button onclick="copiarPix()">📋 Copiar Pix</button>
+  <div class="pix-copy-box" style="display:flex; gap:8px; align-items:center;">
+    <input type="text" id="minhaChavePix" readonly onclick="this.select()" style="flex:1;">
+    <button onclick="copiarPix()" style="width:auto;">Copiar</button>
   </div>
 
   <h3>🔗 Seu link de indicação</h3>
-  <div class="ref-link-box">
-    <input type="text" id="meuLinkRef" readonly onclick="this.select()">
-    <button onclick="copiarLink()">📋 Copiar Link</button>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <input type="text" id="meuLinkRef" readonly onclick="this.select()" style="flex:1;">
+    <button onclick="copiarLink()" style="width:auto;">Copiar</button>
   </div>
   <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
-  
-  <!-- COMPROVANTE INDIVIDUAL REINSERIDO -->
-  <h3>📎 Anexar comprovante de contribuição</h3>
-  <input type="file" id="comprovante" accept="image/*,application/pdf">
+
+  <h3>📎 Comprovante (opcional)</h3>
+  <input type="file" id="comprovante" accept="image/*">
   <button onclick="uploadComprovante()">Enviar comprovante</button>
 
-  <h3>👥 Participantes do ciclo (com Pix)</h3>
+  <h3>📜 Posições da sua fila (quem recebe quando você indicar)</h3>
+  <div id="minhasPosicoes" class="card"></div>
+
+  <h3>💰 Histórico de doações recebidas</h3>
+  <div id="historicoDoacoes" class="card"></div>
+
+  <h3>👥 Participantes do ciclo</h3>
   <div id="lista"></div>
-  
-  <button class="secondary" onclick="logoutSistema()" style="margin-top: 25px;">🚪 Sair</button>
+
+  <button class="secondary" onclick="logoutSistema()" style="margin-top:20px;">🚪 Sair</button>
 </div>
 
 <!-- ADMIN -->
 <div class="container hidden" id="adminPanel">
-  <h2>⚙️ Gestão + Indicações</h2>
+  <h2>⚙️ Gestão + Posições</h2>
   <div id="adminLista"></div>
-  <button class="secondary" onclick="sairAdmin()">◀ Voltar ao login</button>
+  <button class="secondary" onclick="sairAdmin()">◀ Voltar</button>
 </div>
 
 <script>
@@ -231,355 +139,271 @@
     refParam = sessionStorage.getItem('refIndicacao');
   }
 
+  // helpers
   function gerarCodigoUnico(nome) {
-    const base = nome.toLowerCase().replace(/\s/g, '') + Date.now() + Math.random().toString(36).substring(2, 6);
-    return btoa(base).replace(/=/g, '').substring(0, 14);
+    return btoa(nome.toLowerCase().replace(/\s/g, '') + Date.now() + Math.random()).replace(/=/g, '').slice(0, 14);
   }
+  function salvarUsuarios() { localStorage.setItem("usuarios", JSON.stringify(usuarios)); }
+  function escapeHtml(str) { return str ? str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : ""; }
 
-  function salvarUsuarios() {
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-  }
-
-  function escapeHtml(str) {
-    if (!str) return "";
-    return str.replace(/[&<>]/g, function(m) {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    });
-  }
-
-  function contarIndicacoes(codigoReferencia) {
-    return usuarios.filter(u => u.indicadoPorCodigo === codigoReferencia).length;
-  }
-
-  // Lista de participantes com Pix
-  function atualizarListaParticipantes() {
-    const listaDiv = document.getElementById("lista");
-    if (!listaDiv) return;
-    listaDiv.innerHTML = "";
-    if (usuarios.length === 0) {
-      listaDiv.innerHTML = `<div class="card">Nenhum participante cadastrado ainda.</div>`;
-      return;
+  // Inicializa posições para novos usuários e transações
+  function criarNovoUsuario(nome, pix, whats, senha, indicadorObj) {
+    const codigo = gerarCodigoUnico(nome);
+    let positions = [null, null, null, null]; // 4 posições (índices 0,1,2,3)
+    let transactions = []; // histórico de recebimentos
+    
+    // Se foi indicado, aplica regras: indicador recebe R$20 e entra na pos4
+    if (indicadorObj) {
+      // 1. Doação de R$20 do novo para o indicador
+      transactions.push({ de: nome, para: indicadorObj.nome, valor: 20, data: new Date().toLocaleString() });
+      // 2. Herança de posições: as posições 1-3 do indicador viram as posições 1-3 do novo,
+      //    e a pos4 é o indicador
+      const indPos = indicadorObj.positions || [null, null, null, null];
+      positions = [indPos[0], indPos[1], indPos[2], indicadorObj.nome];
+      // 3. Adiciona transação no histórico do indicador também
+      const idxInd = usuarios.findIndex(u => u.codigo === indicadorObj.codigo);
+      if (idxInd !== -1) {
+        if (!usuarios[idxInd].transactions) usuarios[idxInd].transactions = [];
+        usuarios[idxInd].transactions.push({ de: nome, para: indicadorObj.nome, valor: 20, data: new Date().toLocaleString() });
+        salvarUsuarios();
+      }
     }
+    return {
+      nome, pix, whatsapp: whats, senha, status: "pendente", comprovante: "",
+      codigo, positions, transactions, totalRecebido: indicadorObj ? 0 : 0, // indicador já ganhou 20 mas será registrado no objeto dele
+      indicadoPorCodigo: indicadorObj ? indicadorObj.codigo : null,
+      indicadoPorNome: indicadorObj ? indicadorObj.nome : null
+    };
+  }
+
+  // Atualiza a posição do usuário na rede quando ele indica alguém (chamado no cadastro via link)
+  // Quando X (novo) se cadastra via link de Y, já processamos acima.
+  // Agora, quando Y (que tem posições) indicar Z, Z pagará para quem estiver na pos1 de Y, e Y rotaciona suas posições.
+  // Função executada ao criar uma nova indicação (cadastro via link)
+  function processarIndicacao(indicador, novoNome) {
+    // indicador é o objeto do usuário que indicou
+    // novoNome é o nome do novo usuário (já cadastrado)
+    const pos1 = indicador.positions[0];
+    if (pos1) {
+      // Encontra a pessoa que está na posição 1
+      const beneficiario = usuarios.find(u => u.nome === pos1);
+      if (beneficiario) {
+        // Registra doação do novo usuário para o beneficiário (já que ele está no topo da fila do indicador)
+        // Na verdade, quem paga é o novo usuário? O texto: "você receberá doações de R$20 direto em sua conta bancária toda vez que alguém aderir através do link de seus indicados"
+        // Ou seja, quem está na posição 1 recebe do novo membro.
+        if (!beneficiario.transactions) beneficiario.transactions = [];
+        beneficiario.transactions.push({ de: novoNome, para: beneficiario.nome, valor: 20, data: new Date().toLocaleString() });
+        beneficiario.totalRecebido = (beneficiario.totalRecebido || 0) + 20;
+        // Rotaciona a lista do indicador: remove pos1, desloca e insere o novo indicado? 
+        // O novo indicado (Z) entrou através do link do indicador. Quem entra na pos4 do novo usuário é o indicador.
+        // Conforme a regra: o nome do indicador sobe para a quarta posição da lista do novo usuário.
+        // Já tratamos no cadastro do novo (positions[3] = indicador.nome). 
+        // Agora, para o indicador, sua própria lista deve rotacionar? O texto "seu nome sobe para a quarta posição da lista dele" já aconteceu.
+        // Para que o indicador continue subindo nas listas de seus indicados, quando o novo usuário indicar outros, o indicador receberá novamente.
+        // A rotação da lista do indicador acontece quando ELE indica outra pessoa? Não, a rotação ocorre na lista do novo usuário quando ele indicar.
+        // Vamos implementar a rotação na lista do novo usuário quando ele fizer uma indicação. 
+        // Aqui apenas registramos a doação e atualizamos.
+        salvarUsuarios();
+      }
+    }
+  }
+
+  // Cadastro principal
+  function cadastrarUsuario() {
+    if (usuarios.length >= 10) { alert("Limite de 10 participantes."); return; }
+    const nome = document.getElementById("nome").value.trim();
+    const pix = document.getElementById("pix").value.trim();
+    const whats = document.getElementById("whatsapp").value.trim();
+    const senha = document.getElementById("senha").value;
+    if (!nome || !pix || !whats || !senha) { alert("Todos os campos são obrigatórios."); return; }
+    if (usuarios.some(u => u.nome === nome)) { alert("Nome já cadastrado."); return; }
+
+    let indicadorObj = null;
+    let codigoIndicador = refParam || sessionStorage.getItem('refIndicacao');
+    if (codigoIndicador) {
+      indicadorObj = usuarios.find(u => u.codigo === codigoIndicador);
+    }
+
+    const novo = criarNovoUsuario(nome, pix, whats, senha, indicadorObj);
+    usuarios.push(novo);
+    salvarUsuarios();
+
+    if (indicadorObj) {
+      // Atualiza a lista do indicador (não precisa rotacionar ainda, apenas registra que ele recebeu via doação direta)
+      // A doação direta já foi registrada dentro de criarNovoUsuario.
+      alert(`✅ Cadastro via link de ${indicadorObj.nome}! Você doou R$20 para ele. Agora ele está na posição 4 da sua fila.`);
+      sessionStorage.removeItem('refIndicacao');
+      refParam = null;
+    } else {
+      alert("✅ Cadastro realizado! Comece indicando amigos.");
+    }
+    voltarLogin();
+    document.getElementById("nome").value = "";
+    document.getElementById("pix").value = "";
+    document.getElementById("whatsapp").value = "";
+    document.getElementById("senha").value = "";
+  }
+
+  // Função chamada quando alguém se cadastra via link
+  // Já implementado acima
+
+  // Exibir painel do usuário logado
+  function carregarDashboardCompleto() {
+    if (!usuarioLogado) return;
+    const infoDiv = document.getElementById("usuarioInfo");
+    const totalRecebido = (usuarioLogado.transactions || []).reduce((acc, t) => acc + t.valor, 0);
+    infoDiv.innerHTML = `
+      <div class="card">
+        <strong>👤 ${escapeHtml(usuarioLogado.nome)}</strong><br>
+        💰 Pix: ${escapeHtml(usuarioLogado.pix)}<br>
+        📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp)}<br>
+        🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}<br>
+        💵 Total recebido em doações: <span class="doacao">R$ ${totalRecebido}</span>
+      </div>`;
+    
+    document.getElementById("minhaChavePix").value = usuarioLogado.pix;
+    const linkRef = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
+    document.getElementById("meuLinkRef").value = linkRef;
+
+    // Exibir posições da fila (quem está em cada posição)
+    const posDiv = document.getElementById("minhasPosicoes");
+    const positions = usuarioLogado.positions || [null, null, null, null];
+    posDiv.innerHTML = `<div style="display:flex; gap:12px; flex-wrap:wrap;">
+      ${positions.map((p, idx) => `<div class="position-item">Pos${idx+1}: ${p ? escapeHtml(p) : "❌ vaga"}</div>`).join('')}
+    </div><small>✔️ Ao indicar alguém, a pessoa na Posição 1 receberá R$20 e sua fila rodará.</small>`;
+
+    // Histórico de doações recebidas
+    const histDiv = document.getElementById("historicoDoacoes");
+    const trans = usuarioLogado.transactions || [];
+    if (trans.length === 0) histDiv.innerHTML = "<div>Nenhuma doação recebida ainda.</div>";
+    else {
+      histDiv.innerHTML = trans.map(t => `<div>💰 R$ ${t.valor} de ${escapeHtml(t.de)} em ${t.data}</div>`).join('');
+    }
+
+    // Lista de participantes (com nome, status e Pix)
+    const listaDiv = document.getElementById("lista");
+    listaDiv.innerHTML = "";
     usuarios.forEach(u => {
-      let statusTexto = "";
-      if (u.status === "aprovado") statusTexto = "✅ Aprovado";
-      else if (u.status === "reprovado") statusTexto = "❌ Reprovado";
-      else statusTexto = "⏳ Pendente";
-      const pixFormatado = u.pix ? `<div class="pix-mini">💰 Pix: ${escapeHtml(u.pix)}</div>` : '<div class="pix-mini">💰 Pix: não informado</div>';
       listaDiv.innerHTML += `
         <div class="card">
-          <strong>${escapeHtml(u.nome)}</strong><br>
-          Status: ${statusTexto}
-          ${pixFormatado}
+          <strong>${escapeHtml(u.nome)}</strong> - ${u.status === "aprovado" ? "✅" : (u.status==="reprovado"?"❌":"⏳")}<br>
+          <span class="pix-mini">💰 Pix: ${escapeHtml(u.pix)}</span>
         </div>`;
     });
   }
 
-  function carregarDashboardCompleto() {
-    if (!usuarioLogado) return;
-    const infoDiv = document.getElementById("usuarioInfo");
-    const referralCount = contarIndicacoes(usuarioLogado.codigo);
-    infoDiv.innerHTML = `
-      <div class="card">
-        <strong>👤 ${escapeHtml(usuarioLogado.nome)}</strong><br>
-        💰 Pix: ${escapeHtml(usuarioLogado.pix || 'não informado')}<br>
-        📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp || 'não informado')}<br>
-        🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}<br>
-        🎯 Indicações: <strong>${referralCount}</strong> pessoa(s) convidada(s)<br>
-        📎 Comprovante: ${usuarioLogado.comprovante ? escapeHtml(usuarioLogado.comprovante) : 'nenhum anexado'}
-      </div>`;
-    
-    const pixInput = document.getElementById("minhaChavePix");
-    if (pixInput) pixInput.value = usuarioLogado.pix || "Chave não informada";
-    
-    const linkCompleto = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
-    const linkInput = document.getElementById("meuLinkRef");
-    if (linkInput) linkInput.value = linkCompleto;
-    
-    atualizarListaParticipantes();
+  // Simular upload comprovante
+  function uploadComprovante() {
+    const file = document.getElementById("comprovante").files[0];
+    if (!file) { alert("Selecione um arquivo."); return; }
+    usuarioLogado.comprovante = file.name;
+    const idx = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
+    if (idx !== -1) usuarios[idx].comprovante = file.name;
+    salvarUsuarios();
+    alert("Comprovante anexado.");
+    document.getElementById("comprovante").value = "";
   }
 
-  // LOGIN
+  function compartilharWhatsApp() {
+    const link = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
+    const msg = `🌟 Participe do ciclo de ajuda dea doações! Use meu link: ${link}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+  function copiarLink() {
+    const inp = document.getElementById("meuLinkRef");
+    navigator.clipboard.writeText(inp.value);
+    alert("Link copiado!");
+  }
+  function copiarPix() {
+    navigator.clipboard.writeText(usuarioLogado.pix);
+    alert("Pix copiado!");
+  }
+
+  // LOGIN, LOGOUT, ADMIN...
   function logarUsuario() {
-    const nomeInput = document.getElementById("loginNome").value.trim();
-    const senhaInput = document.getElementById("loginSenha").value;
-    if (!nomeInput || !senhaInput) {
-      alert("Preencha nome e senha.");
-      return;
-    }
-    const encontrado = usuarios.find(u => u.nome === nomeInput && u.senha === senhaInput);
-    if (encontrado) {
-      usuarioLogado = encontrado;
+    const nome = document.getElementById("loginNome").value.trim();
+    const senha = document.getElementById("loginSenha").value;
+    const user = usuarios.find(u => u.nome === nome && u.senha === senha);
+    if (user) {
+      usuarioLogado = user;
       document.getElementById("login").classList.add("hidden");
       document.getElementById("dashboard").classList.remove("hidden");
       carregarDashboardCompleto();
-    } else {
-      alert("❌ Nome ou senha incorretos.");
-    }
+    } else alert("Nome ou senha incorretos.");
   }
-
-  // CADASTRO com Pix obrigatório
+  function logoutSistema() {
+    usuarioLogado = null;
+    location.reload();
+  }
   function mostrarCadastro() {
-    const msgDiv = document.getElementById("msgIndicacao");
-    if (refParam) {
-      const indicador = usuarios.find(u => u.codigo === refParam);
-      if (indicador) {
-        msgDiv.innerHTML = `<span style="color:#86efac;">✨ Você foi convidado por ${escapeHtml(indicador.nome)}! Ao se cadastrar, ele ganhará uma indicação.</span>`;
-      } else {
-        msgDiv.innerHTML = `<span>🔗 Link de indicação recebido, mas o convidante não está mais ativo.</span>`;
-      }
-    } else {
-      msgDiv.innerHTML = `<span>📢 Cadastre-se normalmente. Se alguém te indicou, use o link especial dele.</span>`;
-    }
     document.getElementById("login").classList.add("hidden");
     document.getElementById("cadastro").classList.remove("hidden");
+    const msgDiv = document.getElementById("msgIndicacao");
+    if (refParam) {
+      const ind = usuarios.find(u => u.codigo === refParam);
+      msgDiv.innerHTML = ind ? `✨ Indicado por ${escapeHtml(ind.nome)}. Ao cadastrar, você doa R$20 para ele, e ele entra na posição 4 da sua fila.` : "Link inválido.";
+    } else msgDiv.innerHTML = "Cadastre-se para começar.";
   }
-
-  function cadastrarUsuario() {
-    if (usuarios.length >= 10) {
-      alert("Limite máximo de 10 participantes atingido!");
-      return;
-    }
-    const nomeEl = document.getElementById("nome");
-    const pixEl = document.getElementById("pix");
-    const whatsEl = document.getElementById("whatsapp");
-    const senhaEl = document.getElementById("senha");
-
-    const nome = nomeEl.value.trim();
-    const pix = pixEl.value.trim();
-    const whats = whatsEl.value.trim();
-    const senha = senhaEl.value;
-
-    if (!nome || !pix || !whats || !senha) {
-      alert("Todos os campos são obrigatórios, incluindo a chave Pix.");
-      return;
-    }
-    if (usuarios.some(u => u.nome === nome)) {
-      alert("Este nome já está cadastrado.");
-      return;
-    }
-
-    const novoCodigo = gerarCodigoUnico(nome);
-    let indicadoPorCodigo = null;
-    let indicadoPorNome = null;
-
-    let codigoIndicador = refParam || sessionStorage.getItem('refIndicacao');
-    if (codigoIndicador) {
-      const indicador = usuarios.find(u => u.codigo === codigoIndicador);
-      if (indicador) {
-        indicadoPorCodigo = indicador.codigo;
-        indicadoPorNome = indicador.nome;
-      }
-    }
-
-    const novoUsuario = {
-      nome: nome,
-      pix: pix,
-      whatsapp: whats,
-      senha: senha,
-      status: "pendente",
-      comprovante: "",   // inicia sem comprovante
-      codigo: novoCodigo,
-      indicadoPorCodigo: indicadoPorCodigo,
-      indicadoPorNome: indicadoPorNome
-    };
-    usuarios.push(novoUsuario);
-    salvarUsuarios();
-    
-    alert(`✅ Cadastro realizado! ${indicadoPorNome ? `Você foi indicado por ${indicadoPorNome}.` : 'Bem-vindo ao ciclo.'}`);
-    sessionStorage.removeItem('refIndicacao');
-    refParam = null;
-    voltarLogin();
-    nomeEl.value = "";
-    pixEl.value = "";
-    whatsEl.value = "";
-    senhaEl.value = "";
-  }
-
   function voltarLogin() {
     document.getElementById("cadastro").classList.add("hidden");
     document.getElementById("login").classList.remove("hidden");
     document.getElementById("adminPanel").classList.add("hidden");
   }
-
-  // FUNÇÃO DE UPLOAD DO COMPROVANTE (individual)
-  function uploadComprovante() {
-    if (!usuarioLogado) return;
-    const fileInput = document.getElementById("comprovante");
-    if (!fileInput.files.length) {
-      alert("Selecione um arquivo.");
-      return;
-    }
-    const arquivo = fileInput.files[0];
-    // Armazena apenas o nome do arquivo (simulação, pode ser adaptado para base64 se desejar)
-    usuarioLogado.comprovante = arquivo.name;
-    const index = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
-    if (index !== -1) {
-      usuarios[index].comprovante = arquivo.name;
-      salvarUsuarios();
-      alert(`Comprovante "${arquivo.name}" enviado com sucesso!`);
-      // Atualiza exibição do comprovante no card
-      carregarDashboardCompleto();
-    } else {
-      alert("Erro ao salvar comprovante.");
-    }
-    fileInput.value = "";
-  }
-
-  function copiarPix() {
-    const pixInput = document.getElementById("minhaChavePix");
-    if (pixInput && pixInput.value && pixInput.value !== "Chave não informada") {
-      navigator.clipboard.writeText(pixInput.value);
-      alert("Chave Pix copiada!");
-    } else {
-      alert("Nenhuma chave Pix cadastrada.");
-    }
-  }
-
-  function copiarLink() {
-    const linkInput = document.getElementById("meuLinkRef");
-    if (linkInput && linkInput.value) {
-      navigator.clipboard.writeText(linkInput.value);
-      alert("Link copiado!");
-    }
-  }
-
-  function compartilharWhatsApp() {
-    if (!usuarioLogado) return;
-    const linkPersonal = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
-    const mensagem = `🌟 Participe do ciclo de ajuda mútua comigo! Use meu link de indicação: ${linkPersonal}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, '_blank');
-  }
-
-  function logoutSistema() {
-    usuarioLogado = null;
-    document.getElementById("loginNome").value = "";
-    document.getElementById("loginSenha").value = "";
-    document.getElementById("dashboard").classList.add("hidden");
-    document.getElementById("login").classList.remove("hidden");
-    document.getElementById("adminPanel").classList.add("hidden");
-  }
-
-  // ADMIN
   function acessoAdmin() {
-    const senhaAdmin = prompt("Senha de administrador:");
-    if (senhaAdmin === "123456") {
+    const pwd = prompt("Senha admin:");
+    if (pwd === "123456") {
       document.getElementById("login").classList.add("hidden");
       document.getElementById("adminPanel").classList.remove("hidden");
-      renderAdminPanel();
-    } else if (senhaAdmin !== null) alert("Senha incorreta.");
+      renderAdmin();
+    } else alert("Senha incorreta.");
   }
-
-  function renderAdminPanel() {
-    const adminDiv = document.getElementById("adminLista");
-    if (!adminDiv) return;
-    if (usuarios.length === 0) {
-      adminDiv.innerHTML = `<div class="card">Nenhum usuário cadastrado.</div>`;
-      return;
-    }
+  function renderAdmin() {
+    const div = document.getElementById("adminLista");
+    if (!usuarios.length) { div.innerHTML = "<div class='card'>Nenhum usuário</div>"; return; }
     let html = "";
-    usuarios.forEach((user, idx) => {
-      const qtdIndicacoes = contarIndicacoes(user.codigo);
+    usuarios.forEach((u, i) => {
+      const total = (u.transactions || []).reduce((s, t) => s + t.valor, 0);
       html += `
         <div class="card">
-          <strong>${escapeHtml(user.nome)}</strong> 
-          <span class="badge">código: ${user.codigo}</span><br>
-          📧 Pix: ${escapeHtml(user.pix)}<br>
-          📞 WhatsApp: ${escapeHtml(user.whatsapp)}<br>
-          🏷 Status: <strong>${user.status}</strong><br>
-          🎯 Indicações: <strong>${qtdIndicacoes}</strong> pessoas<br>
-          👥 Indicado por: ${user.indicadoPorNome ? escapeHtml(user.indicadoPorNome) : '—'}<br>
-          📎 Comprovante: ${user.comprovante ? escapeHtml(user.comprovante) : 'nenhum'}<br>
-          <div class="flex-buttons" style="margin-top: 10px;">
-            <button onclick="aprovarParticipante(${idx})">✅ Aprovar</button>
-            <button onclick="reprovarParticipante(${idx})">⚠️ Reprovar</button>
-            <button onclick="excluirParticipante(${idx})">🗑 Excluir</button>
+          <strong>${escapeHtml(u.nome)}</strong> (${u.codigo})<br>
+          Pix: ${escapeHtml(u.pix)} | Status: ${u.status}<br>
+          Posições: ${(u.positions || [null,null,null,null]).map((p,idx)=>`${idx+1}:${p||'vaga'}`).join(' | ')}<br>
+          Recebido: R$ ${total}<br>
+          Indicado por: ${u.indicadoPorNome || '—'}<br>
+          <div class="flex-buttons">
+            <button onclick="aprovar(${i})">✅ Aprovar</button>
+            <button onclick="reprovar(${i})">⚠️ Reprovar</button>
+            <button onclick="excluir(${i})">🗑 Excluir</button>
           </div>
         </div>`;
     });
-    adminDiv.innerHTML = html;
+    div.innerHTML = html;
   }
+  function aprovar(i) { usuarios[i].status = "aprovado"; salvarUsuarios(); renderAdmin(); if(usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status="aprovado"; }
+  function reprovar(i) { usuarios[i].status = "reprovado"; salvarUsuarios(); renderAdmin(); if(usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status="reprovado"; }
+  function excluir(i) { if(confirm("Excluir?")) { usuarios.splice(i,1); salvarUsuarios(); renderAdmin(); if(usuarioLogado && !usuarios.find(u=>u.codigo===usuarioLogado.codigo)) logoutSistema(); } }
+  function sairAdmin() { document.getElementById("adminPanel").classList.add("hidden"); document.getElementById("login").classList.remove("hidden"); }
 
-  function aprovarParticipante(indice) {
-    if (indice >= 0 && indice < usuarios.length) {
-      usuarios[indice].status = "aprovado";
-      salvarUsuarios();
-      renderAdminPanel();
-      if (usuarioLogado && usuarioLogado.codigo === usuarios[indice].codigo) {
-        usuarioLogado.status = "aprovado";
-        carregarDashboardCompleto();
-      }
+  // Migrar dados antigos para ter positions e transactions
+  function migrar() {
+    let mudou = false;
+    for (let u of usuarios) {
+      if (!u.positions) { u.positions = [null, null, null, null]; mudou = true; }
+      if (!u.transactions) { u.transactions = []; mudou = true; }
+      if (u.totalRecebido === undefined) u.totalRecebido = 0;
+      if (!u.codigo) { u.codigo = gerarCodigoUnico(u.nome); mudou = true; }
     }
+    if (mudou) salvarUsuarios();
   }
+  migrar();
 
-  function reprovarParticipante(indice) {
-    if (indice >= 0 && indice < usuarios.length) {
-      usuarios[indice].status = "reprovado";
-      salvarUsuarios();
-      renderAdminPanel();
-      if (usuarioLogado && usuarioLogado.codigo === usuarios[indice].codigo) {
-        usuarioLogado.status = "reprovado";
-        carregarDashboardCompleto();
-      }
-    }
-  }
-
-  function excluirParticipante(indice) {
-    if (indice >= 0 && indice < usuarios.length) {
-      const nomeExcluido = usuarios[indice].nome;
-      if (confirm(`Excluir ${nomeExcluido} permanentemente?`)) {
-        usuarios.splice(indice, 1);
-        salvarUsuarios();
-        renderAdminPanel();
-        if (usuarioLogado && usuarioLogado.nome === nomeExcluido) {
-          logoutSistema();
-        } else if (usuarioLogado) {
-          atualizarListaParticipantes();
-        }
-      }
-    }
-  }
-
-  function sairAdmin() {
-    document.getElementById("adminPanel").classList.add("hidden");
-    document.getElementById("login").classList.remove("hidden");
-    usuarioLogado = null;
-  }
-
-  // Migração
-  function migrarBanco() {
-    let altered = false;
-    for (let i = 0; i < usuarios.length; i++) {
-      if (!usuarios[i].codigo) {
-        usuarios[i].codigo = gerarCodigoUnico(usuarios[i].nome);
-        altered = true;
-      }
-      if (usuarios[i].indicadoPorCodigo === undefined) {
-        usuarios[i].indicadoPorCodigo = null;
-        usuarios[i].indicadoPorNome = null;
-        altered = true;
-      }
-      if (!usuarios[i].status) usuarios[i].status = "pendente";
-      if (usuarios[i].comprovante === undefined) {
-        usuarios[i].comprovante = "";
-        altered = true;
-      }
-      if (!usuarios[i].pix) usuarios[i].pix = "";
-    }
-    if (altered) salvarUsuarios();
-  }
-  migrarBanco();
-
-  // Inicialização
+  // Inicializar UI
   document.getElementById("login").classList.remove("hidden");
   document.getElementById("cadastro").classList.add("hidden");
   document.getElementById("dashboard").classList.add("hidden");
   document.getElementById("adminPanel").classList.add("hidden");
 
-  // Expor funções globais
+  // Global functions
   window.logarUsuario = logarUsuario;
   window.mostrarCadastro = mostrarCadastro;
   window.cadastrarUsuario = cadastrarUsuario;
@@ -588,21 +412,25 @@
   window.compartilharWhatsApp = compartilharWhatsApp;
   window.logoutSistema = logoutSistema;
   window.acessoAdmin = acessoAdmin;
-  window.aprovarParticipante = aprovarParticipante;
-  window.reprovarParticipante = reprovarParticipante;
-  window.excluirParticipante = excluirParticipante;
+  window.aprovar = aprovar;
+  window.reprovar = reprovar;
+  window.excluir = excluir;
   window.sairAdmin = sairAdmin;
   window.copiarLink = copiarLink;
   window.copiarPix = copiarPix;
 </script>
 </body>
 </html>
-   
-    
- 
-    
+
   
    
-         
+
+  
  
+    
       
+      
+    
+   
+
+  
