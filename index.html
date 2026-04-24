@@ -107,13 +107,6 @@
     border: 1px solid #22c55e40;
   }
 
-  .info-link a {
-    color: #86efac !important;
-    text-decoration: none;
-    font-weight: 600;
-    word-break: break-all;
-  }
-
   .ref-link-box, .pix-copy-box {
     background: #0f172a;
     border-radius: 14px;
@@ -149,6 +142,16 @@
     border-color: #334155;
     margin: 1rem 0;
   }
+  
+  .pix-mini {
+    font-size: 0.8rem;
+    font-family: monospace;
+    background: #0f172a;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-top: 6px;
+  }
 </style>
 </head>
 <body>
@@ -182,10 +185,10 @@
 
 <!-- PAINEL DO PARTICIPANTE -->
 <div class="container hidden" id="dashboard">
-  <h2>🤝 Sua área administrativa</h2>
+  <h2>🤝 Sua área Administrativa</h2>
   <div id="usuarioInfo"></div>
   
-  <!-- DESTAQUE DA CHAVE PIX (adicional) -->
+  <!-- DESTAQUE DA CHAVE PIX (do próprio) -->
   <h3>💰 Sua chave Pix</h3>
   <div class="pix-copy-box">
     <input type="text" id="minhaChavePix" readonly onclick="this.select()">
@@ -199,11 +202,7 @@
   </div>
   <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
   
-  <h3>📎 Comprovante de contribuição</h3>
-  <input type="file" id="comprovante" accept="image/*,application/pdf">
-  <button onclick="uploadComprovante()">Enviar comprovante</button>
-  
-  <h3>👥 Participantes do ciclo</h3>
+  <h3>👥 Participantes do ciclo (com chave Pix)</h3>
   <div id="lista"></div>
   
   <button class="secondary" onclick="logoutSistema()" style="margin-top: 25px;">🚪 Sair</button>
@@ -254,6 +253,7 @@
     return usuarios.filter(u => u.indicadoPorCodigo === codigoReferencia).length;
   }
 
+  // Lista de participantes com a chave Pix de cada um
   function atualizarListaParticipantes() {
     const listaDiv = document.getElementById("lista");
     if (!listaDiv) return;
@@ -267,10 +267,15 @@
       if (u.status === "aprovado") statusTexto = "✅ Aprovado";
       else if (u.status === "reprovado") statusTexto = "❌ Reprovado";
       else statusTexto = "⏳ Pendente";
+      
+      // Exibe a chave Pix de cada participante
+      const pixFormatado = u.pix ? `<div class="pix-mini">💰 Pix: ${escapeHtml(u.pix)}</div>` : '<div class="pix-mini">💰 Pix: não informado</div>';
+      
       listaDiv.innerHTML += `
         <div class="card">
           <strong>${escapeHtml(u.nome)}</strong><br>
           Status: ${statusTexto}
+          ${pixFormatado}
         </div>`;
     });
   }
@@ -288,7 +293,7 @@
         🎯 Indicações: <strong>${referralCount}</strong> pessoa(s) convidada(s)
       </div>`;
     
-    // Preencher campo da chave Pix (novo)
+    // Preencher campo da chave Pix do usuário logado
     const pixInput = document.getElementById("minhaChavePix");
     if (pixInput) pixInput.value = usuarioLogado.pix || "Chave não informada";
     
@@ -378,7 +383,7 @@
       whatsapp: whats,
       senha: senha,
       status: "pendente",
-      comprovante: "",
+      comprovante: "",   // mantido por compatibilidade, mas sem uso na UI
       codigo: novoCodigo,
       indicadoPorCodigo: indicadoPorCodigo,
       indicadoPorNome: indicadoPorNome
@@ -424,27 +429,11 @@
   function compartilharWhatsApp() {
     if (!usuarioLogado) return;
     const linkPersonal = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
-    const mensagem = `🌟 Participe do Ciclo de Ajuda Mútua comigo!Dai e dar-se vos a! Use meu link de indicação: ${linkPersonal}`;
+    const mensagem = `🌟 Participe do ciclo de ajuda mútua comigo! Use meu link de indicação: ${linkPersonal}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, '_blank');
   }
 
-  function uploadComprovante() {
-    if (!usuarioLogado) return;
-    const fileInput = document.getElementById("comprovante");
-    if (!fileInput.files.length) {
-      alert("Selecione um arquivo.");
-      return;
-    }
-    const arquivo = fileInput.files[0];
-    usuarioLogado.comprovante = arquivo.name;
-    const index = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
-    if (index !== -1) {
-      usuarios[index].comprovante = arquivo.name;
-      salvarUsuarios();
-      alert(`Comprovante "${arquivo.name}" enviado.`);
-    }
-    fileInput.value = "";
-  }
+  // Função de upload removida completamente
 
   function logoutSistema() {
     usuarioLogado = null;
@@ -475,7 +464,6 @@
     let html = "";
     usuarios.forEach((user, idx) => {
       const qtdIndicacoes = contarIndicacoes(user.codigo);
-      const comprovanteInfo = user.comprovante ? `📄 ${escapeHtml(user.comprovante)}` : "📂 sem comprovante";
       html += `
         <div class="card">
           <strong>${escapeHtml(user.nome)}</strong> 
@@ -485,7 +473,6 @@
           🏷 Status: <strong>${user.status}</strong><br>
           🎯 Indicações: <strong>${qtdIndicacoes}</strong> pessoas<br>
           👥 Indicado por: ${user.indicadoPorNome ? escapeHtml(user.indicadoPorNome) : '—'}<br>
-          <small>${comprovanteInfo}</small>
           <div class="flex-buttons" style="margin-top: 10px;">
             <button onclick="aprovarParticipante(${idx})">✅ Aprovar</button>
             <button onclick="reprovarParticipante(${idx})">⚠️ Reprovar</button>
@@ -542,7 +529,7 @@
     usuarioLogado = null;
   }
 
-  // Migração para garantir que usuários antigos tenham os campos necessários
+  // Migração para garantir campos
   function migrarBanco() {
     let altered = false;
     for (let i = 0; i < usuarios.length; i++) {
@@ -573,7 +560,6 @@
   window.mostrarCadastro = mostrarCadastro;
   window.cadastrarUsuario = cadastrarUsuario;
   window.voltarLogin = voltarLogin;
-  window.uploadComprovante = uploadComprovante;
   window.compartilharWhatsApp = compartilharWhatsApp;
   window.logoutSistema = logoutSistema;
   window.acessoAdmin = acessoAdmin;
@@ -586,6 +572,16 @@
 </script>
 </body>
 </html>
+   
+
+  
+  
+    
+  
+
+     
+   
+  
+  
+    
  
-
-
