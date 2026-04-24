@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Ciclo de Ajuda Mútua | Sistema de Apoio</title>
+<title>Ciclo de Ajuda | Sistema de Doações</title>
 <style>
   * {
     margin: 0;
@@ -19,23 +19,21 @@
     padding: 1rem;
   }
 
-  /* container principal */
   .container {
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(15, 23, 42, 0.9);
     border-radius: 1.5rem;
     padding: 1.5rem;
-    box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+    box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
     backdrop-filter: blur(2px);
   }
 
-  /* TODOS os textos com cor branca garantida */
+  /* Garantia de texto branco */
   h1, h2, h3, h4, p, span, div, label, a, button, input, textarea, select, .card, .card * {
     color: #ffffff !important;
   }
 
-  /* inputs, selects, textarea — fundo escuro e texto branco */
   input, button, textarea, select {
     background-color: #1e293b;
     border: 1px solid #334155;
@@ -43,8 +41,6 @@
     padding: 12px 16px;
     font-size: 1rem;
     outline: none;
-    transition: all 0.2s ease;
-    font-weight: normal;
     width: 100%;
     margin: 8px 0;
     color: #ffffff !important;
@@ -61,15 +57,12 @@
     background-color: #0f172a;
   }
 
-  /* botões principais */
   button {
     background: #22c55e;
     border: none;
     font-weight: 700;
     cursor: pointer;
-    letter-spacing: 0.3px;
     transition: 0.2s;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
 
   button:hover {
@@ -77,7 +70,6 @@
     transform: scale(0.98);
   }
 
-  /* botões secundários (admin, cadastro, sair) */
   button.secondary {
     background: #334155;
   }
@@ -91,26 +83,11 @@
     padding: 1rem;
     margin: 0.75rem 0;
     border-left: 4px solid #22c55e;
-    transition: 0.1s linear;
     word-break: break-word;
-  }
-
-  .card strong {
-    color: #bbf7d0;
   }
 
   .hidden {
     display: none;
-  }
-
-  /* paineis internos */
-  #dashboard, #adminPanel, #cadastro, #login {
-    animation: fade 0.2s ease;
-  }
-
-  @keyframes fade {
-    from { opacity: 0; transform: translateY(6px);}
-    to { opacity: 1; transform: translateY(0);}
   }
 
   .flex-buttons {
@@ -118,15 +95,6 @@
     gap: 12px;
     flex-wrap: wrap;
     margin: 15px 0;
-  }
-
-  .flex-buttons button {
-    flex: 1;
-  }
-
-  hr {
-    border-color: #334155;
-    margin: 1rem 0;
   }
 
   .info-link {
@@ -146,47 +114,48 @@
     word-break: break-all;
   }
 
-  .info-link a:hover {
-    text-decoration: underline;
-  }
-
-  small {
-    opacity: 0.8;
-    font-size: 0.75rem;
-    display: block;
-    margin-top: 5px;
-  }
-
-  #adminLista .card button {
-    margin-top: 6px;
-    margin-right: 6px;
-    width: auto;
-    padding: 8px 12px;
-    font-size: 0.8rem;
-  }
-
-  /* botões dentro das listas admin */
-  .button-group {
+  .ref-link-box {
+    background: #0f172a;
+    border-radius: 14px;
+    padding: 10px;
+    margin: 10px 0;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 10px;
+    align-items: center;
+  }
+  .ref-link-box input {
+    flex: 1;
+    margin: 0;
+    background: #1e293b;
+    font-size: 0.8rem;
+  }
+  .ref-link-box button {
+    width: auto;
+    padding: 8px 12px;
+    margin: 0;
   }
 
-  .btn-aprovar { background: #16a34a; }
-  .btn-reprovar { background: #ea580c; }
-  .btn-excluir { background: #dc2626; }
+  .badge {
+    background: #22c55e20;
+    border-radius: 30px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin-left: 8px;
+  }
 
-  .btn-aprovar:hover { background: #15803d; }
-  .btn-reprovar:hover { background: #c2410c; }
-  .btn-excluir:hover { background: #b91c1c; }
+  hr {
+    border-color: #334155;
+    margin: 1rem 0;
+  }
 </style>
 </head>
 <body>
 
 <!-- TELA DE LOGIN -->
 <div class="container" id="login">
-  <h2>✨ Acesso ao Ciclo</h2>
+  <h2>✨ Ciclo de Ajuda</h2>
   <input type="text" id="loginNome" placeholder="Seu nome completo" autocomplete="off">
   <input type="password" id="loginSenha" placeholder="Senha">
   <button onclick="logarUsuario()">Entrar</button>
@@ -195,15 +164,14 @@
     <button class="secondary" onclick="acessoAdmin()">🔐 Admin</button>
   </div>
   <div class="info-link">
-    📢 <strong>Link de cadastro (convite)</strong><br>
-    <a href="https://wal32.github.io/ciclodeajuda/" target="_blank">https://wal32.github.io/ciclodeajuda/</a>
-    <small>Compartilhe esse link para novos participantes</small>
+    🌐 Sistema de indicação individual — cada membro tem seu próprio link
   </div>
 </div>
 
-<!-- TELA DE CADASTRO (local) -->
+<!-- TELA DE CADASTRO -->
 <div class="container hidden" id="cadastro">
   <h2>📋 Novo participante</h2>
+  <div id="msgIndicacao" style="background:#1e293b; padding: 10px; border-radius: 14px; margin-bottom: 10px;"></div>
   <input type="text" id="nome" placeholder="Nome completo">
   <input type="text" id="pix" placeholder="Chave Pix (email/telefone)">
   <input type="text" id="whatsapp" placeholder="WhatsApp com DDD">
@@ -212,21 +180,21 @@
   <button class="secondary" onclick="voltarLogin()">Voltar</button>
 </div>
 
-<!-- PAINEL DO PARTICIPANTE (logado) -->
+<!-- PAINEL DO PARTICIPANTE -->
 <div class="container hidden" id="dashboard">
-  <h2>🤝 Área Colaborativa</h2>
+  <h2>🤝 Sua área colaborativa</h2>
   <div id="usuarioInfo"></div>
+  
+  <h3>🔗 Seu link de indicação (individual)</h3>
+  <div class="ref-link-box">
+    <input type="text" id="meuLinkRef" readonly onclick="this.select()">
+    <button onclick="copiarLink()">📋 Copiar</button>
+  </div>
+  <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
   
   <h3>📎 Comprovante de contribuição</h3>
   <input type="file" id="comprovante" accept="image/*,application/pdf">
   <button onclick="uploadComprovante()">Enviar comprovante</button>
-
-  <h3>🔗 Indicar novo membro</h3>
-  <div class="info-link" style="background:#1e293b; margin-bottom:10px;">
-    🌐 <strong>Link oficial de cadastro</strong><br>
-    <span style="font-size:0.85rem;">https://wal32.github.io/ciclodeajuda/</span>
-  </div>
-  <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
   
   <h3>👥 Participantes do ciclo</h3>
   <div id="lista"></div>
@@ -234,24 +202,57 @@
   <button class="secondary" onclick="logoutSistema()" style="margin-top: 25px;">🚪 Sair</button>
 </div>
 
-<!-- PAINEL ADMINISTRADOR -->
+<!-- PAINEL ADMIN -->
 <div class="container hidden" id="adminPanel">
-  <h2>⚙️ Gestão de Participantes</h2>
+  <h2>⚙️ Gestão + Indicações</h2>
   <div id="adminLista"></div>
   <button class="secondary" onclick="sairAdmin()">◀ Voltar ao login</button>
 </div>
 
 <script>
-  // ---------------- BASE DE DADOS LOCAL ----------------
+  // ---------- DADOS GLOBAIS ----------
   let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  let usuarioLogado = null;        // guarda objeto do participante ativo
+  let usuarioLogado = null;
+  let refParam = null;  // guarda código de indicação vindo da URL
 
-  // ---------- FUNÇÕES AUXILIARES DE REFERÊNCIA E UI ----------
+  // Extrair ?ref=CODIGO ao carregar
+  const urlParams = new URLSearchParams(window.location.search);
+  const codigoIndicacaoURL = urlParams.get('ref');
+  if (codigoIndicacaoURL) {
+    refParam = codigoIndicacaoURL;
+    sessionStorage.setItem('refIndicacao', refParam);
+  } else {
+    refParam = sessionStorage.getItem('refIndicacao');
+  }
+
+  // Gera código único para cada usuário (base64 curto)
+  function gerarCodigoUnico(nome) {
+    const base = nome.toLowerCase().replace(/\s/g, '') + Date.now() + Math.random().toString(36).substring(2, 6);
+    return btoa(base).replace(/=/g, '').substring(0, 14);
+  }
+
+  // Salvar usuários no localStorage
   function salvarUsuarios() {
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
   }
 
-  // atualiza a lista simples no dashboard do usuário comum
+  // Helper escape
+  function escapeHtml(str) {
+    if (!str) return "";
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // Contar quantas indicações uma pessoa fez (baseado no campo indicadoPorCodigo)
+  function contarIndicacoes(codigoReferencia) {
+    return usuarios.filter(u => u.indicadoPorCodigo === codigoReferencia).length;
+  }
+
+  // Atualizar lista de participantes (dashboard comum)
   function atualizarListaParticipantes() {
     const listaDiv = document.getElementById("lista");
     if (!listaDiv) return;
@@ -273,41 +274,34 @@
     });
   }
 
-  // pequeno helper para evitar XSS
-  function escapeHtml(str) {
-    if (!str) return "";
-    return str.replace(/[&<>]/g, function(m) {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-      return c;
-    });
-  }
-
-  // carrega informações do dashboard do logado
+  // Carregar dashboard do usuário logado
   function carregarDashboardCompleto() {
     if (!usuarioLogado) return;
     const infoDiv = document.getElementById("usuarioInfo");
-    if (infoDiv) {
-      infoDiv.innerHTML = `
-        <div class="card">
-          <strong>👤 ${escapeHtml(usuarioLogado.nome)}</strong><br>
-          💰 Pix: ${escapeHtml(usuarioLogado.pix || 'não informado')}<br>
-          📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp || 'não informado')}<br>
-          🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}
-        </div>`;
-    }
+    const referralCount = contarIndicacoes(usuarioLogado.codigo);
+    infoDiv.innerHTML = `
+      <div class="card">
+        <strong>👤 ${escapeHtml(usuarioLogado.nome)}</strong><br>
+        💰 Pix: ${escapeHtml(usuarioLogado.pix || 'não informado')}<br>
+        📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp || 'não informado')}<br>
+        🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}<br>
+        🎯 Indicações: <strong>${referralCount}</strong> pessoa(s) convidada(s)
+      </div>`;
+    
+    // Preencher o campo do link individual
+    const linkCompleto = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
+    const linkInput = document.getElementById("meuLinkRef");
+    if (linkInput) linkInput.value = linkCompleto;
+    
     atualizarListaParticipantes();
   }
 
-  // ---------- FLUXO LOGIN ----------
+  // ---------- LOGIN ----------
   function logarUsuario() {
     const nomeInput = document.getElementById("loginNome").value.trim();
     const senhaInput = document.getElementById("loginSenha").value;
     if (!nomeInput || !senhaInput) {
-      alert("Por favor, preencha nome e senha.");
+      alert("Preencha nome e senha.");
       return;
     }
     const encontrado = usuarios.find(u => u.nome === nomeInput && u.senha === senhaInput);
@@ -317,14 +311,31 @@
       document.getElementById("dashboard").classList.remove("hidden");
       carregarDashboardCompleto();
     } else {
-      alert("❌ Nome ou senha incorretos. Verifique seus dados ou faça o cadastro.");
+      alert("❌ Nome ou senha incorretos.");
     }
   }
 
-  // ---------- CADASTRO (com validação de limite e campos) ----------
+  // ---------- CADASTRO + INDICAÇÃO ----------
+  function mostrarCadastro() {
+    // Verifica se há indicação pendente e mostra mensagem
+    const msgDiv = document.getElementById("msgIndicacao");
+    if (refParam) {
+      const indicador = usuarios.find(u => u.codigo === refParam);
+      if (indicador) {
+        msgDiv.innerHTML = `<span style="color:#86efac;">✨ Você foi convidado por ${escapeHtml(indicador.nome)}! Ao se cadastrar, ele ganhará uma indicação.</span>`;
+      } else {
+        msgDiv.innerHTML = `<span>🔗 Link de indicação recebido, mas o convidante não está mais ativo.</span>`;
+      }
+    } else {
+      msgDiv.innerHTML = `<span>📢 Cadastre-se normalmente. Se alguém te indicou, use o link especial dele.</span>`;
+    }
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("cadastro").classList.remove("hidden");
+  }
+
   function cadastrarUsuario() {
     if (usuarios.length >= 10) {
-      alert("Limite máximo de 10 participantes atingido! Entre em contato com o administrador.");
+      alert("Limite máximo de 10 participantes atingido!");
       return;
     }
     const nomeEl = document.getElementById("nome");
@@ -338,35 +349,53 @@
     const senha = senhaEl.value;
 
     if (!nome || !pix || !whats || !senha) {
-      alert("Todos os campos são obrigatórios para o cadastro.");
+      alert("Todos os campos são obrigatórios.");
       return;
     }
     if (usuarios.some(u => u.nome === nome)) {
-      alert("Este nome já está cadastrado. Escolha outro nome ou faça login.");
+      alert("Este nome já está cadastrado.");
       return;
     }
+
+    // Gera código único para o novo usuário
+    const novoCodigo = gerarCodigoUnico(nome);
+    let indicadoPorCodigo = null;
+    let indicadoPorNome = null;
+
+    // Verifica se existe indicação via URL ou sessionStorage
+    let codigoIndicador = refParam || sessionStorage.getItem('refIndicacao');
+    if (codigoIndicador) {
+      const indicador = usuarios.find(u => u.codigo === codigoIndicador);
+      if (indicador) {
+        indicadoPorCodigo = indicador.codigo;
+        indicadoPorNome = indicador.nome;
+      }
+    }
+
     const novoUsuario = {
       nome: nome,
       pix: pix,
       whatsapp: whats,
       senha: senha,
       status: "pendente",
-      comprovante: ""
+      comprovante: "",
+      codigo: novoCodigo,
+      indicadoPorCodigo: indicadoPorCodigo,
+      indicadoPorNome: indicadoPorNome
     };
     usuarios.push(novoUsuario);
     salvarUsuarios();
-    alert("✅ Cadastro realizado com sucesso! Faça login para participar.");
-    // limpa campos
+    
+    alert(`✅ Cadastro realizado! ${indicadoPorNome ? `Você foi indicado por ${indicadoPorNome}.` : 'Bem-vindo ao ciclo.'}`);
+    // Limpar referência de indicação após uso
+    sessionStorage.removeItem('refIndicacao');
+    refParam = null;
+    voltarLogin();
+    // Limpar campos
     nomeEl.value = "";
     pixEl.value = "";
     whatsEl.value = "";
     senhaEl.value = "";
-    voltarLogin();
-  }
-
-  function mostrarCadastro() {
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("cadastro").classList.remove("hidden");
   }
 
   function voltarLogin() {
@@ -375,83 +404,83 @@
     document.getElementById("adminPanel").classList.add("hidden");
   }
 
-  // ---------- FUNÇÃO DE UPLOAD (comprovante) ----------
+  // ---------- COMPARTILHAR LINK INDIVIDUAL ----------
+  function copiarLink() {
+    const linkInput = document.getElementById("meuLinkRef");
+    if (linkInput && linkInput.value) {
+      navigator.clipboard.writeText(linkInput.value);
+      alert("Link copiado! Compartilhe com seus contatos.");
+    }
+  }
+
+  function compartilharWhatsApp() {
+    if (!usuarioLogado) return;
+    const linkPersonal = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
+    const mensagem = `🌟 Participe do ciclo de ajuda comigo! Use meu link de indicação: ${linkPersonal}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, '_blank');
+  }
+
+  // ---------- UPLOAD COMPROVANTE ----------
   function uploadComprovante() {
     if (!usuarioLogado) return;
     const fileInput = document.getElementById("comprovante");
-    if (!fileInput.files || fileInput.files.length === 0) {
-      alert("Selecione um arquivo de comprovante (imagem ou PDF).");
+    if (!fileInput.files.length) {
+      alert("Selecione um arquivo.");
       return;
     }
     const arquivo = fileInput.files[0];
-    // armazena apenas nome do arquivo (simulação, poderia ser convertido em base64, mas mantém funcionalidade simples)
     usuarioLogado.comprovante = arquivo.name;
-    // encontrar índice e atualizar no array
-    const index = usuarios.findIndex(u => u.nome === usuarioLogado.nome && u.senha === usuarioLogado.senha);
+    const index = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
     if (index !== -1) {
       usuarios[index].comprovante = arquivo.name;
       salvarUsuarios();
-      alert(`📎 Comprovante "${arquivo.name}" anexado com sucesso! O administrador poderá visualizar o envio.`);
-    } else {
-      alert("Erro ao salvar comprovante, tente novamente.");
+      alert(`Comprovante "${arquivo.name}" enviado.`);
     }
-    fileInput.value = ""; // limpa input
+    fileInput.value = "";
   }
-
-  // ---------- COMPARTILHAMENTO: link de cadastro atualizado (wal32.github.io) ----------
-  function compartilharWhatsApp() {
-    // Link oficial de cadastro solicitado na tarefa
-    const linkCadastro = "https://wal32.github.io/ciclodeajuda/";
-    const mensagem = `🌟 Participe do ciclo de ajuda colaborativa! Faça seu cadastro através do link oficial: ${linkCadastro}`;
-    const urlWhats = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
-    window.open(urlWhats, '_blank');
-  }
-
-  // função 'indicar' mantida compatibilidade, mas usamos compartilharWhatsApp
-  window.indicar = compartilharWhatsApp;
 
   // ---------- LOGOUT ----------
   function logoutSistema() {
     usuarioLogado = null;
-    // limpar campos login
     document.getElementById("loginNome").value = "";
     document.getElementById("loginSenha").value = "";
     document.getElementById("dashboard").classList.add("hidden");
     document.getElementById("login").classList.remove("hidden");
-    // recarrega lista admin se estiver visível? esconder painel admin
     document.getElementById("adminPanel").classList.add("hidden");
   }
 
-  // ---------- ADMIN (senha fixa 123456) ----------
+  // ---------- ADMIN ----------
   function acessoAdmin() {
-    const senhaAdmin = prompt("🔐 Digite a senha de administrador:");
+    const senhaAdmin = prompt("Senha de administrador:");
     if (senhaAdmin === "123456") {
       document.getElementById("login").classList.add("hidden");
       document.getElementById("adminPanel").classList.remove("hidden");
       renderAdminPanel();
-    } else if (senhaAdmin !== null) {
-      alert("Senha incorreta. Acesso negado.");
-    }
+    } else if (senhaAdmin !== null) alert("Senha incorreta.");
   }
 
   function renderAdminPanel() {
     const adminDiv = document.getElementById("adminLista");
     if (!adminDiv) return;
     if (usuarios.length === 0) {
-      adminDiv.innerHTML = `<div class="card">Nenhum participante cadastrado ainda.</div>`;
+      adminDiv.innerHTML = `<div class="card">Nenhum usuário cadastrado.</div>`;
       return;
     }
     let html = "";
     usuarios.forEach((user, idx) => {
-      const comprovanteInfo = user.comprovante ? `📄 Comprovante: ${escapeHtml(user.comprovante)}` : "📂 Sem comprovante anexado";
+      const qtdIndicacoes = contarIndicacoes(user.codigo);
+      const comprovanteInfo = user.comprovante ? `📄 ${escapeHtml(user.comprovante)}` : "📂 sem comprovante";
       html += `
         <div class="card">
-          <strong>${escapeHtml(user.nome)}</strong><br>
+          <strong>${escapeHtml(user.nome)}</strong> 
+          <span class="badge">código: ${user.codigo}</span><br>
           📧 Pix: ${escapeHtml(user.pix)}<br>
           📞 WhatsApp: ${escapeHtml(user.whatsapp)}<br>
-          🏷 Status: <strong>${user.status === "aprovado" ? "APROVADO" : (user.status === "reprovado" ? "REPROVADO" : "PENDENTE")}</strong><br>
+          🏷 Status: <strong>${user.status}</strong><br>
+          🎯 Indicações: <strong>${qtdIndicacoes}</strong> pessoas<br>
+          👥 Indicado por: ${user.indicadoPorNome ? escapeHtml(user.indicadoPorNome) : '—'}<br>
           <small>${comprovanteInfo}</small>
-          <div class="button-group">
+          <div class="flex-buttons" style="margin-top: 10px;">
             <button class="btn-aprovar" onclick="aprovarParticipante(${idx})">✅ Aprovar</button>
             <button class="btn-reprovar" onclick="reprovarParticipante(${idx})">⚠️ Reprovar</button>
             <button class="btn-excluir" onclick="excluirParticipante(${idx})">🗑 Excluir</button>
@@ -466,8 +495,7 @@
       usuarios[indice].status = "aprovado";
       salvarUsuarios();
       renderAdminPanel();
-      // se o usuário aprovado for o mesmo que está logado, atualiza painel dele também
-      if (usuarioLogado && usuarioLogado.nome === usuarios[indice].nome) {
+      if (usuarioLogado && usuarioLogado.codigo === usuarios[indice].codigo) {
         usuarioLogado.status = "aprovado";
         carregarDashboardCompleto();
       }
@@ -479,7 +507,7 @@
       usuarios[indice].status = "reprovado";
       salvarUsuarios();
       renderAdminPanel();
-      if (usuarioLogado && usuarioLogado.nome === usuarios[indice].nome) {
+      if (usuarioLogado && usuarioLogado.codigo === usuarios[indice].codigo) {
         usuarioLogado.status = "reprovado";
         carregarDashboardCompleto();
       }
@@ -489,17 +517,14 @@
   function excluirParticipante(indice) {
     if (indice >= 0 && indice < usuarios.length) {
       const nomeExcluido = usuarios[indice].nome;
-      if (confirm(`Tem certeza que deseja EXCLUIR permanentemente o participante "${nomeExcluido}"?`)) {
+      if (confirm(`Excluir ${nomeExcluido} permanentemente?`)) {
         usuarios.splice(indice, 1);
         salvarUsuarios();
         renderAdminPanel();
-        // se o usuário deletado for o que está logado, desloga automaticamente
         if (usuarioLogado && usuarioLogado.nome === nomeExcluido) {
-          alert("Sua conta foi removida pelo administrador. Você será desconectado.");
           logoutSistema();
-        } else {
-          // pode ser que a lista de participantes do dashboard mude
-          if (usuarioLogado) atualizarListaParticipantes();
+        } else if (usuarioLogado) {
+          atualizarListaParticipantes();
         }
       }
     }
@@ -508,16 +533,36 @@
   function sairAdmin() {
     document.getElementById("adminPanel").classList.add("hidden");
     document.getElementById("login").classList.remove("hidden");
-    // se existir usuarioLogado, manter? melhor resetar o usuario logado por segurança
-    if (usuarioLogado) {
-      usuarioLogado = null;
-    }
-    // limpar campos de login
-    document.getElementById("loginNome").value = "";
-    document.getElementById("loginSenha").value = "";
+    usuarioLogado = null;
   }
 
-  // ----- garantir que os nomes das funções chamadas via onclick estejam no escopo global -----
+  // Migração para garantir que usuários antigos tenham campo 'codigo' e indicações
+  function migrarBanco() {
+    let altered = false;
+    for (let i = 0; i < usuarios.length; i++) {
+      if (!usuarios[i].codigo) {
+        usuarios[i].codigo = gerarCodigoUnico(usuarios[i].nome);
+        altered = true;
+      }
+      if (usuarios[i].indicadoPorCodigo === undefined) {
+        usuarios[i].indicadoPorCodigo = null;
+        usuarios[i].indicadoPorNome = null;
+        altered = true;
+      }
+      if (!usuarios[i].status) usuarios[i].status = "pendente";
+      if (!usuarios[i].comprovante) usuarios[i].comprovante = "";
+    }
+    if (altered) salvarUsuarios();
+  }
+  migrarBanco();
+
+  // Inicialização: esconder todos e mostrar login
+  document.getElementById("login").classList.remove("hidden");
+  document.getElementById("cadastro").classList.add("hidden");
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("adminPanel").classList.add("hidden");
+
+  // Expor funções globais para os botões HTML
   window.logarUsuario = logarUsuario;
   window.mostrarCadastro = mostrarCadastro;
   window.cadastrarUsuario = cadastrarUsuario;
@@ -530,42 +575,16 @@
   window.reprovarParticipante = reprovarParticipante;
   window.excluirParticipante = excluirParticipante;
   window.sairAdmin = sairAdmin;
-  
-  // função legada 'indicar' e 'admin' compatível com o código original
-  window.admin = acessoAdmin;
-  window.indicar = compartilharWhatsApp;
-
-  // (Opcional) ao iniciar, garantir que arrays antigos tenham campo status
-  function migrarDadosAntigos() {
-    let alterado = false;
-    for (let i = 0; i < usuarios.length; i++) {
-      if (!usuarios[i].status) {
-        usuarios[i].status = "pendente";
-        alterado = true;
-      }
-      if (!usuarios[i].comprovante) {
-        usuarios[i].comprovante = "";
-        alterado = true;
-      }
-    }
-    if (alterado) salvarUsuarios();
-  }
-  migrarDadosAntigos();
-
-  // se o usuário estava logado antes (recarregou acidental), resetamos estado da interface
-  if (usuarioLogado) {
-    usuarioLogado = null;
-  }
-  // garantir que ao recarregar a página, apenas login esteja visível
-  document.getElementById("login").classList.remove("hidden");
-  document.getElementById("cadastro").classList.add("hidden");
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
+  window.copiarLink = copiarLink;
 </script>
 </body>
 </html>
-           
-           
-            
+  
+ 
+  
+  
+ 
    
-            
+      
+  
+  
