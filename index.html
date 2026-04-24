@@ -114,7 +114,7 @@
     word-break: break-all;
   }
 
-  .ref-link-box {
+  .ref-link-box, .pix-copy-box {
     background: #0f172a;
     border-radius: 14px;
     padding: 10px;
@@ -124,13 +124,13 @@
     gap: 8px;
     align-items: center;
   }
-  .ref-link-box input {
+  .ref-link-box input, .pix-copy-box input {
     flex: 1;
     margin: 0;
     background: #1e293b;
     font-size: 0.8rem;
   }
-  .ref-link-box button {
+  .ref-link-box button, .pix-copy-box button {
     width: auto;
     padding: 8px 12px;
     margin: 0;
@@ -155,7 +155,7 @@
 
 <!-- TELA DE LOGIN -->
 <div class="container" id="login">
-  <h2>✨ Ciclo de Ajuda</h2>
+  <h2>✨ Ciclo de Ajuda Mútua</h2>
   <input type="text" id="loginNome" placeholder="Seu nome completo" autocomplete="off">
   <input type="password" id="loginSenha" placeholder="Senha">
   <button onclick="logarUsuario()">Entrar</button>
@@ -173,7 +173,7 @@
   <h2>📋 Novo participante</h2>
   <div id="msgIndicacao" style="background:#1e293b; padding: 10px; border-radius: 14px; margin-bottom: 10px;"></div>
   <input type="text" id="nome" placeholder="Nome completo">
-  <input type="text" id="pix" placeholder="Chave Pix (email/telefone)">
+  <input type="text" id="pix" placeholder="Chave Pix (email/telefone/cpf)">
   <input type="text" id="whatsapp" placeholder="WhatsApp com DDD">
   <input type="password" id="senha" placeholder="Crie uma senha">
   <button onclick="cadastrarUsuario()">Cadastrar</button>
@@ -182,13 +182,20 @@
 
 <!-- PAINEL DO PARTICIPANTE -->
 <div class="container hidden" id="dashboard">
-  <h2>🤝 Sua área colaborativa</h2>
+  <h2>🤝 Sua área administrativa</h2>
   <div id="usuarioInfo"></div>
   
+  <!-- DESTAQUE DA CHAVE PIX (adicional) -->
+  <h3>💰 Sua chave Pix</h3>
+  <div class="pix-copy-box">
+    <input type="text" id="minhaChavePix" readonly onclick="this.select()">
+    <button onclick="copiarPix()">📋 Copiar Pix</button>
+  </div>
+
   <h3>🔗 Seu link de indicação (individual)</h3>
   <div class="ref-link-box">
     <input type="text" id="meuLinkRef" readonly onclick="this.select()">
-    <button onclick="copiarLink()">📋 Copiar</button>
+    <button onclick="copiarLink()">📋 Copiar Link</button>
   </div>
   <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
   
@@ -213,9 +220,8 @@
   // ---------- DADOS GLOBAIS ----------
   let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
   let usuarioLogado = null;
-  let refParam = null;  // guarda código de indicação vindo da URL
+  let refParam = null;
 
-  // Extrair ?ref=CODIGO ao carregar
   const urlParams = new URLSearchParams(window.location.search);
   const codigoIndicacaoURL = urlParams.get('ref');
   if (codigoIndicacaoURL) {
@@ -225,18 +231,15 @@
     refParam = sessionStorage.getItem('refIndicacao');
   }
 
-  // Gera código único para cada usuário (base64 curto)
   function gerarCodigoUnico(nome) {
     const base = nome.toLowerCase().replace(/\s/g, '') + Date.now() + Math.random().toString(36).substring(2, 6);
     return btoa(base).replace(/=/g, '').substring(0, 14);
   }
 
-  // Salvar usuários no localStorage
   function salvarUsuarios() {
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
   }
 
-  // Helper escape
   function escapeHtml(str) {
     if (!str) return "";
     return str.replace(/[&<>]/g, function(m) {
@@ -247,12 +250,10 @@
     });
   }
 
-  // Contar quantas indicações uma pessoa fez (baseado no campo indicadoPorCodigo)
   function contarIndicacoes(codigoReferencia) {
     return usuarios.filter(u => u.indicadoPorCodigo === codigoReferencia).length;
   }
 
-  // Atualizar lista de participantes (dashboard comum)
   function atualizarListaParticipantes() {
     const listaDiv = document.getElementById("lista");
     if (!listaDiv) return;
@@ -274,7 +275,6 @@
     });
   }
 
-  // Carregar dashboard do usuário logado
   function carregarDashboardCompleto() {
     if (!usuarioLogado) return;
     const infoDiv = document.getElementById("usuarioInfo");
@@ -288,7 +288,10 @@
         🎯 Indicações: <strong>${referralCount}</strong> pessoa(s) convidada(s)
       </div>`;
     
-    // Preencher o campo do link individual
+    // Preencher campo da chave Pix (novo)
+    const pixInput = document.getElementById("minhaChavePix");
+    if (pixInput) pixInput.value = usuarioLogado.pix || "Chave não informada";
+    
     const linkCompleto = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
     const linkInput = document.getElementById("meuLinkRef");
     if (linkInput) linkInput.value = linkCompleto;
@@ -315,9 +318,8 @@
     }
   }
 
-  // ---------- CADASTRO + INDICAÇÃO ----------
+  // ---------- CADASTRO COM PIX OBRIGATÓRIO ----------
   function mostrarCadastro() {
-    // Verifica se há indicação pendente e mostra mensagem
     const msgDiv = document.getElementById("msgIndicacao");
     if (refParam) {
       const indicador = usuarios.find(u => u.codigo === refParam);
@@ -349,7 +351,7 @@
     const senha = senhaEl.value;
 
     if (!nome || !pix || !whats || !senha) {
-      alert("Todos os campos são obrigatórios.");
+      alert("Todos os campos são obrigatórios, incluindo a chave Pix.");
       return;
     }
     if (usuarios.some(u => u.nome === nome)) {
@@ -357,12 +359,10 @@
       return;
     }
 
-    // Gera código único para o novo usuário
     const novoCodigo = gerarCodigoUnico(nome);
     let indicadoPorCodigo = null;
     let indicadoPorNome = null;
 
-    // Verifica se existe indicação via URL ou sessionStorage
     let codigoIndicador = refParam || sessionStorage.getItem('refIndicacao');
     if (codigoIndicador) {
       const indicador = usuarios.find(u => u.codigo === codigoIndicador);
@@ -387,11 +387,9 @@
     salvarUsuarios();
     
     alert(`✅ Cadastro realizado! ${indicadoPorNome ? `Você foi indicado por ${indicadoPorNome}.` : 'Bem-vindo ao ciclo.'}`);
-    // Limpar referência de indicação após uso
     sessionStorage.removeItem('refIndicacao');
     refParam = null;
     voltarLogin();
-    // Limpar campos
     nomeEl.value = "";
     pixEl.value = "";
     whatsEl.value = "";
@@ -404,23 +402,32 @@
     document.getElementById("adminPanel").classList.add("hidden");
   }
 
-  // ---------- COMPARTILHAR LINK INDIVIDUAL ----------
+  // ---------- COPIAR PIX E LINK ----------
+  function copiarPix() {
+    const pixInput = document.getElementById("minhaChavePix");
+    if (pixInput && pixInput.value && pixInput.value !== "Chave não informada") {
+      navigator.clipboard.writeText(pixInput.value);
+      alert("Chave Pix copiada!");
+    } else {
+      alert("Nenhuma chave Pix cadastrada.");
+    }
+  }
+
   function copiarLink() {
     const linkInput = document.getElementById("meuLinkRef");
     if (linkInput && linkInput.value) {
       navigator.clipboard.writeText(linkInput.value);
-      alert("Link copiado! Compartilhe com seus contatos.");
+      alert("Link copiado!");
     }
   }
 
   function compartilharWhatsApp() {
     if (!usuarioLogado) return;
     const linkPersonal = `https://wal32.github.io/ciclodeajuda/?ref=${usuarioLogado.codigo}`;
-    const mensagem = `🌟 Participe do ciclo de ajuda comigo! Use meu link de indicação: ${linkPersonal}`;
+    const mensagem = `🌟 Participe do Ciclo de Ajuda Mútua comigo!Dai e dar-se vos a! Use meu link de indicação: ${linkPersonal}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, '_blank');
   }
 
-  // ---------- UPLOAD COMPROVANTE ----------
   function uploadComprovante() {
     if (!usuarioLogado) return;
     const fileInput = document.getElementById("comprovante");
@@ -439,7 +446,6 @@
     fileInput.value = "";
   }
 
-  // ---------- LOGOUT ----------
   function logoutSistema() {
     usuarioLogado = null;
     document.getElementById("loginNome").value = "";
@@ -481,9 +487,9 @@
           👥 Indicado por: ${user.indicadoPorNome ? escapeHtml(user.indicadoPorNome) : '—'}<br>
           <small>${comprovanteInfo}</small>
           <div class="flex-buttons" style="margin-top: 10px;">
-            <button class="btn-aprovar" onclick="aprovarParticipante(${idx})">✅ Aprovar</button>
-            <button class="btn-reprovar" onclick="reprovarParticipante(${idx})">⚠️ Reprovar</button>
-            <button class="btn-excluir" onclick="excluirParticipante(${idx})">🗑 Excluir</button>
+            <button onclick="aprovarParticipante(${idx})">✅ Aprovar</button>
+            <button onclick="reprovarParticipante(${idx})">⚠️ Reprovar</button>
+            <button onclick="excluirParticipante(${idx})">🗑 Excluir</button>
           </div>
         </div>`;
     });
@@ -536,7 +542,7 @@
     usuarioLogado = null;
   }
 
-  // Migração para garantir que usuários antigos tenham campo 'codigo' e indicações
+  // Migração para garantir que usuários antigos tenham os campos necessários
   function migrarBanco() {
     let altered = false;
     for (let i = 0; i < usuarios.length; i++) {
@@ -551,18 +557,18 @@
       }
       if (!usuarios[i].status) usuarios[i].status = "pendente";
       if (!usuarios[i].comprovante) usuarios[i].comprovante = "";
+      if (!usuarios[i].pix) usuarios[i].pix = "";
     }
     if (altered) salvarUsuarios();
   }
   migrarBanco();
 
-  // Inicialização: esconder todos e mostrar login
+  // Inicialização
   document.getElementById("login").classList.remove("hidden");
   document.getElementById("cadastro").classList.add("hidden");
   document.getElementById("dashboard").classList.add("hidden");
   document.getElementById("adminPanel").classList.add("hidden");
 
-  // Expor funções globais para os botões HTML
   window.logarUsuario = logarUsuario;
   window.mostrarCadastro = mostrarCadastro;
   window.cadastrarUsuario = cadastrarUsuario;
@@ -576,15 +582,10 @@
   window.excluirParticipante = excluirParticipante;
   window.sairAdmin = sairAdmin;
   window.copiarLink = copiarLink;
+  window.copiarPix = copiarPix;
 </script>
 </body>
 </html>
-  
  
-  
-  
- 
-   
-      
-  
-  
+
+
