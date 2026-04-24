@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Ciclo de Ajuda | Sistema de Doações</title>
+<title>Ciclo de Ajuda Mútua| Sistema de Doações</title>
 <style>
   * {
     margin: 0;
@@ -29,7 +29,6 @@
     backdrop-filter: blur(2px);
   }
 
-  /* Garantia de texto branco */
   h1, h2, h3, h4, p, span, div, label, a, button, input, textarea, select, .card, .card * {
     color: #ffffff !important;
   }
@@ -48,7 +47,6 @@
 
   input::placeholder, textarea::placeholder {
     color: #cbd5e1 !important;
-    opacity: 1;
   }
 
   input:focus, button:focus, textarea:focus {
@@ -138,11 +136,6 @@
     margin-left: 8px;
   }
 
-  hr {
-    border-color: #334155;
-    margin: 1rem 0;
-  }
-  
   .pix-mini {
     font-size: 0.8rem;
     font-family: monospace;
@@ -152,13 +145,18 @@
     border-radius: 20px;
     margin-top: 6px;
   }
+
+  hr {
+    border-color: #334155;
+    margin: 1rem 0;
+  }
 </style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN -->
+<!-- LOGIN -->
 <div class="container" id="login">
-  <h2>✨ Ciclo de Ajuda Mútua</h2>
+  <h2>✨ Ciclo de Ajuda</h2>
   <input type="text" id="loginNome" placeholder="Seu nome completo" autocomplete="off">
   <input type="password" id="loginSenha" placeholder="Senha">
   <button onclick="logarUsuario()">Entrar</button>
@@ -171,7 +169,7 @@
   </div>
 </div>
 
-<!-- TELA DE CADASTRO -->
+<!-- CADASTRO -->
 <div class="container hidden" id="cadastro">
   <h2>📋 Novo participante</h2>
   <div id="msgIndicacao" style="background:#1e293b; padding: 10px; border-radius: 14px; margin-bottom: 10px;"></div>
@@ -183,32 +181,36 @@
   <button class="secondary" onclick="voltarLogin()">Voltar</button>
 </div>
 
-<!-- PAINEL DO PARTICIPANTE -->
+<!-- PAINEL DO PARTICIPANTE (COM COMPROVANTE) -->
 <div class="container hidden" id="dashboard">
-  <h2>🤝 Sua área Administrativa</h2>
+  <h2>🤝 Sua área colaborativa</h2>
   <div id="usuarioInfo"></div>
   
-  <!-- DESTAQUE DA CHAVE PIX (do próprio) -->
   <h3>💰 Sua chave Pix</h3>
   <div class="pix-copy-box">
     <input type="text" id="minhaChavePix" readonly onclick="this.select()">
     <button onclick="copiarPix()">📋 Copiar Pix</button>
   </div>
 
-  <h3>🔗 Seu link de indicação (individual)</h3>
+  <h3>🔗 Seu link de indicação</h3>
   <div class="ref-link-box">
     <input type="text" id="meuLinkRef" readonly onclick="this.select()">
     <button onclick="copiarLink()">📋 Copiar Link</button>
   </div>
   <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
   
-  <h3>👥 Participantes do ciclo (com chave Pix)</h3>
+  <!-- COMPROVANTE INDIVIDUAL REINSERIDO -->
+  <h3>📎 Anexar comprovante de contribuição</h3>
+  <input type="file" id="comprovante" accept="image/*,application/pdf">
+  <button onclick="uploadComprovante()">Enviar comprovante</button>
+
+  <h3>👥 Participantes do ciclo (com Pix)</h3>
   <div id="lista"></div>
   
   <button class="secondary" onclick="logoutSistema()" style="margin-top: 25px;">🚪 Sair</button>
 </div>
 
-<!-- PAINEL ADMIN -->
+<!-- ADMIN -->
 <div class="container hidden" id="adminPanel">
   <h2>⚙️ Gestão + Indicações</h2>
   <div id="adminLista"></div>
@@ -216,7 +218,6 @@
 </div>
 
 <script>
-  // ---------- DADOS GLOBAIS ----------
   let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
   let usuarioLogado = null;
   let refParam = null;
@@ -253,7 +254,7 @@
     return usuarios.filter(u => u.indicadoPorCodigo === codigoReferencia).length;
   }
 
-  // Lista de participantes com a chave Pix de cada um
+  // Lista de participantes com Pix
   function atualizarListaParticipantes() {
     const listaDiv = document.getElementById("lista");
     if (!listaDiv) return;
@@ -267,10 +268,7 @@
       if (u.status === "aprovado") statusTexto = "✅ Aprovado";
       else if (u.status === "reprovado") statusTexto = "❌ Reprovado";
       else statusTexto = "⏳ Pendente";
-      
-      // Exibe a chave Pix de cada participante
       const pixFormatado = u.pix ? `<div class="pix-mini">💰 Pix: ${escapeHtml(u.pix)}</div>` : '<div class="pix-mini">💰 Pix: não informado</div>';
-      
       listaDiv.innerHTML += `
         <div class="card">
           <strong>${escapeHtml(u.nome)}</strong><br>
@@ -290,10 +288,10 @@
         💰 Pix: ${escapeHtml(usuarioLogado.pix || 'não informado')}<br>
         📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp || 'não informado')}<br>
         🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}<br>
-        🎯 Indicações: <strong>${referralCount}</strong> pessoa(s) convidada(s)
+        🎯 Indicações: <strong>${referralCount}</strong> pessoa(s) convidada(s)<br>
+        📎 Comprovante: ${usuarioLogado.comprovante ? escapeHtml(usuarioLogado.comprovante) : 'nenhum anexado'}
       </div>`;
     
-    // Preencher campo da chave Pix do usuário logado
     const pixInput = document.getElementById("minhaChavePix");
     if (pixInput) pixInput.value = usuarioLogado.pix || "Chave não informada";
     
@@ -304,7 +302,7 @@
     atualizarListaParticipantes();
   }
 
-  // ---------- LOGIN ----------
+  // LOGIN
   function logarUsuario() {
     const nomeInput = document.getElementById("loginNome").value.trim();
     const senhaInput = document.getElementById("loginSenha").value;
@@ -323,7 +321,7 @@
     }
   }
 
-  // ---------- CADASTRO COM PIX OBRIGATÓRIO ----------
+  // CADASTRO com Pix obrigatório
   function mostrarCadastro() {
     const msgDiv = document.getElementById("msgIndicacao");
     if (refParam) {
@@ -383,7 +381,7 @@
       whatsapp: whats,
       senha: senha,
       status: "pendente",
-      comprovante: "",   // mantido por compatibilidade, mas sem uso na UI
+      comprovante: "",   // inicia sem comprovante
       codigo: novoCodigo,
       indicadoPorCodigo: indicadoPorCodigo,
       indicadoPorNome: indicadoPorNome
@@ -407,7 +405,30 @@
     document.getElementById("adminPanel").classList.add("hidden");
   }
 
-  // ---------- COPIAR PIX E LINK ----------
+  // FUNÇÃO DE UPLOAD DO COMPROVANTE (individual)
+  function uploadComprovante() {
+    if (!usuarioLogado) return;
+    const fileInput = document.getElementById("comprovante");
+    if (!fileInput.files.length) {
+      alert("Selecione um arquivo.");
+      return;
+    }
+    const arquivo = fileInput.files[0];
+    // Armazena apenas o nome do arquivo (simulação, pode ser adaptado para base64 se desejar)
+    usuarioLogado.comprovante = arquivo.name;
+    const index = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
+    if (index !== -1) {
+      usuarios[index].comprovante = arquivo.name;
+      salvarUsuarios();
+      alert(`Comprovante "${arquivo.name}" enviado com sucesso!`);
+      // Atualiza exibição do comprovante no card
+      carregarDashboardCompleto();
+    } else {
+      alert("Erro ao salvar comprovante.");
+    }
+    fileInput.value = "";
+  }
+
   function copiarPix() {
     const pixInput = document.getElementById("minhaChavePix");
     if (pixInput && pixInput.value && pixInput.value !== "Chave não informada") {
@@ -433,8 +454,6 @@
     window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, '_blank');
   }
 
-  // Função de upload removida completamente
-
   function logoutSistema() {
     usuarioLogado = null;
     document.getElementById("loginNome").value = "";
@@ -444,7 +463,7 @@
     document.getElementById("adminPanel").classList.add("hidden");
   }
 
-  // ---------- ADMIN ----------
+  // ADMIN
   function acessoAdmin() {
     const senhaAdmin = prompt("Senha de administrador:");
     if (senhaAdmin === "123456") {
@@ -473,6 +492,7 @@
           🏷 Status: <strong>${user.status}</strong><br>
           🎯 Indicações: <strong>${qtdIndicacoes}</strong> pessoas<br>
           👥 Indicado por: ${user.indicadoPorNome ? escapeHtml(user.indicadoPorNome) : '—'}<br>
+          📎 Comprovante: ${user.comprovante ? escapeHtml(user.comprovante) : 'nenhum'}<br>
           <div class="flex-buttons" style="margin-top: 10px;">
             <button onclick="aprovarParticipante(${idx})">✅ Aprovar</button>
             <button onclick="reprovarParticipante(${idx})">⚠️ Reprovar</button>
@@ -529,7 +549,7 @@
     usuarioLogado = null;
   }
 
-  // Migração para garantir campos
+  // Migração
   function migrarBanco() {
     let altered = false;
     for (let i = 0; i < usuarios.length; i++) {
@@ -543,7 +563,10 @@
         altered = true;
       }
       if (!usuarios[i].status) usuarios[i].status = "pendente";
-      if (!usuarios[i].comprovante) usuarios[i].comprovante = "";
+      if (usuarios[i].comprovante === undefined) {
+        usuarios[i].comprovante = "";
+        altered = true;
+      }
       if (!usuarios[i].pix) usuarios[i].pix = "";
     }
     if (altered) salvarUsuarios();
@@ -556,10 +579,12 @@
   document.getElementById("dashboard").classList.add("hidden");
   document.getElementById("adminPanel").classList.add("hidden");
 
+  // Expor funções globais
   window.logarUsuario = logarUsuario;
   window.mostrarCadastro = mostrarCadastro;
   window.cadastrarUsuario = cadastrarUsuario;
   window.voltarLogin = voltarLogin;
+  window.uploadComprovante = uploadComprovante;
   window.compartilharWhatsApp = compartilharWhatsApp;
   window.logoutSistema = logoutSistema;
   window.acessoAdmin = acessoAdmin;
@@ -573,15 +598,11 @@
 </body>
 </html>
    
-
-  
-  
-    
-  
-
-     
-   
-  
-  
     
  
+    
+  
+   
+         
+ 
+      
