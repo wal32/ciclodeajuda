@@ -1,613 +1,571 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Ciclo de Ajuda Mútua</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Ciclo de Ajuda Mútua | Sistema de Apoio</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        body {
-            background: linear-gradient(145deg, #0b1120 0%, #0f172a 100%);
-            min-height: 100vh;
-            padding: 24px 16px 40px;
-        }
+  body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: #0f172a;
+    color: #ffffff;
+    line-height: 1.5;
+    padding: 1rem;
+  }
 
-        /* containers */
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(2px);
-            border-radius: 2rem;
-            padding: 1.8rem 1.5rem;
-            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            transition: all 0.2s ease;
-        }
+  /* container principal */
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+  }
 
-        .hidden {
-            display: none;
-        }
+  /* TODOS os textos com cor branca garantida */
+  h1, h2, h3, h4, p, span, div, label, a, button, input, textarea, select, .card, .card * {
+    color: #ffffff !important;
+  }
 
-        /* logo + título */
-        .hero-logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .logo-icon {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            width: 70px;
-            height: 70px;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            box-shadow: 0 10px 20px -5px rgba(34,197,94,0.3);
-        }
-        .logo-icon span {
-            font-size: 2.8rem;
-        }
-        h1 {
-            font-size: 1.9rem;
-            font-weight: 800;
-            background: linear-gradient(to right, #e2e8f0, #86efac);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
-        }
-        .sub {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            margin-top: 6px;
-        }
+  /* inputs, selects, textarea — fundo escuro e texto branco */
+  input, button, textarea, select {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.2s ease;
+    font-weight: normal;
+    width: 100%;
+    margin: 8px 0;
+    color: #ffffff !important;
+  }
 
-        /* cards e inputs */
-        .card {
-            background: #1e293b;
-            border-radius: 1.2rem;
-            padding: 1rem 1.2rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid #22c55e;
-            transition: 0.1s;
-            word-break: break-word;
-        }
-        .card-admin {
-            border-left-color: #f59e0b;
-        }
-        input, button, .file-label {
-            width: 100%;
-            padding: 12px 14px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 1.2rem;
-            font-size: 1rem;
-            transition: 0.2s;
-            outline: none;
-        }
-        input {
-            background: #0f172a;
-            color: #f1f5f9;
-            border: 1px solid #334155;
-        }
-        input:focus {
-            border-color: #22c55e;
-            box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
-        }
-        button {
-            background: #22c55e;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            border: none;
-        }
-        button:active {
-            transform: scale(0.97);
-        }
-        .btn-outline {
-            background: #334155;
-            color: #e2e8f0;
-        }
-        .btn-danger {
-            background: #ef4444;
-        }
-        .btn-warning {
-            background: #f97316;
-        }
-        .small-btn {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            width: auto;
-            margin: 4px;
-        }
-        .flex-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        .comprovante-link {
-            background: #0f172a;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #86efac;
-            text-decoration: none;
-            display: inline-block;
-            margin: 4px 4px 0 0;
-        }
-        hr {
-            border-color: #334155;
-            margin: 12px 0;
-        }
-        .badge {
-            background: #0f172a;
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-left: 8px;
-            color: #cbd5e1;
-        }
-        .status-aprovado { color: #4ade80; font-weight: bold; }
-        .status-pendente { color: #facc15; }
-        .status-reprovado { color: #f87171; }
-        .user-info {
-            font-size: 0.9rem;
-        }
-        a {
-            color: #86efac;
-        }
-        .file-input-custom {
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 1rem;
-            font-size: 0.8rem;
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.7rem;
-            color: #475569;
-        }
-        h2, h3 {
-            margin: 0.8rem 0 0.4rem;
-            font-weight: 600;
-        }
-        h2 { font-size: 1.6rem; }
-        h3 { font-size: 1.2rem; border-left: 3px solid #22c55e; padding-left: 12px; margin-top: 1rem; }
-        .logo-mini {
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
-    </style>
+  input::placeholder, textarea::placeholder {
+    color: #cbd5e1 !important;
+    opacity: 1;
+  }
+
+  input:focus, button:focus, textarea:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
+    background-color: #0f172a;
+  }
+
+  /* botões principais */
+  button {
+    background: #22c55e;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+
+  button:hover {
+    background: #16a34a;
+    transform: scale(0.98);
+  }
+
+  /* botões secundários (admin, cadastro, sair) */
+  button.secondary {
+    background: #334155;
+  }
+  button.secondary:hover {
+    background: #475569;
+  }
+
+  .card {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 1rem;
+    margin: 0.75rem 0;
+    border-left: 4px solid #22c55e;
+    transition: 0.1s linear;
+    word-break: break-word;
+  }
+
+  .card strong {
+    color: #bbf7d0;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  /* paineis internos */
+  #dashboard, #adminPanel, #cadastro, #login {
+    animation: fade 0.2s ease;
+  }
+
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(6px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+  .flex-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+  }
+
+  .flex-buttons button {
+    flex: 1;
+  }
+
+  hr {
+    border-color: #334155;
+    margin: 1rem 0;
+  }
+
+  .info-link {
+    background: #0f172a;
+    padding: 12px;
+    border-radius: 16px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    border: 1px solid #22c55e40;
+  }
+
+  .info-link a {
+    color: #86efac !important;
+    text-decoration: none;
+    font-weight: 600;
+    word-break: break-all;
+  }
+
+  .info-link a:hover {
+    text-decoration: underline;
+  }
+
+  small {
+    opacity: 0.8;
+    font-size: 0.75rem;
+    display: block;
+    margin-top: 5px;
+  }
+
+  #adminLista .card button {
+    margin-top: 6px;
+    margin-right: 6px;
+    width: auto;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  /* botões dentro das listas admin */
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .btn-aprovar { background: #16a34a; }
+  .btn-reprovar { background: #ea580c; }
+  .btn-excluir { background: #dc2626; }
+
+  .btn-aprovar:hover { background: #15803d; }
+  .btn-reprovar:hover { background: #c2410c; }
+  .btn-excluir:hover { background: #b91c1c; }
+</style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN (com logo e nome) -->
-<div id="loginContainer" class="container">
-    <div class="hero-logo">
-        <div class="logo-icon">
-            <span>🤝</span>
-        </div>
-        <h1>Ciclo de Ajuda Mútua</h1>
-        <div class="sub">solidariedade que transforma</div>
-    </div>
-    <input type="text" id="loginNomeInput" placeholder="Seu nome completo" autocomplete="off">
-    <input type="password" id="loginSenhaInput" placeholder="Senha">
-    <button onclick="fazerLogin()">🔐 Entrar na rede</button>
-    <button onclick="mostrarPainelCadastro()" class="btn-outline">📝 Criar Conta</button>
-    <button onclick="acessoAdmin()" class="btn-outline" style="background:#475569;">🛡️ Admin</button>
+<!-- TELA DE LOGIN -->
+<div class="container" id="login">
+  <h2>✨ Acesso ao Ciclo</h2>
+  <input type="text" id="loginNome" placeholder="Seu nome completo" autocomplete="off">
+  <input type="password" id="loginSenha" placeholder="Senha">
+  <button onclick="logarUsuario()">Entrar</button>
+  <div class="flex-buttons">
+    <button class="secondary" onclick="mostrarCadastro()">📝 Cadastrar</button>
+    <button class="secondary" onclick="acessoAdmin()">🔐 Admin</button>
+  </div>
+  <div class="info-link">
+    📢 <strong>Link de cadastro (convite)</strong><br>
+    <a href="https://wal32.github.io/ciclodeajuda/" target="_blank">https://wal32.github.io/ciclodeajuda/</a>
+    <small>Compartilhe esse link para novos participantes</small>
+  </div>
 </div>
 
-<!-- TELA DE CADASTRO -->
-<div id="cadastroContainer" class="container hidden">
-    <div class="hero-logo" style="margin-bottom: 1rem;">
-        <span style="font-size:2rem;">🙌</span>
-        <h2>Nova adesão</h2>
-    </div>
-    <input type="text" id="cadNome" placeholder="Nome completo">
-    <input type="text" id="cadPix" placeholder="Chave Pix (e-mail ou telefone)">
-    <input type="text" id="cadWhats" placeholder="WhatsApp com DDD">
-    <input type="password" id="cadSenha" placeholder="Crie uma senha">
-    <button onclick="registrarUsuario()">📌 Cadastrar</button>
-    <button onclick="voltarLogin()" class="btn-outline">← Voltar</button>
-    <div class="sub" style="text-align:center; margin-top:12px;">* Limite máximo de 10 participantes ativos</div>
+<!-- TELA DE CADASTRO (local) -->
+<div class="container hidden" id="cadastro">
+  <h2>📋 Novo participante</h2>
+  <input type="text" id="nome" placeholder="Nome completo">
+  <input type="text" id="pix" placeholder="Chave Pix (email/telefone)">
+  <input type="text" id="whatsapp" placeholder="WhatsApp com DDD">
+  <input type="password" id="senha" placeholder="Crie uma senha">
+  <button onclick="cadastrarUsuario()">Cadastrar</button>
+  <button class="secondary" onclick="voltarLogin()">Voltar</button>
 </div>
 
-<!-- PAINEL DO PARTICIPANTE (USUÁRIO) -->
-<div id="dashboardContainer" class="container hidden">
-    <div class="hero-logo" style="margin-bottom: 0.2rem;">
-        <span style="font-size: 1.8rem;">🤝</span>
-        <h2 style="font-size:1.5rem;">Minha ajuda</h2>
-    </div>
-    <div id="userInfoCard"></div>
+<!-- PAINEL DO PARTICIPANTE (logado) -->
+<div class="container hidden" id="dashboard">
+  <h2>🤝 Área Colaborativa</h2>
+  <div id="usuarioInfo"></div>
+  
+  <h3>📎 Comprovante de contribuição</h3>
+  <input type="file" id="comprovante" accept="image/*,application/pdf">
+  <button onclick="uploadComprovante()">Enviar comprovante</button>
 
-    <h3>📎 Meu comprovante</h3>
-    <div id="meuComprovanteArea" class="card" style="background:#0f172a;"></div>
-    <input type="file" id="userComprovanteFile" accept="image/*,application/pdf">
-    <button onclick="uploadMeuComprovante()">⬆️ Enviar comprovante</button>
-    
-    <h3>👥 Participantes da roda</h3>
-    <div id="listaParticipantes"></div>
-
-    <h3>📢 Indique um amigo</h3>
-    <button onclick="compartilharWhatsApp()">📱 Compartilhar no WhatsApp</button>
-    
-    <button onclick="logoutSistema()" class="btn-outline" style="margin-top: 20px; background:#dc2626;">🚪 Sair</button>
+  <h3>🔗 Indicar novo membro</h3>
+  <div class="info-link" style="background:#1e293b; margin-bottom:10px;">
+    🌐 <strong>Link oficial de cadastro</strong><br>
+    <span style="font-size:0.85rem;">https://wal32.github.io/ciclodeajuda/</span>
+  </div>
+  <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
+  
+  <h3>👥 Participantes do ciclo</h3>
+  <div id="lista"></div>
+  
+  <button class="secondary" onclick="logoutSistema()" style="margin-top: 25px;">🚪 Sair</button>
 </div>
 
 <!-- PAINEL ADMINISTRADOR -->
-<div id="adminContainer" class="container hidden">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 style="margin:0;">🛡️ Admin</h2>
-        <button onclick="sairAdmin()" class="small-btn" style="width:auto;">Sair</button>
-    </div>
-    <div id="adminListaUsuarios"></div>
+<div class="container hidden" id="adminPanel">
+  <h2>⚙️ Gestão de Participantes</h2>
+  <div id="adminLista"></div>
+  <button class="secondary" onclick="sairAdmin()">◀ Voltar ao login</button>
 </div>
 
 <script>
-    // ---------- ESTRUTURA DE DADOS ----------
-    let usuarios = [];      // array de objetos
-    let usuarioLogado = null;   // guarda referência do usuário ativo
+  // ---------------- BASE DE DADOS LOCAL ----------------
+  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  let usuarioLogado = null;        // guarda objeto do participante ativo
 
-    // Carrega dados salvos
-    function carregarLocalStorage() {
-        const dados = localStorage.getItem("ciclo_ajuda");
-        if(dados) {
-            usuarios = JSON.parse(dados);
-        } else {
-            // dados iniciais exemplo (vazio, mas admin pode criar)
-            usuarios = [];
-        }
-        // garantir que todo usuário tenha campo comprovanteObj (para compatibilidade)
-        usuarios.forEach(u => {
-            if(!u.comprovanteObj) u.comprovanteObj = null;
-            if(!u.status) u.status = "pendente";
-        });
-        salvarLocalStorage();
+  // ---------- FUNÇÕES AUXILIARES DE REFERÊNCIA E UI ----------
+  function salvarUsuarios() {
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  }
+
+  // atualiza a lista simples no dashboard do usuário comum
+  function atualizarListaParticipantes() {
+    const listaDiv = document.getElementById("lista");
+    if (!listaDiv) return;
+    listaDiv.innerHTML = "";
+    if (usuarios.length === 0) {
+      listaDiv.innerHTML = `<div class="card">Nenhum participante cadastrado ainda.</div>`;
+      return;
     }
+    usuarios.forEach(u => {
+      let statusTexto = "";
+      if (u.status === "aprovado") statusTexto = "✅ Aprovado";
+      else if (u.status === "reprovado") statusTexto = "❌ Reprovado";
+      else statusTexto = "⏳ Pendente";
+      listaDiv.innerHTML += `
+        <div class="card">
+          <strong>${escapeHtml(u.nome)}</strong><br>
+          Status: ${statusTexto}
+        </div>`;
+    });
+  }
 
-    function salvarLocalStorage() {
-        localStorage.setItem("ciclo_ajuda", JSON.stringify(usuarios));
+  // pequeno helper para evitar XSS
+  function escapeHtml(str) {
+    if (!str) return "";
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+
+  // carrega informações do dashboard do logado
+  function carregarDashboardCompleto() {
+    if (!usuarioLogado) return;
+    const infoDiv = document.getElementById("usuarioInfo");
+    if (infoDiv) {
+      infoDiv.innerHTML = `
+        <div class="card">
+          <strong>👤 ${escapeHtml(usuarioLogado.nome)}</strong><br>
+          💰 Pix: ${escapeHtml(usuarioLogado.pix || 'não informado')}<br>
+          📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp || 'não informado')}<br>
+          🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}
+        </div>`;
     }
+    atualizarListaParticipantes();
+  }
 
-    // helpers DOM
-    function esconderTelas() {
-        document.getElementById("loginContainer").classList.add("hidden");
-        document.getElementById("cadastroContainer").classList.add("hidden");
-        document.getElementById("dashboardContainer").classList.add("hidden");
-        document.getElementById("adminContainer").classList.add("hidden");
+  // ---------- FLUXO LOGIN ----------
+  function logarUsuario() {
+    const nomeInput = document.getElementById("loginNome").value.trim();
+    const senhaInput = document.getElementById("loginSenha").value;
+    if (!nomeInput || !senhaInput) {
+      alert("Por favor, preencha nome e senha.");
+      return;
     }
-
-    function voltarLogin() {
-        esconderTelas();
-        document.getElementById("loginContainer").classList.remove("hidden");
-        document.getElementById("loginNomeInput").value = "";
-        document.getElementById("loginSenhaInput").value = "";
+    const encontrado = usuarios.find(u => u.nome === nomeInput && u.senha === senhaInput);
+    if (encontrado) {
+      usuarioLogado = encontrado;
+      document.getElementById("login").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+      carregarDashboardCompleto();
+    } else {
+      alert("❌ Nome ou senha incorretos. Verifique seus dados ou faça o cadastro.");
     }
+  }
 
-    function mostrarPainelCadastro() {
-        esconderTelas();
-        document.getElementById("cadastroContainer").classList.remove("hidden");
+  // ---------- CADASTRO (com validação de limite e campos) ----------
+  function cadastrarUsuario() {
+    if (usuarios.length >= 10) {
+      alert("Limite máximo de 10 participantes atingido! Entre em contato com o administrador.");
+      return;
     }
+    const nomeEl = document.getElementById("nome");
+    const pixEl = document.getElementById("pix");
+    const whatsEl = document.getElementById("whatsapp");
+    const senhaEl = document.getElementById("senha");
 
-    // ---------- CADASTRO (limite 10) ----------
-    function registrarUsuario() {
-        const nome = document.getElementById("cadNome").value.trim();
-        const pix = document.getElementById("cadPix").value.trim();
-        const whats = document.getElementById("cadWhats").value.trim();
-        const senha = document.getElementById("cadSenha").value;
+    const nome = nomeEl.value.trim();
+    const pix = pixEl.value.trim();
+    const whats = whatsEl.value.trim();
+    const senha = senhaEl.value;
 
-        if(!nome || !pix || !whats || !senha) {
-            alert("❌ Preencha todos os campos!");
-            return;
-        }
-        if(usuarios.length >= 10) {
-            alert("⚠️ Limite de 10 participantes atingido. Aguarde liberação de vaga.");
-            return;
-        }
-        if(usuarios.some(u => u.nome.toLowerCase() === nome.toLowerCase())) {
-            alert("Nome já cadastrado! Escolha outro.");
-            return;
-        }
-
-        const novoUsuario = {
-            id: Date.now(),
-            nome: nome,
-            pix: pix,
-            whatsapp: whats,
-            senha: senha,
-            status: "pendente",
-            comprovanteObj: null,   // { nomeArquivo, base64, tipo }
-        };
-        usuarios.push(novoUsuario);
-        salvarLocalStorage();
-        alert("✅ Cadastro realizado com sucesso! Aguarde aprovação do admin.");
-        voltarLogin();
+    if (!nome || !pix || !whats || !senha) {
+      alert("Todos os campos são obrigatórios para o cadastro.");
+      return;
     }
-
-    // ---------- LOGIN ----------
-    function fazerLogin() {
-        const nomeLogin = document.getElementById("loginNomeInput").value.trim();
-        const senhaLogin = document.getElementById("loginSenhaInput").value;
-        const encontrado = usuarios.find(u => u.nome === nomeLogin && u.senha === senhaLogin);
-        if(encontrado) {
-            usuarioLogado = encontrado;
-            esconderTelas();
-            document.getElementById("dashboardContainer").classList.remove("hidden");
-            carregarDashboard();
-        } else {
-            alert("❌ Nome ou senha incorretos.");
-        }
+    if (usuarios.some(u => u.nome === nome)) {
+      alert("Este nome já está cadastrado. Escolha outro nome ou faça login.");
+      return;
     }
-
-    // ---------- DASHBOARD (participante) ----------
-    function carregarDashboard() {
-        if(!usuarioLogado) return;
-        const userDiv = document.getElementById("userInfoCard");
-        userDiv.innerHTML = `
-            <div class="card">
-                <strong>✨ ${usuarioLogado.nome}</strong> <span class="badge">${usuarioLogado.status === "aprovado" ? "✓ Aprovado" : (usuarioLogado.status === "reprovado" ? "✗ Reprovado" : "⏳ Pendente")}</span><br>
-                <span>💰 Pix: ${usuarioLogado.pix}</span><br>
-                <span>📱 WhatsApp: ${usuarioLogado.whatsapp}</span>
-            </div>
-        `;
-        // mostrar comprovante atual do usuário logado
-        const compArea = document.getElementById("meuComprovanteArea");
-        if(usuarioLogado.comprovanteObj && usuarioLogado.comprovanteObj.base64) {
-            const tipo = usuarioLogado.comprovanteObj.tipo || "";
-            const nomeArq = usuarioLogado.comprovanteObj.nomeArquivo || "comprovante";
-            let preview = "";
-            if(tipo.startsWith("image/")) {
-                preview = `<img src="${usuarioLogado.comprovanteObj.base64}" style="max-width:100%; max-height:120px; border-radius:12px; margin-top:6px;">`;
-            }
-            compArea.innerHTML = `
-                <div>📄 <strong>${nomeArq}</strong></div>
-                ${preview}
-                <div><a href="${usuarioLogado.comprovanteObj.base64}" target="_blank" class="comprovante-link">🔍 Visualizar completo</a></div>
-            `;
-        } else {
-            compArea.innerHTML = `<div style="color:#94a3b8;">Nenhum comprovante anexado ainda.</div>`;
-        }
-
-        // lista de participantes (todos)
-        const listaDiv = document.getElementById("listaParticipantes");
-        listaDiv.innerHTML = "";
-        usuarios.forEach(u => {
-            let statusText = "";
-            if(u.status === "aprovado") statusText = "<span class='status-aprovado'>aprovado</span>";
-            else if(u.status === "reprovado") statusText = "<span class='status-reprovado'>reprovado</span>";
-            else statusText = "<span class='status-pendente'>pendente</span>";
-            listaDiv.innerHTML += `
-                <div class="card">
-                    <strong>${u.nome}</strong> <span class="badge">${statusText}</span>
-                </div>
-            `;
-        });
-    }
-
-    // usuário faz upload do próprio comprovante (base64)
-    function uploadMeuComprovante() {
-        if(!usuarioLogado) return;
-        const fileInput = document.getElementById("userComprovanteFile");
-        const file = fileInput.files[0];
-        if(!file) {
-            alert("Selecione um arquivo (imagem ou PDF).");
-            return;
-        }
-        if(file.size > 2 * 1024 * 1024) {
-            alert("Arquivo muito grande! Máximo 2MB.");
-            return;
-        }
-        const leitor = new FileReader();
-        leitor.onload = function(e) {
-            const base64 = e.target.result;
-            usuarioLogado.comprovanteObj = {
-                nomeArquivo: file.name,
-                base64: base64,
-                tipo: file.type
-            };
-            // atualizar no array usuarios
-            const index = usuarios.findIndex(u => u.id === usuarioLogado.id);
-            if(index !== -1) {
-                usuarios[index].comprovanteObj = usuarioLogado.comprovanteObj;
-                salvarLocalStorage();
-            }
-            alert("✅ Comprovante enviado com sucesso!");
-            carregarDashboard();
-        };
-        leitor.readAsDataURL(file);
-    }
-
-    // compartilhar link
-    function compartilharWhatsApp() {
-        let linkAtual = encodeURIComponent(window.location.href);
-        let texto = `🤝 Participe do Ciclo de Ajuda Mútua! Apoie e seja apoiado. Faça seu cadastro:https://wal32.github.io/ciclodeajuda/`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
-    }
-
-    // logout
-    function logoutSistema() {
-        usuarioLogado = null;
-        voltarLogin();
-    }
-
-    // ---------- ADMIN ----------
-    function acessoAdmin() {
-        const senha = prompt("🔑 Chave de acesso administrativo:");
-        if(senha === "123456") {
-            esconderTelas();
-            document.getElementById("adminContainer").classList.remove("hidden");
-            renderAdminLista();
-        } else {
-            alert("Acesso negado.");
-        }
-    }
-
-    function sairAdmin() {
-        voltarLogin();
-    }
-
-    // renderizar admin com opção de anexar comprovante em cada participante
-    function renderAdminLista() {
-        const container = document.getElementById("adminListaUsuarios");
-        if(!container) return;
-        if(usuarios.length === 0) {
-            container.innerHTML = `<div class="card">Nenhum participante cadastrado ainda.</div>`;
-            return;
-        }
-        let html = "";
-        usuarios.forEach((user, idx) => {
-            // dados do comprovante existente
-            let infoComprovante = "📂 Nenhum comprovante";
-            let previewMini = "";
-            if(user.comprovanteObj && user.comprovanteObj.base64) {
-                const nomeFile = user.comprovanteObj.nomeArquivo;
-                infoComprovante = `📎 ${nomeFile}`;
-                if(user.comprovanteObj.tipo && user.comprovanteObj.tipo.startsWith("image/")) {
-                    previewMini = `<div><img src="${user.comprovanteObj.base64}" style="max-width:70px; max-height:50px; border-radius:8px; margin-top:6px;"></div>`;
-                } else {
-                    previewMini = `<div><a href="${user.comprovanteObj.base64}" target="_blank">🔗 Visualizar PDF/arquivo</a></div>`;
-                }
-            }
-            html += `
-                <div class="card card-admin" id="adminCard_${idx}">
-                    <div><strong>${user.nome}</strong> <span class="badge">${user.status}</span></div>
-                    <div class="user-info">💰 Pix: ${user.pix} | 📞 ${user.whatsapp}</div>
-                    <div class="user-info">📎 ${infoComprovante} ${previewMini}</div>
-                    <div style="margin: 8px 0;">
-                        <label style="font-size:0.8rem;">📎 Anexar novo comprovante para ${user.nome}:</label>
-                        <input type="file" id="adminFile_${idx}" accept="image/*,application/pdf" style="margin:4px 0; padding:6px;">
-                        <button onclick="adminAnexarComprovante(${idx})" style="background:#3b82f6; margin-top:4px;">⬆️ Salvar comprovante</button>
-                    </div>
-                    <div class="flex-buttons">
-                        <button onclick="adminAlterarStatus(${idx}, 'aprovado')" class="small-btn" style="background:#16a34a;">✔️ Aprovar</button>
-                        <button onclick="adminAlterarStatus(${idx}, 'reprovado')" class="small-btn" style="background:#dc2626;">❌ Reprovar</button>
-                        <button onclick="adminExcluirParticipante(${idx})" class="small-btn btn-danger">🗑️ Excluir</button>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    // Admin anexar comprovante para um participante específico (funcionalidade principal)
-    window.adminAnexarComprovante = function(indice) {
-        const fileInput = document.getElementById(`adminFile_${indice}`);
-        if(!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert("⚠️ Selecione um arquivo para anexar como comprovante.");
-            return;
-        }
-        const arquivo = fileInput.files[0];
-        if(arquivo.size > 2 * 1024 * 1024) {
-            alert("Arquivo muito grande (máx 2MB).");
-            return;
-        }
-        const leitor = new FileReader();
-        leitor.onload = function(e) {
-            const base64 = e.target.result;
-            usuarios[indice].comprovanteObj = {
-                nomeArquivo: arquivo.name,
-                base64: base64,
-                tipo: arquivo.type
-            };
-            salvarLocalStorage();
-            alert(`✅ Comprovante anexado para ${usuarios[indice].nome} com sucesso!`);
-            renderAdminLista();  // recarrega a lista admin
-            // se o usuário logado for o mesmo e estiver no dashboard, atualiza dashboard futuramente
-            if(usuarioLogado && usuarioLogado.id === usuarios[indice].id) {
-                usuarioLogado.comprovanteObj = usuarios[indice].comprovanteObj;
-                if(!document.getElementById("dashboardContainer").classList.contains("hidden")) carregarDashboard();
-            }
-        };
-        leitor.readAsDataURL(arquivo);
+    const novoUsuario = {
+      nome: nome,
+      pix: pix,
+      whatsapp: whats,
+      senha: senha,
+      status: "pendente",
+      comprovante: ""
     };
+    usuarios.push(novoUsuario);
+    salvarUsuarios();
+    alert("✅ Cadastro realizado com sucesso! Faça login para participar.");
+    // limpa campos
+    nomeEl.value = "";
+    pixEl.value = "";
+    whatsEl.value = "";
+    senhaEl.value = "";
+    voltarLogin();
+  }
 
-    window.adminAlterarStatus = function(indice, novoStatus) {
-        if(indice >= 0 && indice < usuarios.length) {
-            usuarios[indice].status = novoStatus;
-            salvarLocalStorage();
-            renderAdminLista();
-            // se o dashboard estiver aberto e o usuário atual for o mesmo, atualiza visão
-            if(usuarioLogado && usuarioLogado.id === usuarios[indice].id) {
-                usuarioLogado.status = novoStatus;
-                if(!document.getElementById("dashboardContainer").classList.contains("hidden")) carregarDashboard();
-            }
-            alert(`Status alterado para ${novoStatus.toUpperCase()}`);
-        }
-    };
+  function mostrarCadastro() {
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("cadastro").classList.remove("hidden");
+  }
 
-    window.adminExcluirParticipante = function(indice) {
-        if(confirm(`Tem certeza que deseja excluir ${usuarios[indice].nome} permanentemente?`)) {
-            const removidoId = usuarios[indice].id;
-            usuarios.splice(indice, 1);
-            salvarLocalStorage();
-            if(usuarioLogado && usuarioLogado.id === removidoId) {
-                logoutSistema();
-                alert("Sua conta foi removida pelo administrador.");
-            } else {
-                renderAdminLista();
-            }
-        }
-    };
+  function voltarLogin() {
+    document.getElementById("cadastro").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
+    document.getElementById("adminPanel").classList.add("hidden");
+  }
 
-    // garantia de sincronia para o dashboard quando admin atualiza algum comprovante
-    function sincronizarUsuarioLogado() {
-        if(usuarioLogado) {
-            const atualizado = usuarios.find(u => u.id === usuarioLogado.id);
-            if(atualizado) {
-                usuarioLogado = atualizado;
-            } else {
-                usuarioLogado = null;
-                if(!document.getElementById("loginContainer").classList.contains("hidden") === false) voltarLogin();
-            }
-        }
+  // ---------- FUNÇÃO DE UPLOAD (comprovante) ----------
+  function uploadComprovante() {
+    if (!usuarioLogado) return;
+    const fileInput = document.getElementById("comprovante");
+    if (!fileInput.files || fileInput.files.length === 0) {
+      alert("Selecione um arquivo de comprovante (imagem ou PDF).");
+      return;
     }
+    const arquivo = fileInput.files[0];
+    // armazena apenas nome do arquivo (simulação, poderia ser convertido em base64, mas mantém funcionalidade simples)
+    usuarioLogado.comprovante = arquivo.name;
+    // encontrar índice e atualizar no array
+    const index = usuarios.findIndex(u => u.nome === usuarioLogado.nome && u.senha === usuarioLogado.senha);
+    if (index !== -1) {
+      usuarios[index].comprovante = arquivo.name;
+      salvarUsuarios();
+      alert(`📎 Comprovante "${arquivo.name}" anexado com sucesso! O administrador poderá visualizar o envio.`);
+    } else {
+      alert("Erro ao salvar comprovante, tente novamente.");
+    }
+    fileInput.value = ""; // limpa input
+  }
 
-    // funções globais
-    window.fazerLogin = fazerLogin;
-    window.mostrarPainelCadastro = mostrarPainelCadastro;
-    window.registrarUsuario = registrarUsuario;
-    window.voltarLogin = voltarLogin;
-    window.uploadMeuComprovante = uploadMeuComprovante;
-    window.compartilharWhatsApp = compartilharWhatsApp;
-    window.logoutSistema = logoutSistema;
-    window.acessoAdmin = acessoAdmin;
-    window.sairAdmin = sairAdmin;
+  // ---------- COMPARTILHAMENTO: link de cadastro atualizado (wal32.github.io) ----------
+  function compartilharWhatsApp() {
+    // Link oficial de cadastro solicitado na tarefa
+    const linkCadastro = "https://wal32.github.io/ciclodeajuda/";
+    const mensagem = `🌟 Participe do ciclo de ajuda colaborativa! Faça seu cadastro através do link oficial: ${linkCadastro}`;
+    const urlWhats = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
+    window.open(urlWhats, '_blank');
+  }
 
-    // Inicializar sistema
-    carregarLocalStorage();
-    sincronizarUsuarioLogado();
-    // já exibe tela de login com logo e nome "Ciclo de Ajuda Mútua" - conforme solicitado
-    esconderTelas();
-    document.getElementById("loginContainer").classList.remove("hidden");
+  // função 'indicar' mantida compatibilidade, mas usamos compartilharWhatsApp
+  window.indicar = compartilharWhatsApp;
 
-    // fix para garantir que ao re-render admin após ações, os eventos dinamicos mantenham referencias (tudo global)
-    // também ao abrir dashboard estando logado e admin atualizar comprovante, mantém sincronia
-    setInterval(() => {
-        if(!document.getElementById("dashboardContainer").classList.contains("hidden") && usuarioLogado) {
-            const fresh = usuarios.find(u => u.id === usuarioLogado.id);
-            if(fresh && JSON.stringify(fresh.comprovanteObj) !== JSON.stringify(usuarioLogado.comprovanteObj)) {
-                usuarioLogado = fresh;
-                carregarDashboard();
-            } else if(fresh && fresh.status !== usuarioLogado.status) {
-                usuarioLogado = fresh;
-                carregarDashboard();
-            }
+  // ---------- LOGOUT ----------
+  function logoutSistema() {
+    usuarioLogado = null;
+    // limpar campos login
+    document.getElementById("loginNome").value = "";
+    document.getElementById("loginSenha").value = "";
+    document.getElementById("dashboard").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
+    // recarrega lista admin se estiver visível? esconder painel admin
+    document.getElementById("adminPanel").classList.add("hidden");
+  }
+
+  // ---------- ADMIN (senha fixa 123456) ----------
+  function acessoAdmin() {
+    const senhaAdmin = prompt("🔐 Digite a senha de administrador:");
+    if (senhaAdmin === "123456") {
+      document.getElementById("login").classList.add("hidden");
+      document.getElementById("adminPanel").classList.remove("hidden");
+      renderAdminPanel();
+    } else if (senhaAdmin !== null) {
+      alert("Senha incorreta. Acesso negado.");
+    }
+  }
+
+  function renderAdminPanel() {
+    const adminDiv = document.getElementById("adminLista");
+    if (!adminDiv) return;
+    if (usuarios.length === 0) {
+      adminDiv.innerHTML = `<div class="card">Nenhum participante cadastrado ainda.</div>`;
+      return;
+    }
+    let html = "";
+    usuarios.forEach((user, idx) => {
+      const comprovanteInfo = user.comprovante ? `📄 Comprovante: ${escapeHtml(user.comprovante)}` : "📂 Sem comprovante anexado";
+      html += `
+        <div class="card">
+          <strong>${escapeHtml(user.nome)}</strong><br>
+          📧 Pix: ${escapeHtml(user.pix)}<br>
+          📞 WhatsApp: ${escapeHtml(user.whatsapp)}<br>
+          🏷 Status: <strong>${user.status === "aprovado" ? "APROVADO" : (user.status === "reprovado" ? "REPROVADO" : "PENDENTE")}</strong><br>
+          <small>${comprovanteInfo}</small>
+          <div class="button-group">
+            <button class="btn-aprovar" onclick="aprovarParticipante(${idx})">✅ Aprovar</button>
+            <button class="btn-reprovar" onclick="reprovarParticipante(${idx})">⚠️ Reprovar</button>
+            <button class="btn-excluir" onclick="excluirParticipante(${idx})">🗑 Excluir</button>
+          </div>
+        </div>`;
+    });
+    adminDiv.innerHTML = html;
+  }
+
+  function aprovarParticipante(indice) {
+    if (indice >= 0 && indice < usuarios.length) {
+      usuarios[indice].status = "aprovado";
+      salvarUsuarios();
+      renderAdminPanel();
+      // se o usuário aprovado for o mesmo que está logado, atualiza painel dele também
+      if (usuarioLogado && usuarioLogado.nome === usuarios[indice].nome) {
+        usuarioLogado.status = "aprovado";
+        carregarDashboardCompleto();
+      }
+    }
+  }
+
+  function reprovarParticipante(indice) {
+    if (indice >= 0 && indice < usuarios.length) {
+      usuarios[indice].status = "reprovado";
+      salvarUsuarios();
+      renderAdminPanel();
+      if (usuarioLogado && usuarioLogado.nome === usuarios[indice].nome) {
+        usuarioLogado.status = "reprovado";
+        carregarDashboardCompleto();
+      }
+    }
+  }
+
+  function excluirParticipante(indice) {
+    if (indice >= 0 && indice < usuarios.length) {
+      const nomeExcluido = usuarios[indice].nome;
+      if (confirm(`Tem certeza que deseja EXCLUIR permanentemente o participante "${nomeExcluido}"?`)) {
+        usuarios.splice(indice, 1);
+        salvarUsuarios();
+        renderAdminPanel();
+        // se o usuário deletado for o que está logado, desloga automaticamente
+        if (usuarioLogado && usuarioLogado.nome === nomeExcluido) {
+          alert("Sua conta foi removida pelo administrador. Você será desconectado.");
+          logoutSistema();
+        } else {
+          // pode ser que a lista de participantes do dashboard mude
+          if (usuarioLogado) atualizarListaParticipantes();
         }
-    }, 800);
+      }
+    }
+  }
+
+  function sairAdmin() {
+    document.getElementById("adminPanel").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
+    // se existir usuarioLogado, manter? melhor resetar o usuario logado por segurança
+    if (usuarioLogado) {
+      usuarioLogado = null;
+    }
+    // limpar campos de login
+    document.getElementById("loginNome").value = "";
+    document.getElementById("loginSenha").value = "";
+  }
+
+  // ----- garantir que os nomes das funções chamadas via onclick estejam no escopo global -----
+  window.logarUsuario = logarUsuario;
+  window.mostrarCadastro = mostrarCadastro;
+  window.cadastrarUsuario = cadastrarUsuario;
+  window.voltarLogin = voltarLogin;
+  window.uploadComprovante = uploadComprovante;
+  window.compartilharWhatsApp = compartilharWhatsApp;
+  window.logoutSistema = logoutSistema;
+  window.acessoAdmin = acessoAdmin;
+  window.aprovarParticipante = aprovarParticipante;
+  window.reprovarParticipante = reprovarParticipante;
+  window.excluirParticipante = excluirParticipante;
+  window.sairAdmin = sairAdmin;
+  
+  // função legada 'indicar' e 'admin' compatível com o código original
+  window.admin = acessoAdmin;
+  window.indicar = compartilharWhatsApp;
+
+  // (Opcional) ao iniciar, garantir que arrays antigos tenham campo status
+  function migrarDadosAntigos() {
+    let alterado = false;
+    for (let i = 0; i < usuarios.length; i++) {
+      if (!usuarios[i].status) {
+        usuarios[i].status = "pendente";
+        alterado = true;
+      }
+      if (!usuarios[i].comprovante) {
+        usuarios[i].comprovante = "";
+        alterado = true;
+      }
+    }
+    if (alterado) salvarUsuarios();
+  }
+  migrarDadosAntigos();
+
+  // se o usuário estava logado antes (recarregou acidental), resetamos estado da interface
+  if (usuarioLogado) {
+    usuarioLogado = null;
+  }
+  // garantir que ao recarregar a página, apenas login esteja visível
+  document.getElementById("login").classList.remove("hidden");
+  document.getElementById("cadastro").classList.add("hidden");
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("adminPanel").classList.add("hidden");
 </script>
-<footer style="text-align:center; margin-top: 20px; color:#475569; font-size:12px;">
-    🤝 Ciclo de Ajuda Mútua — confiança e apoio coletivo
-</footer>
 </body>
 </html>
+           
+           
+            
+   
+            
