@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Ciclo de Ajuda Mútua</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1120 0%, #0f172a 100%);
+            min-height: 100vh;
+            padding: 24px 16px 40px;
+        }
+
+        /* containers */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* logo + título */
+        .hero-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo-icon {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            width: 70px;
+            height: 70px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 20px -5px rgba(34,197,94,0.3);
+        }
+        .logo-icon span {
+            font-size: 2.8rem;
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #e2e8f0, #86efac);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .sub {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+
+        /* cards e inputs */
+        .card {
+            background: #1e293b;
+            border-radius: 1.2rem;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #22c55e;
+            transition: 0.1s;
+            word-break: break-word;
+        }
+        .card-admin {
+            border-left-color: #f59e0b;
+        }
+        input, button, .file-label {
+            width: 100%;
+            padding: 12px 14px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 1.2rem;
+            font-size: 1rem;
+            transition: 0.2s;
+            outline: none;
+        }
+        input {
+            background: #0f172a;
+            color: #f1f5f9;
+            border: 1px solid #334155;
+        }
+        input:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
+        }
+        button {
+            background: #22c55e;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: none;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        .btn-outline {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        .btn-danger {
+            background: #ef4444;
+        }
+        .btn-warning {
+            background: #f97316;
+        }
+        .small-btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            width: auto;
+            margin: 4px;
+        }
+        .flex-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .comprovante-link {
+            background: #0f172a;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #86efac;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 4px 0 0;
+        }
+        hr {
+            border-color: #334155;
+            margin: 12px 0;
+        }
+        .badge {
+            background: #0f172a;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-left: 8px;
+            color: #cbd5e1;
+        }
+        .status-aprovado { color: #4ade80; font-weight: bold; }
+        .status-pendente { color: #facc15; }
+        .status-reprovado { color: #f87171; }
+        .user-info {
+            font-size: 0.9rem;
+        }
+        a {
+            color: #86efac;
+        }
+        .file-input-custom {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: #475569;
+        }
+        h2, h3 {
+            margin: 0.8rem 0 0.4rem;
+            font-weight: 600;
+        }
+        h2 { font-size: 1.6rem; }
+        h3 { font-size: 1.2rem; border-left: 3px solid #22c55e; padding-left: 12px; margin-top: 1rem; }
+        .logo-mini {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TELA DE LOGIN (com logo e nome) -->
+<div id="loginContainer" class="container">
+    <div class="hero-logo">
+        <div class="logo-icon">
+            <span>🤝</span>
+        </div>
+        <h1>Ciclo de Ajuda Mútua</h1>
+        <div class="sub">solidariedade que transforma</div>
+    </div>
+    <input type="text" id="loginNomeInput" placeholder="Seu nome completo" autocomplete="off">
+    <input type="password" id="loginSenhaInput" placeholder="Senha">
+    <button onclick="fazerLogin()">🔐 Entrar na rede</button>
+    <button onclick="mostrarPainelCadastro()" class="btn-outline">📝 Criar Conta</button>
+    <button onclick="acessoAdmin()" class="btn-outline" style="background:#475569;">🛡️ Admin</button>
+</div>
+
+<!-- TELA DE CADASTRO -->
+<div id="cadastroContainer" class="container hidden">
+    <div class="hero-logo" style="margin-bottom: 1rem;">
+        <span style="font-size:2rem;">🙌</span>
+        <h2>Nova adesão</h2>
+    </div>
+    <input type="text" id="cadNome" placeholder="Nome completo">
+    <input type="text" id="cadPix" placeholder="Chave Pix (e-mail ou telefone)">
+    <input type="text" id="cadWhats" placeholder="WhatsApp com DDD">
+    <input type="password" id="cadSenha" placeholder="Crie uma senha">
+    <button onclick="registrarUsuario()">📌 Cadastrar</button>
+    <button onclick="voltarLogin()" class="btn-outline">← Voltar</button>
+    <div class="sub" style="text-align:center; margin-top:12px;">* Limite máximo de 10 participantes ativos</div>
+</div>
+
+<!-- PAINEL DO PARTICIPANTE (USUÁRIO) -->
+<div id="dashboardContainer" class="container hidden">
+    <div class="hero-logo" style="margin-bottom: 0.2rem;">
+        <span style="font-size: 1.8rem;">🤝</span>
+        <h2 style="font-size:1.5rem;">Minha ajuda</h2>
+    </div>
+    <div id="userInfoCard"></div>
+
+    <h3>📎 Meu comprovante</h3>
+    <div id="meuComprovanteArea" class="card" style="background:#0f172a;"></div>
+    <input type="file" id="userComprovanteFile" accept="image/*,application/pdf">
+    <button onclick="uploadMeuComprovante()">⬆️ Enviar comprovante</button>
+    
+    <h3>👥 Participantes da roda</h3>
+    <div id="listaParticipantes"></div>
+
+    <h3>📢 Indique um amigo</h3>
+    <button onclick="compartilharWhatsApp()">📱 Compartilhar no WhatsApp</button>
+    
+    <button onclick="logoutSistema()" class="btn-outline" style="margin-top: 20px; background:#dc2626;">🚪 Sair</button>
+</div>
+
+<!-- PAINEL ADMINISTRADOR -->
+<div id="adminContainer" class="container hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0;">🛡️ Admin</h2>
+        <button onclick="sairAdmin()" class="small-btn" style="width:auto;">Sair</button>
+    </div>
+    <div id="adminListaUsuarios"></div>
+</div>
+
+<script>
+    // ---------- ESTRUTURA DE DADOS ----------
+    let usuarios = [];      // array de objetos
+    let usuarioLogado = null;   // guarda referência do usuário ativo
+
+    // Carrega dados salvos
+    function carregarLocalStorage() {
+        const dados = localStorage.getItem("ciclo_ajuda");
+        if(dados) {
+            usuarios = JSON.parse(dados);
+        } else {
+            // dados iniciais exemplo (vazio, mas admin pode criar)
+            usuarios = [];
+        }
+        // garantir que todo usuário tenha campo comprovanteObj (para compatibilidade)
+        usuarios.forEach(u => {
+            if(!u.comprovanteObj) u.comprovanteObj = null;
+            if(!u.status) u.status = "pendente";
+        });
+        salvarLocalStorage();
+    }
+
+    function salvarLocalStorage() {
+        localStorage.setItem("ciclo_ajuda", JSON.stringify(usuarios));
+    }
+
+    // helpers DOM
+    function esconderTelas() {
+        document.getElementById("loginContainer").classList.add("hidden");
+        document.getElementById("cadastroContainer").classList.add("hidden");
+        document.getElementById("dashboardContainer").classList.add("hidden");
+        document.getElementById("adminContainer").classList.add("hidden");
+    }
+
+    function voltarLogin() {
+        esconderTelas();
+        document.getElementById("loginContainer").classList.remove("hidden");
+        document.getElementById("loginNomeInput").value = "";
+        document.getElementById("loginSenhaInput").value = "";
+    }
+
+    function mostrarPainelCadastro() {
+        esconderTelas();
+        document.getElementById("cadastroContainer").classList.remove("hidden");
+    }
+
+    // ---------- CADASTRO (limite 10) ----------
+    function registrarUsuario() {
+        const nome = document.getElementById("cadNome").value.trim();
+        const pix = document.getElementById("cadPix").value.trim();
+        const whats = document.getElementById("cadWhats").value.trim();
+        const senha = document.getElementById("cadSenha").value;
+
+        if(!nome || !pix || !whats || !senha) {
+            alert("❌ Preencha todos os campos!");
+            return;
+        }
+        if(usuarios.length >= 10) {
+            alert("⚠️ Limite de 10 participantes atingido. Aguarde liberação de vaga.");
+            return;
+        }
+        if(usuarios.some(u => u.nome.toLowerCase() === nome.toLowerCase())) {
+            alert("Nome já cadastrado! Escolha outro.");
+            return;
+        }
+
+        const novoUsuario = {
+            id: Date.now(),
+            nome: nome,
+            pix: pix,
+            whatsapp: whats,
+            senha: senha,
+            status: "pendente",
+            comprovanteObj: null,   // { nomeArquivo, base64, tipo }
+        };
+        usuarios.push(novoUsuario);
+        salvarLocalStorage();
+        alert("✅ Cadastro realizado com sucesso! Aguarde aprovação do admin.");
+        voltarLogin();
+    }
+
+    // ---------- LOGIN ----------
+    function fazerLogin() {
+        const nomeLogin = document.getElementById("loginNomeInput").value.trim();
+        const senhaLogin = document.getElementById("loginSenhaInput").value;
+        const encontrado = usuarios.find(u => u.nome === nomeLogin && u.senha === senhaLogin);
+        if(encontrado) {
+            usuarioLogado = encontrado;
+            esconderTelas();
+            document.getElementById("dashboardContainer").classList.remove("hidden");
+            carregarDashboard();
+        } else {
+            alert("❌ Nome ou senha incorretos.");
+        }
+    }
+
+    // ---------- DASHBOARD (participante) ----------
+    function carregarDashboard() {
+        if(!usuarioLogado) return;
+        const userDiv = document.getElementById("userInfoCard");
+        userDiv.innerHTML = `
+            <div class="card">
+                <strong>✨ ${usuarioLogado.nome}</strong> <span class="badge">${usuarioLogado.status === "aprovado" ? "✓ Aprovado" : (usuarioLogado.status === "reprovado" ? "✗ Reprovado" : "⏳ Pendente")}</span><br>
+                <span>💰 Pix: ${usuarioLogado.pix}</span><br>
+                <span>📱 WhatsApp: ${usuarioLogado.whatsapp}</span>
+            </div>
+        `;
+        // mostrar comprovante atual do usuário logado
+        const compArea = document.getElementById("meuComprovanteArea");
+        if(usuarioLogado.comprovanteObj && usuarioLogado.comprovanteObj.base64) {
+            const tipo = usuarioLogado.comprovanteObj.tipo || "";
+            const nomeArq = usuarioLogado.comprovanteObj.nomeArquivo || "comprovante";
+            let preview = "";
+            if(tipo.startsWith("image/")) {
+                preview = `<img src="${usuarioLogado.comprovanteObj.base64}" style="max-width:100%; max-height:120px; border-radius:12px; margin-top:6px;">`;
+            }
+            compArea.innerHTML = `
+                <div>📄 <strong>${nomeArq}</strong></div>
+                ${preview}
+                <div><a href="${usuarioLogado.comprovanteObj.base64}" target="_blank" class="comprovante-link">🔍 Visualizar completo</a></div>
+            `;
+        } else {
+            compArea.innerHTML = `<div style="color:#94a3b8;">Nenhum comprovante anexado ainda.</div>`;
+        }
+
+        // lista de participantes (todos)
+        const listaDiv = document.getElementById("listaParticipantes");
+        listaDiv.innerHTML = "";
+        usuarios.forEach(u => {
+            let statusText = "";
+            if(u.status === "aprovado") statusText = "<span class='status-aprovado'>aprovado</span>";
+            else if(u.status === "reprovado") statusText = "<span class='status-reprovado'>reprovado</span>";
+            else statusText = "<span class='status-pendente'>pendente</span>";
+            listaDiv.innerHTML += `
+                <div class="card">
+                    <strong>${u.nome}</strong> <span class="badge">${statusText}</span>
+                </div>
+            `;
+        });
+    }
+
+    // usuário faz upload do próprio comprovante (base64)
+    function uploadMeuComprovante() {
+        if(!usuarioLogado) return;
+        const fileInput = document.getElementById("userComprovanteFile");
+        const file = fileInput.files[0];
+        if(!file) {
+            alert("Selecione um arquivo (imagem ou PDF).");
+            return;
+        }
+        if(file.size > 2 * 1024 * 1024) {
+            alert("Arquivo muito grande! Máximo 2MB.");
+            return;
+        }
+        const leitor = new FileReader();
+        leitor.onload = function(e) {
+            const base64 = e.target.result;
+            usuarioLogado.comprovanteObj = {
+                nomeArquivo: file.name,
+                base64: base64,
+                tipo: file.type
+            };
+            // atualizar no array usuarios
+            const index = usuarios.findIndex(u => u.id === usuarioLogado.id);
+            if(index !== -1) {
+                usuarios[index].comprovanteObj = usuarioLogado.comprovanteObj;
+                salvarLocalStorage();
+            }
+            alert("✅ Comprovante enviado com sucesso!");
+            carregarDashboard();
+        };
+        leitor.readAsDataURL(file);
+    }
+
+    // compartilhar link
+    function compartilharWhatsApp() {
+        let linkAtual = encodeURIComponent(window.location.href);
+        let texto = `🤝 Participe do Ciclo de Ajuda Mútua! Apoie e seja apoiado. Faça seu cadastro:https://sites.google.com/view/ciclo-ajuda-mutua/inicio`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
+    }
+
+    // logout
+    function logoutSistema() {
+        usuarioLogado = null;
+        voltarLogin();
+    }
+
+    // ---------- ADMIN ----------
+    function acessoAdmin() {
+        const senha = prompt("🔑 Chave de acesso administrativo:");
+        if(senha === "123456") {
+            esconderTelas();
+            document.getElementById("adminContainer").classList.remove("hidden");
+            renderAdminLista();
+        } else {
+            alert("Acesso negado.");
+        }
+    }
+
+    function sairAdmin() {
+        voltarLogin();
+    }
+
+    // renderizar admin com opção de anexar comprovante em cada participante
+    function renderAdminLista() {
+        const container = document.getElementById("adminListaUsuarios");
+        if(!container) return;
+        if(usuarios.length === 0) {
+            container.innerHTML = `<div class="card">Nenhum participante cadastrado ainda.</div>`;
+            return;
+        }
+        let html = "";
+        usuarios.forEach((user, idx) => {
+            // dados do comprovante existente
+            let infoComprovante = "📂 Nenhum comprovante";
+            let previewMini = "";
+            if(user.comprovanteObj && user.comprovanteObj.base64) {
+                const nomeFile = user.comprovanteObj.nomeArquivo;
+                infoComprovante = `📎 ${nomeFile}`;
+                if(user.comprovanteObj.tipo && user.comprovanteObj.tipo.startsWith("image/")) {
+                    previewMini = `<div><img src="${user.comprovanteObj.base64}" style="max-width:70px; max-height:50px; border-radius:8px; margin-top:6px;"></div>`;
+                } else {
+                    previewMini = `<div><a href="${user.comprovanteObj.base64}" target="_blank">🔗 Visualizar PDF/arquivo</a></div>`;
+                }
+            }
+            html += `
+                <div class="card card-admin" id="adminCard_${idx}">
+                    <div><strong>${user.nome}</strong> <span class="badge">${user.status}</span></div>
+                    <div class="user-info">💰 Pix: ${user.pix} | 📞 ${user.whatsapp}</div>
+                    <div class="user-info">📎 ${infoComprovante} ${previewMini}</div>
+                    <div style="margin: 8px 0;">
+                        <label style="font-size:0.8rem;">📎 Anexar novo comprovante para ${user.nome}:</label>
+                        <input type="file" id="adminFile_${idx}" accept="image/*,application/pdf" style="margin:4px 0; padding:6px;">
+                        <button onclick="adminAnexarComprovante(${idx})" style="background:#3b82f6; margin-top:4px;">⬆️ Salvar comprovante</button>
+                    </div>
+                    <div class="flex-buttons">
+                        <button onclick="adminAlterarStatus(${idx}, 'aprovado')" class="small-btn" style="background:#16a34a;">✔️ Aprovar</button>
+                        <button onclick="adminAlterarStatus(${idx}, 'reprovado')" class="small-btn" style="background:#dc2626;">❌ Reprovar</button>
+                        <button onclick="adminExcluirParticipante(${idx})" class="small-btn btn-danger">🗑️ Excluir</button>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    // Admin anexar comprovante para um participante específico (funcionalidade principal)
+    window.adminAnexarComprovante = function(indice) {
+        const fileInput = document.getElementById(`adminFile_${indice}`);
+        if(!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            alert("⚠️ Selecione um arquivo para anexar como comprovante.");
+            return;
+        }
+        const arquivo = fileInput.files[0];
+        if(arquivo.size > 2 * 1024 * 1024) {
+            alert("Arquivo muito grande (máx 2MB).");
+            return;
+        }
+        const leitor = new FileReader();
+        leitor.onload = function(e) {
+            const base64 = e.target.result;
+            usuarios[indice].comprovanteObj = {
+                nomeArquivo: arquivo.name,
+                base64: base64,
+                tipo: arquivo.type
+            };
+            salvarLocalStorage();
+            alert(`✅ Comprovante anexado para ${usuarios[indice].nome} com sucesso!`);
+            renderAdminLista();  // recarrega a lista admin
+            // se o usuário logado for o mesmo e estiver no dashboard, atualiza dashboard futuramente
+            if(usuarioLogado && usuarioLogado.id === usuarios[indice].id) {
+                usuarioLogado.comprovanteObj = usuarios[indice].comprovanteObj;
+                if(!document.getElementById("dashboardContainer").classList.contains("hidden")) carregarDashboard();
+            }
+        };
+        leitor.readAsDataURL(arquivo);
+    };
+
+    window.adminAlterarStatus = function(indice, novoStatus) {
+        if(indice >= 0 && indice < usuarios.length) {
+            usuarios[indice].status = novoStatus;
+            salvarLocalStorage();
+            renderAdminLista();
+            // se o dashboard estiver aberto e o usuário atual for o mesmo, atualiza visão
+            if(usuarioLogado && usuarioLogado.id === usuarios[indice].id) {
+                usuarioLogado.status = novoStatus;
+                if(!document.getElementById("dashboardContainer").classList.contains("hidden")) carregarDashboard();
+            }
+            alert(`Status alterado para ${novoStatus.toUpperCase()}`);
+        }
+    };
+
+    window.adminExcluirParticipante = function(indice) {
+        if(confirm(`Tem certeza que deseja excluir ${usuarios[indice].nome} permanentemente?`)) {
+            const removidoId = usuarios[indice].id;
+            usuarios.splice(indice, 1);
+            salvarLocalStorage();
+            if(usuarioLogado && usuarioLogado.id === removidoId) {
+                logoutSistema();
+                alert("Sua conta foi removida pelo administrador.");
+            } else {
+                renderAdminLista();
+            }
+        }
+    };
+
+    // garantia de sincronia para o dashboard quando admin atualiza algum comprovante
+    function sincronizarUsuarioLogado() {
+        if(usuarioLogado) {
+            const atualizado = usuarios.find(u => u.id === usuarioLogado.id);
+            if(atualizado) {
+                usuarioLogado = atualizado;
+            } else {
+                usuarioLogado = null;
+                if(!document.getElementById("loginContainer").classList.contains("hidden") === false) voltarLogin();
+            }
+        }
+    }
+
+    // funções globais
+    window.fazerLogin = fazerLogin;
+    window.mostrarPainelCadastro = mostrarPainelCadastro;
+    window.registrarUsuario = registrarUsuario;
+    window.voltarLogin = voltarLogin;
+    window.uploadMeuComprovante = uploadMeuComprovante;
+    window.compartilharWhatsApp = compartilharWhatsApp;
+    window.logoutSistema = logoutSistema;
+    window.acessoAdmin = acessoAdmin;
+    window.sairAdmin = sairAdmin;
+
+    // Inicializar sistema
+    carregarLocalStorage();
+    sincronizarUsuarioLogado();
+    // já exibe tela de login com logo e nome "Ciclo de Ajuda Mútua" - conforme solicitado
+    esconderTelas();
+    document.getElementById("loginContainer").classList.remove("hidden");
+
+    // fix para garantir que ao re-render admin após ações, os eventos dinamicos mantenham referencias (tudo global)
+    // também ao abrir dashboard estando logado e admin atualizar comprovante, mantém sincronia
+    setInterval(() => {
+        if(!document.getElementById("dashboardContainer").classList.contains("hidden") && usuarioLogado) {
+            const fresh = usuarios.find(u => u.id === usuarioLogado.id);
+            if(fresh && JSON.stringify(fresh.comprovanteObj) !== JSON.stringify(usuarioLogado.comprovanteObj)) {
+                usuarioLogado = fresh;
+                carregarDashboard();
+            } else if(fresh && fresh.status !== usuarioLogado.status) {
+                usuarioLogado = fresh;
+                carregarDashboard();
+            }
+        }
+    }, 800);
+</script>
+<footer style="text-align:center; margin-top: 20px; color:#475569; font-size:12px;">
+    🤝 Ciclo de Ajuda Mútua — confiança e apoio coletivo
+</footer>
+</body>
+</html>
