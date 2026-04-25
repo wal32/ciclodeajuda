@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Ciclo de Ajuda Mútua | Sistema de Doações</title>
+<title>Ciclo de Ajuda Mútua | Sistema de Doações </title>
 <style>
   * {
     margin: 0;
@@ -174,8 +174,8 @@
 
 <!-- LOGIN -->
 <div class="container" id="login">
-  <h2>✨ Ciclo de Ajuda Mútua | Sistema de Doações</h2>
-  <p style="margin-bottom: 12px;">🌍 Sistema global de doações</p>
+  <h2>✨ Ciclo de Ajuda Mútua | Doações Ilimitadas</h2>
+  <p style="margin-bottom: 12px;">🌍 Sistema global com ADMIN na frente até a 10ª geração</p>
   <input type="text" id="loginWhatsapp" placeholder="WhatsApp (com DDD)" autocomplete="off">
   <input type="password" id="loginSenha" placeholder="Senha">
   <button onclick="logarUsuario()">Entrar</button>
@@ -183,7 +183,7 @@
     <button class="secondary" onclick="mostrarCadastro()">📝 Cadastrar</button>
     <button class="secondary" onclick="acessoAdmin()">🔐 Admin</button>
   </div>
-  <div class="info-link">💰 O cadastrado recebe R$20 de CADA novo membro até a 10ª geração. Após o nível 10, você sai da fila e os indicadores passam a receber.</div>
+  <div class="info-link">💰 ADMIN recebe R$20 de CADA novo membro até a 10ª geração. Após o nível 10, o ADMIN sai da fila e os indicadores passam a receber.</div>
   <button class="download-apk" onclick="baixarApk()">📲 Baixar APK (Android)</button>
   <div class="small-reset" onclick="limparCacheComSenha()">🗑️ Limpar cache (admin)</div>
 </div>
@@ -222,7 +222,7 @@
   </div>
   <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
 
-  <h3>📎 Comprovante (opcional)</h3>
+  <h3>📎 Comprovante (obrigatório para aprovação)</h3>
   <input type="file" id="comprovante" accept="image/*">
   <button onclick="uploadComprovante()">Enviar comprovante</button>
 
@@ -246,11 +246,11 @@
     <button class="secondary" onclick="sairAdmin()">◀ Voltar</button>
     <button class="danger" onclick="resetCompletoSistema()">🔥 LIMPAR TODOS OS DADOS</button>
   </div>
-  <div class="info-link">📌 ADMIN configurado: nome "🌟 ADMIN GLOBAL", recebe R$20 de todos os cadastros até a 10ª geração. Após o nível 10, sai da fila automaticamente.</div>
+  <div class="info-link">📌 ADMIN configurado: nome "🌟 ADMIN GLOBAL", recebe R$20 de todos os cadastros até a 10ª geração. Após o nível 20, sai da fila automaticamente.</div>
 </div>
 
 <script>
-  // ---------- SISTEMA ILIMITADO COM ADMIN NA FRENTE ATÉ 10ª GERAÇÃO ----------
+  // ---------- SISTEMA ILIMITADO COM ADMIN NA FRENTE ATÉ 20ª GERAÇÃO ----------
   let usuarios = [];
   let usuarioLogado = null;
   let refParam = null;
@@ -258,9 +258,9 @@
   // CONSTANTES
   const ADMIN_CODIGO = "ADMIN_GLOBAL_2025";
   const ADMIN_NOME = "🌟 ADMIN GLOBAL";
-  const ADMIN_WHATS = "41988228676";
+  const ADMIN_WHATS = "admin@sistema.com";
   const ADMIN_SENHA = "admin123";
-  const ADMIN_PIX = "41988228676";
+  const ADMIN_PIX = "admin@doacoesilimitadas.com";
 
   // Carrega dados do localStorage e garante existência do ADMIN
   function carregarUsuariosDoStorage() {
@@ -326,6 +326,7 @@
       if (!u.whatsapp) u.whatsapp = "";
       if (!u.pix) u.pix = "";
       if (!u.senha) u.senha = "";
+      if (!u.comprovante) u.comprovante = "";
     }
     if (mudou) salvarUsuariosNoStorage();
   }
@@ -601,13 +602,15 @@
     const file = document.getElementById("comprovante").files[0];
     if (!file) { alert("Selecione um arquivo."); return; }
     if (usuarioLogado) {
+      // Salva apenas o nome do arquivo (simulação). Em produção, seria upload para servidor.
       usuarioLogado.comprovante = file.name;
       const idx = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
       if (idx !== -1) usuarios[idx].comprovante = file.name;
       salvarUsuariosNoStorage();
-      alert("Comprovante anexado com sucesso.");
+      alert("Comprovante anexado com sucesso! Aguarde a aprovação do administrador.");
     }
     document.getElementById("comprovante").value = "";
+    recarregarDashboard(); // atualiza a tela
   }
 
   function compartilharWhatsApp() {
@@ -672,10 +675,12 @@
       let totalRecebido = 0;
       if (u.transactions) totalRecebido = u.transactions.reduce((s, t) => s + t.valor, 0);
       const posTexto = (u.positions || []).map((p, i) => `${i + 1}:${p ? escapeHtml(p) : 'vaga'}`).join(" | ");
+      const comprovanteStatus = u.comprovante ? "📎 Sim" : "❌ Não";
       html += `<div class="card">
         <strong>${escapeHtml(u.nome)}</strong> (${u.codigo}) | Nível: ${u.nivel}<br>
         WhatsApp: ${escapeHtml(u.whatsapp)}<br>
         Pix: ${escapeHtml(u.pix)} | Status: ${u.status}<br>
+        Comprovante: ${comprovanteStatus}<br>
         Fila: ${posTexto || "vazia"}<br>
         Recebido: R$ ${totalRecebido.toFixed(2)}<br>
         Indicado por: ${u.indicadoPorNome || '—'}<br>
@@ -689,10 +694,22 @@
     div.innerHTML = html;
   }
 
+  // 🔒 TRAVA DE APROVAÇÃO: só permite aprovar se comprovante estiver enviado
   function aprovar(i) {
     carregarUsuariosDoStorage();
-    if (usuarios[i]) { usuarios[i].status = "aprovado"; salvarUsuariosNoStorage(); renderAdmin(); if (usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status = "aprovado"; }
+    const usuario = usuarios[i];
+    if (!usuario.comprovante || usuario.comprovante.trim() === "") {
+      alert("❌ Não é possível aprovar: participante não enviou comprovante.");
+      return;
+    }
+    usuarios[i].status = "aprovado";
+    salvarUsuariosNoStorage();
+    renderAdmin();
+    if (usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) {
+      usuarioLogado.status = "aprovado";
+    }
   }
+
   function reprovar(i) {
     carregarUsuariosDoStorage();
     if (usuarios[i]) { usuarios[i].status = "reprovado"; salvarUsuariosNoStorage(); renderAdmin(); if (usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status = "reprovado"; }
@@ -732,11 +749,7 @@
     else alert("Ação cancelada.");
   }
 
-  function baixarApk() {
-    alert("📱 APK disponível em breve no repositório oficial:\nhttps://github.com/seu-usuario/ciclo-ajuda-mutua/releases\n\nCrie seu repositório, faça upload deste HTML como index.html, ative o GitHub Pages e gere um APK com ferramentas como PWA2APK ou Bubblewrap.");
-    window.open("https://github.com", "_blank");
-  }
-
+  
   // INICIALIZAÇÃO
   carregarUsuariosDoStorage();
 
@@ -780,36 +793,3 @@
 </script>
 </body>
 </html>
-
-   
-    
-   
- 
- 
-
-    
-
-  
-   
-   
- 
-       
-       
-    
-  
-  
-    
-    
-  
-     
-   
-     
-     
-    
- 
- 
-   
-
-   
-   
-      
