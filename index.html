@@ -175,7 +175,7 @@
 <!-- LOGIN -->
 <div class="container" id="login">
   <h2>✨ Ciclo de Ajuda Mútua | Sistema de Doações</h2>
-  <p style="margin-bottom: 12px;">🌍 Sistema global com ADMIN na frente até a 10ª geração</p>
+  <p style="margin-bottom: 12px;">🌍 Sistema global de Doações até a 10ª geração</p>
   <input type="text" id="loginWhatsapp" placeholder="WhatsApp (com DDD)" autocomplete="off">
   <input type="password" id="loginSenha" placeholder="Senha">
   <button onclick="logarUsuario()">Entrar</button>
@@ -183,7 +183,7 @@
     <button class="secondary" onclick="mostrarCadastro()">📝 Cadastrar</button>
     <button class="secondary" onclick="acessoAdmin()">🔐 Admin</button>
   </div>
-  <div class="info-link">💰 ADMIN recebe R$20 de CADA novo membro até a 20ª geração. Após o nível 20, o ADMIN sai da fila e os indicadores passam a receber.</div>
+  <div class="info-link">💰 O participante recebe R$20 de CADA novo membro até a 20ª geração. Após o nível 20, o ADMIN sai da fila e os indicadores passam a receber.</div>
  
   <div class="small-reset" onclick="limparCacheComSenha()">🗑️ Limpar cache (admin)</div>
 </div>
@@ -567,7 +567,7 @@
     }
     posHtml += '</div>';
     if (usuarioLogado.nivel <= 10) {
-      posHtml += '<small>🔹 ADMIN está na posição #1 da sua fila (pois você está dentro da 10ª geração).</small>';
+      posHtml += '<small>🔹 ADMIN está na posição #1 da sua fila (pois você está dentro da 20ª geração).</small>';
     } else {
       posHtml += '<small>🔸 ADMIN não está mais na sua fila. Agora você participa do sistema normalmente.</small>';
     }
@@ -643,7 +643,7 @@
       const ind = encontrarUsuarioPorCodigo(refParam);
       msgDiv.innerHTML = ind ? `✨ Indicado por ${escapeHtml(ind.nome)} (nível ${ind.nivel}). Ao cadastrar, se você estiver dentro da 10ª geração, ADMIN recebe R$20 e fica na posição #1 da sua fila.` : "Link inválido, será vinculado ao ADMIN.";
     } else {
-      msgDiv.innerHTML = "📢 Sem link de indicação? Você será cadastrado diretamente pelo ADMIN Global. ADMIN estará na posição #1 da sua fila até a 10ª geração.";
+      msgDiv.innerHTML = "📢 Sem link de indicação? Você será cadastrado diretamente pelo ADMIN Global. ADMIN estará na posição #1 da sua fila até a 20ª geração.";
     }
   }
 
