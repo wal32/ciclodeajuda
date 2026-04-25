@@ -1,508 +1,346 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Ciclo de Ajuda Mútua | Sistema de Doações</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-    background: #0f172a;
-    color: #fff;
-    padding: 1rem;
-  }
-  .container {
-    max-width: 700px;
-    margin: 0 auto;
-    background: rgba(15, 23, 42, 0.95);
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
-  }
-  h1, h2, h3, h4, p, span, div, label, button, input, .card, .card * {
-    color: #fff !important;
-  }
-  input, button, select, textarea {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 14px;
-    padding: 12px 16px;
-    font-size: 1rem;
-    width: 100%;
-    margin: 8px 0;
-    transition: 0.2s;
-  }
-  button {
-    background: #22c55e;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  button:hover { background: #16a34a; transform: scale(0.98); }
-  button.secondary { background: #334155; }
-  button.danger { background: #dc2626; }
-  button.danger:hover { background: #b91c1c; }
-  .card {
-    background: #1e293b;
-    border-radius: 20px;
-    padding: 1rem;
-    margin: 0.75rem 0;
-    border-left: 4px solid #22c55e;
-  }
-  .hidden { display: none; }
-  .flex-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin: 15px 0; }
-  .info-link { background: #0f172a; padding: 12px; border-radius: 16px; margin-top: 20px; text-align: center; border: 1px solid #22c55e40; font-size: 0.9rem; }
-  .badge { background: #22c55e20; border-radius: 30px; padding: 4px 12px; font-size: 0.75rem; display: inline-block; margin-left: 8px; }
-  .positions-list { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-  .position-item { background: #0f172a; border-radius: 20px; padding: 4px 10px; font-size: 0.8rem; }
-  hr { border-color: #334155; margin: 1rem 0; }
-  .doacao { color: #86efac; font-weight: bold; }
-  .small-reset {
-    font-size: 0.7rem;
-    background: #1e293b;
-    border: 1px solid #475569;
-    margin-top: 10px;
-    padding: 8px;
-    text-align: center;
-    border-radius: 20px;
-    cursor: pointer;
-    opacity: 0.7;
-  }
-  .small-reset:hover { opacity: 1; background: #2d3a52; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ciclo de Ajuda Mútua – Sistema de Doações</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e0eafc 0%, #cfdef3 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .mockup-card {
+            max-width: 540px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 56px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .mockup-card:hover {
+            transform: scale(1.01);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2b7a4b, #1e5a3a);
+            padding: 2rem 1.5rem 1.8rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero h1 span {
+            font-weight: 300;
+            font-size: 1.2rem;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.1rem 0.7rem;
+            border-radius: 40px;
+            margin-left: 8px;
+        }
+
+        .hero .sub {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .hero .sub::before, .hero .sub::after {
+            content: "❤️";
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* conteúdo */
+        .form-container {
+            padding: 2rem 1.8rem 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #2c3e2f;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            font-size: 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 2rem;
+            background: #fefefe;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            border-color: #2b7a4b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(43, 122, 75, 0.2);
+        }
+
+        .btn-entrar {
+            width: 100%;
+            background: linear-gradient(100deg, #2b7a4b, #1e5a3a);
+            border: none;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-entrar:hover {
+            background: linear-gradient(100deg, #1f6340, #164a2e);
+            transform: translateY(-2px);
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 0rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .links a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 2rem;
+            transition: 0.1s;
+        }
+
+        .cadastrar {
+            background: #f1f5f9;
+            color: #1e5a3a;
+        }
+
+        .admin {
+            background: transparent;
+            color: #5b6e5c;
+            border: 1px solid #d4dcd0;
+        }
+
+        .links a:hover {
+            background: #e6f0ea;
+        }
+
+        /* Banner sistema de posições (igual ao original) */
+        .indique-banner {
+            background: #fef7e0;
+            margin: 0 1.5rem 1.5rem 1.5rem;
+            padding: 1rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            border: 1px solid #ffe5a3;
+            font-weight: 600;
+            color: #b46f0b;
+        }
+
+        .indique-banner span {
+            background: #ffd966;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            color: #4a2e00;
+        }
+
+        /* Seção de cadastro completo (novo) */
+        .cadastro-section {
+            margin: 0 1.5rem 1.8rem 1.5rem;
+            background: #F9FCF7;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e2efdf;
+        }
+
+        .cadastro-title {
+            font-weight: 700;
+            color: #1e5a3a;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-cadastrar-novo {
+            width: 100%;
+            background: linear-gradient(100deg, #ffb347, #ff9f2c);
+            border: none;
+            padding: 0.9rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d2b26;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-cadastrar-novo:hover {
+            background: linear-gradient(100deg, #ffa31a, #ff8c00);
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #8c9a8c;
+            padding: 0.8rem 1rem 1.5rem;
+            border-top: 1px solid #ececec;
+            margin-top: 0.2rem;
+        }
+
+        .badge-mock {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            font-size: 11px;
+            padding: 5px 12px;
+            border-radius: 27px;
+            color: white;
+            font-family: monospace;
+            pointer-events: none;
+        }
+
+        @media (max-width: 550px) {
+            body {
+                padding: 1rem;
+            }
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            .form-container {
+                padding: 1.5rem;
+            }
+            .indique-banner, .cadastro-section {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+<div style="position: relative;">
+    <div class="mockup-card">
+        <div class="hero">
+            <h1>Ciclo de Ajuda Mútua <span>❤️</span></h1>
+            <div class="sub">Sistema de Doações Colaborativo</div>
+        </div>
 
-<!-- LOGIN -->
-<div class="container" id="login">
-  <h2>✨ Ciclo de Ajuda Mútua</h2>
-  <input type="text" id="loginNome" placeholder="Nome completo" autocomplete="off">
-  <input type="password" id="loginSenha" placeholder="Senha">
-  <button onclick="logarUsuario()">Entrar</button>
-  <div class="flex-buttons">
-    <button class="secondary" onclick="mostrarCadastro()">📝 Cadastrar</button>
-    <button class="secondary" onclick="acessoAdmin()">🔐 Admin</button>
-  </div>
-  <div class="info-link">💰 Sistema de posições: indique e ganhe R$20 a cada nova entrada na sua rede.</div>
-  <div class="small-reset" onclick="limparCacheComSenha()">🗑️ Limpar cache (admin)</div>
-</div>
+        <div class="form-container">
+            <!-- Login: WhatsApp + Senha (substituiu o Nome completo) -->
+            <div class="input-group">
+                <label>WhatsApp (login)</label>
+                <input type="tel" placeholder="(11) 99999-9999">
+            </div>
+            <div class="input-group">
+                <label>Senha</label>
+                <input type="password" placeholder="••••••">
+            </div>
+            <button class="btn-entrar">Entrar</button>
 
-<!-- CADASTRO -->
-<div class="container hidden" id="cadastro">
-  <h2>📋 Novo participante</h2>
-  <div id="msgIndicacao" style="background:#1e293b; padding: 10px; border-radius: 14px; margin-bottom: 10px;"></div>
-  <input type="text" id="nome" placeholder="Nome completo" autocomplete="off">
-  <input type="text" id="pix" placeholder="Chave Pix">
-  <input type="text" id="whatsapp" placeholder="WhatsApp">
-  <input type="password" id="senha" placeholder="Senha">
-  <button onclick="cadastrarUsuario()">Cadastrar</button>
-  <button class="secondary" onclick="voltarLogin()">Voltar</button>
-</div>
+            <div class="links">
+                <a href="#" class="cadastrar">📝 Cadastrar</a>
+                <a href="#" class="admin">🔐 Admin</a>
+            </div>
+        </div>
 
-<!-- PAINEL DO PARTICIPANTE -->
-<div class="container hidden" id="dashboard">
-  <h2>🤝 Sua rede de ajuda</h2>
-  <div id="usuarioInfo"></div>
-  
-  <h3>💰 Sua chave Pix</h3>
-  <div class="pix-copy-box" style="display:flex; gap:8px; align-items:center;">
-    <input type="text" id="minhaChavePix" readonly onclick="this.select()" style="flex:1;">
-    <button onclick="copiarPix()" style="width:auto;">Copiar</button>
-  </div>
+        <!-- Banner de sistema de posições (igual ao original) -->
+        <div class="indique-banner">
+            💰 Sistema de posições: indique e ganhe
+            <span>R$20</span>
+            a cada nova entrada na sua rede.
+        </div>
 
-  <h3>🔗 Seu link de indicação</h3>
-  <div style="display:flex; gap:8px; align-items:center;">
-    <input type="text" id="meuLinkRef" readonly onclick="this.select()" style="flex:1;">
-    <button onclick="copiarLink()" style="width:auto;">Copiar</button>
-  </div>
-  <button onclick="compartilharWhatsApp()">📲 Compartilhar no WhatsApp</button>
+        <!-- NOVO: Cadastro completo do participante -->
+        <div class="cadastro-section">
+            <div class="cadastro-title">
+                <i class="fa-regular fa-id-card"></i> Novo participante – cadastro completo
+            </div>
+            <div class="input-group" style="margin-bottom: 1rem;">
+                <label>Nome completo</label>
+                <input type="text" placeholder="Ex: Ana Beatriz Souza">
+            </div>
+            <div class="input-group" style="margin-bottom: 1rem;">
+                <label>E-mail</label>
+                <input type="email" placeholder="ana@email.com">
+            </div>
+            <div class="input-group" style="margin-bottom: 1rem;">
+                <label>WhatsApp (com DDD)</label>
+                <input type="tel" placeholder="(11) 98888-7777">
+            </div>
+            <div class="input-group" style="margin-bottom: 1rem;">
+                <label>Criar senha</label>
+                <input type="password" placeholder="mínimo 6 caracteres">
+            </div>
+            <div class="input-group" style="margin-bottom: 1rem;">
+                <label>Confirmar senha</label>
+                <input type="password" placeholder="digite novamente">
+            </div>
+            <button class="btn-cadastrar-novo">✅ Cadastrar e começar a doar</button>
+        </div>
 
-  <h3>📎 Comprovante (opcional)</h3>
-  <input type="file" id="comprovante" accept="image/*">
-  <button onclick="uploadComprovante()">Enviar comprovante</button>
+        <div class="footer-note">
+            🌱 Doações constroem um ciclo de confiança • Participe
+        </div>
+    </div>
+   
 
-  <h3>📜 Posições da sua fila (quem recebe quando você indicar)</h3>
-  <div id="minhasPosicoes" class="card"></div>
 
-  <h3>💰 Histórico de doações recebidas</h3>
-  <div id="historicoDoacoes" class="card"></div>
-
-  <h3>👥 Participantes do ciclo</h3>
-  <div id="lista"></div>
-
-  <button class="secondary" onclick="logoutSistema()" style="margin-top:20px;">🚪 Sair</button>
-</div>
-
-<!-- ADMIN -->
-<div class="container hidden" id="adminPanel">
-  <h2>⚙️ Gestão + Posições</h2>
-  <div id="adminLista"></div>
-  <div class="flex-buttons">
-    <button class="secondary" onclick="sairAdmin()">◀ Voltar</button>
-    <button class="danger" onclick="resetCompletoSistema()">🔥 LIMPAR TODOS OS DADOS</button>
-  </div>
-</div>
-
-<script>
-  // ---------- BANCO DE DADOS LOCAL ----------
-  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  let usuarioLogado = null;
-  let refParam = null;
-
-  // Captura ref na URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const codigoIndicacaoURL = urlParams.get('ref');
-  if (codigoIndicacaoURL) {
-    refParam = codigoIndicacaoURL;
-    sessionStorage.setItem('refIndicacao', refParam);
-  } else {
-    refParam = sessionStorage.getItem('refIndicacao');
-  }
-
-  // ---------- FUNÇÕES AUXILIARES ----------
-  function gerarCodigoUnico(nome) {
-    return btoa(nome.toLowerCase().replace(/\s/g, '') + Date.now() + Math.random()).replace(/=/g, '').slice(0, 14);
-  }
-  function salvarUsuarios() { localStorage.setItem("usuarios", JSON.stringify(usuarios)); }
-  function escapeHtml(str) { return str ? str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : ""; }
-
-  // Migração para garantir campos obrigatórios em usuários antigos
-  function migrarEstrutura() {
-    let mudou = false;
-    for (let u of usuarios) {
-      if (!u.positions) { u.positions = [null, null, null, null]; mudou = true; }
-      if (!u.transactions) { u.transactions = []; mudou = true; }
-      if (u.totalRecebido === undefined) u.totalRecebido = 0;
-      if (!u.codigo) { u.codigo = gerarCodigoUnico(u.nome); mudou = true; }
-      if (!u.status) { u.status = "pendente"; mudou = true; }
-      if (u.indicadoPorCodigo === undefined) u.indicadoPorCodigo = null;
-      if (u.indicadoPorNome === undefined) u.indicadoPorNome = null;
-      if (!u.whatsapp) u.whatsapp = "";
-      if (!u.pix) u.pix = "";
-      if (!u.senha) u.senha = "";
-    }
-    if (mudou) salvarUsuarios();
-  }
-
-  // Cria novo usuário com herança de posições e doação automática para o indicador
-  function criarNovoUsuario(nome, pix, whats, senha, indicadorObj) {
-    const codigo = gerarCodigoUnico(nome);
-    let positions = [null, null, null, null];
-    let transactions = [];
-    
-    if (indicadorObj) {
-      // 1. Herança de posições: as posições 1-3 do indicador viram as posições 1-3 do novo,
-      //    e a pos4 recebe o nome do indicador
-      const indPos = indicadorObj.positions || [null, null, null, null];
-      positions = [indPos[0], indPos[1], indPos[2], indicadorObj.nome];
-      
-      // 2. Registra doação de R$20 do novo usuário para o indicador
-      const doacao = { de: nome, para: indicadorObj.nome, valor: 20, data: new Date().toLocaleString() };
-      if (!indicadorObj.transactions) indicadorObj.transactions = [];
-      indicadorObj.transactions.push(doacao);
-      indicadorObj.totalRecebido = (indicadorObj.totalRecebido || 0) + 20;
-      
-      // Atualiza indicador no array principal
-      const idxInd = usuarios.findIndex(u => u.codigo === indicadorObj.codigo);
-      if (idxInd !== -1) {
-        usuarios[idxInd] = indicadorObj;
-      }
-    }
-    
-    return {
-      nome, pix, whatsapp: whats, senha, status: "pendente", comprovante: "",
-      codigo, positions, transactions, totalRecebido: 0,
-      indicadoPorCodigo: indicadorObj ? indicadorObj.codigo : null,
-      indicadoPorNome: indicadorObj ? indicadorObj.nome : null
-    };
-  }
-
-  // Cadastro principal
-  function cadastrarUsuario() {
-    if (usuarios.length >= 10) { alert("Limite de 10 participantes."); return; }
-    const nome = document.getElementById("nome").value.trim();
-    const pix = document.getElementById("pix").value.trim();
-    const whats = document.getElementById("whatsapp").value.trim();
-    const senha = document.getElementById("senha").value;
-    if (!nome || !pix || !whats || !senha) { alert("Todos os campos são obrigatórios."); return; }
-    if (usuarios.some(u => u.nome === nome)) { alert("Nome já cadastrado."); return; }
-
-    let indicadorObj = null;
-    let codigoIndicador = refParam || sessionStorage.getItem('refIndicacao');
-    if (codigoIndicador) {
-      indicadorObj = usuarios.find(u => u.codigo === codigoIndicador);
-      if (!indicadorObj) alert("Link de indicação inválido. Cadastrando sem indicador.");
-    }
-
-    const novo = criarNovoUsuario(nome, pix, whats, senha, indicadorObj);
-    usuarios.push(novo);
-    salvarUsuarios();
-
-    if (indicadorObj) {
-      alert(`✅ Cadastro via link de ${indicadorObj.nome}! Você doou R$20 para ele. Agora ele está na posição 4 da sua fila.`);
-      sessionStorage.removeItem('refIndicacao');
-      refParam = null;
-    } else {
-      alert("✅ Cadastro realizado! Comece indicando amigos.");
-    }
-    voltarLogin();
-    document.getElementById("nome").value = "";
-    document.getElementById("pix").value = "";
-    document.getElementById("whatsapp").value = "";
-    document.getElementById("senha").value = "";
-  }
-
-  // ---------- DASHBOARD DO USUÁRIO ----------
-  function carregarDashboardCompleto() {
-    if (!usuarioLogado) return;
-    const infoDiv = document.getElementById("usuarioInfo");
-    const totalRecebido = (usuarioLogado.transactions || []).reduce((acc, t) => acc + t.valor, 0);
-    infoDiv.innerHTML = `
-      <div class="card">
-        <strong>👤 ${escapeHtml(usuarioLogado.nome)}</strong><br>
-        💰 Pix: ${escapeHtml(usuarioLogado.pix)}<br>
-        📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp)}<br>
-        🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}<br>
-        💵 Total recebido em doações: <span class="doacao">R$ ${totalRecebido.toFixed(2)}</span>
-      </div>`;
-    
-    document.getElementById("minhaChavePix").value = usuarioLogado.pix;
-    const linkRef = `${window.location.origin}${window.location.pathname}?ref=${usuarioLogado.codigo}`;
-    document.getElementById("meuLinkRef").value = linkRef;
-
-    // Exibir posições da fila
-    const positions = usuarioLogado.positions || [null, null, null, null];
-    const posDiv = document.getElementById("minhasPosicoes");
-    posDiv.innerHTML = `<div style="display:flex; gap:12px; flex-wrap:wrap;">
-      ${positions.map((p, idx) => `<div class="position-item">Pos${idx+1}: ${p ? escapeHtml(p) : "❌ vaga"}</div>`).join('')}
-    </div><small>✔️ Ao indicar alguém, todas as pessoas cadastradas receberão R$20 e sua fila rodará automaticamente na nova rede.</small>`;
-
-    // Histórico de doações recebidas
-    const trans = usuarioLogado.transactions || [];
-    const histDiv = document.getElementById("historicoDoacoes");
-    if (trans.length === 0) histDiv.innerHTML = "<div>Nenhuma doação recebida ainda.</div>";
-    else {
-      histDiv.innerHTML = trans.map(t => `<div>💰 R$ ${t.valor} de ${escapeHtml(t.de)} em ${t.data}</div>`).join('');
-    }
-
-    // Lista de participantes (público)
-    const listaDiv = document.getElementById("lista");
-    listaDiv.innerHTML = "";
-    usuarios.forEach(u => {
-      listaDiv.innerHTML += `
-        <div class="card">
-          <strong>${escapeHtml(u.nome)}</strong> - ${u.status === "aprovado" ? "✅" : (u.status==="reprovado"?"❌":"⏳")}<br>
-          <span class="pix-mini">💰 Pix: ${escapeHtml(u.pix)}</span>
-        </div>`;
-    });
-  }
-
-  // Upload comprovante (simples)
-  function uploadComprovante() {
-    const file = document.getElementById("comprovante").files[0];
-    if (!file) { alert("Selecione um arquivo."); return; }
-    if (usuarioLogado) {
-      usuarioLogado.comprovante = file.name;
-      const idx = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
-      if (idx !== -1) usuarios[idx].comprovante = file.name;
-      salvarUsuarios();
-      alert("Comprovante anexado com sucesso.");
-    }
-    document.getElementById("comprovante").value = "";
-  }
-
-  function compartilharWhatsApp() {
-    const link = `${window.location.origin}${window.location.pathname}?ref=${usuarioLogado.codigo}`;
-    const msg = `🌟 Participe do ciclo de ajuda mútua,dai e vos será dado! Use meu link e entre na rede: ${link}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-  }
-  function copiarLink() {
-    const inp = document.getElementById("meuLinkRef");
-    navigator.clipboard.writeText(inp.value);
-    alert("Link copiado!");
-  }
-  function copiarPix() {
-    if(usuarioLogado) navigator.clipboard.writeText(usuarioLogado.pix);
-    alert("Pix copiado!");
-  }
-
-  // ---------- LOGIN (CORRIGIDA E OPERANTE) ----------
-  function logarUsuario() {
-    // Obter elementos do DOM com segurança
-    const nomeInput = document.getElementById("loginNome");
-    const senhaInput = document.getElementById("loginSenha");
-    
-    if (!nomeInput || !senhaInput) {
-      console.error("Campos de login não encontrados!");
-      alert("Erro interno. Recarregue a página.");
-      return;
-    }
-    
-    const nome = nomeInput.value.trim();
-    const senha = senhaInput.value;
-    
-    if (nome === "" || senha === "") {
-      alert("Preencha nome e senha.");
-      return;
-    }
-    
-    // Buscar usuário
-    const user = usuarios.find(u => u.nome === nome && u.senha === senha);
-    
-    if (user) {
-      usuarioLogado = user;
-      // Esconder tela de login e mostrar dashboard
-      const loginDiv = document.getElementById("login");
-      const dashboardDiv = document.getElementById("dashboard");
-      if (loginDiv) loginDiv.classList.add("hidden");
-      if (dashboardDiv) dashboardDiv.classList.remove("hidden");
-      
-      // Carregar informações do usuário no dashboard
-      carregarDashboardCompleto();
-    } else {
-      alert("Nome ou senha incorretos. Verifique seus dados.");
-    }
-  }
-  
-  function logoutSistema() {
-    usuarioLogado = null;
-    location.reload();
-  }
-  
-  function mostrarCadastro() {
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("cadastro").classList.remove("hidden");
-    const msgDiv = document.getElementById("msgIndicacao");
-    if (refParam) {
-      const ind = usuarios.find(u => u.codigo === refParam);
-      msgDiv.innerHTML = ind ? `✨ Indicado por ${escapeHtml(ind.nome)}. Ao cadastrar, você doa R$20 para ele, e ele entra na posição 4 da sua fila.` : "Link inválido ou indicador não encontrado.";
-    } else msgDiv.innerHTML = "Cadastre-se para começar. Se alguém te indicou, use o link especial.";
-  }
-  
-  function voltarLogin() {
-    document.getElementById("cadastro").classList.add("hidden");
-    document.getElementById("login").classList.remove("hidden");
-    document.getElementById("adminPanel").classList.add("hidden");
-  }
-  
-  function acessoAdmin() {
-    const pwd = prompt("Senha admin:");
-    if (pwd === "123456") {
-      document.getElementById("login").classList.add("hidden");
-      document.getElementById("adminPanel").classList.remove("hidden");
-      renderAdmin();
-    } else alert("Senha incorreta.");
-  }
-  
-  function renderAdmin() {
-    const div = document.getElementById("adminLista");
-    if (!usuarios.length) { div.innerHTML = "<div class='card'>Nenhum usuário cadastrado</div>"; return; }
-    let html = "";
-    usuarios.forEach((u, i) => {
-      const totalRecebido = (u.transactions || []).reduce((s, t) => s + t.valor, 0);
-      html += `
-        <div class="card">
-          <strong>${escapeHtml(u.nome)}</strong> (${u.codigo})<br>
-          Pix: ${escapeHtml(u.pix)} | Status: ${u.status}<br>
-          Posições: ${(u.positions || [null,null,null,null]).map((p,idx)=>`${idx+1}:${p ? escapeHtml(p) : 'vaga'}`).join(' | ')}<br>
-          Recebido total: R$ ${totalRecebido.toFixed(2)}<br>
-          Indicado por: ${u.indicadoPorNome || '—'}<br>
-          <div class="flex-buttons">
-            <button onclick="aprovar(${i})">✅ Aprovar</button>
-            <button onclick="reprovar(${i})">⚠️ Reprovar</button>
-            <button onclick="excluir(${i})">🗑 Excluir</button>
-          </div>
-        </div>`;
-    });
-    div.innerHTML = html;
-  }
-  
-  function aprovar(i) { usuarios[i].status = "aprovado"; salvarUsuarios(); renderAdmin(); if(usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status="aprovado"; }
-  function reprovar(i) { usuarios[i].status = "reprovado"; salvarUsuarios(); renderAdmin(); if(usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status="reprovado"; }
-  function excluir(i) { 
-    if(confirm(`Excluir ${usuarios[i].nome} permanentemente?`)) { 
-      usuarios.splice(i,1); 
-      salvarUsuarios(); 
-      renderAdmin(); 
-      if(usuarioLogado && !usuarios.find(u=>u.codigo===usuarioLogado.codigo)) logoutSistema(); 
-    } 
-  }
-  function sairAdmin() { document.getElementById("adminPanel").classList.add("hidden"); document.getElementById("login").classList.remove("hidden"); }
-  
-  // ---------- LIMPAR CACHE / RESET COMPLETO ----------
-  function limparCacheCompleto() {
-    if(confirm("⚠️ ATENÇÃO: Isso vai APAGAR TODOS os dados (usuários, posições, transações). O sistema será resetado completamente. Confirmar?")) {
-      localStorage.clear();
-      sessionStorage.clear();
-      usuarios = [];
-      usuarioLogado = null;
-      refParam = null;
-      alert("Cache e dados limpos! A página será recarregada.");
-      window.location.href = window.location.pathname;
-    }
-  }
-  
-  function resetCompletoSistema() {
-    limparCacheCompleto();
-  }
-  
-  function limparCacheComSenha() {
-    const pwd = prompt("Digite a senha de administrador para limpar todo o sistema:");
-    if(pwd === "123456") {
-      limparCacheCompleto();
-    } else {
-      alert("Senha incorreta. Ação cancelada.");
-    }
-  }
-  
-  // ---------- INICIALIZAÇÃO E MIGRAÇÃO ----------
-  migrarEstrutura();
-  // Validação extra: garantir que todos tenham positions array de 4 posições
-  for(let u of usuarios) {
-    if(!u.positions || u.positions.length !== 4) u.positions = [null, null, null, null];
-    if(!u.transactions) u.transactions = [];
-    if(typeof u.totalRecebido !== 'number') u.totalRecebido = 0;
-  }
-  salvarUsuarios();
-  
-  // Inicialização da interface
-  document.getElementById("login").classList.remove("hidden");
-  document.getElementById("cadastro").classList.add("hidden");
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
-  
-  // Se houver referência na URL, manter visível no cadastro
-  if(refParam && !usuarios.find(u=>u.codigo===refParam)) {
-    sessionStorage.removeItem('refIndicacao');
-    refParam = null;
-  }
-  
-  // Expor funções globais
-  window.logarUsuario = logarUsuario;
-  window.mostrarCadastro = mostrarCadastro;
-  window.cadastrarUsuario = cadastrarUsuario;
-  window.voltarLogin = voltarLogin;
-  window.uploadComprovante = uploadComprovante;
-  window.compartilharWhatsApp = compartilharWhatsApp;
-  window.logoutSistema = logoutSistema;
-  window.acessoAdmin = acessoAdmin;
-  window.aprovar = aprovar;
-  window.reprovar = reprovar;
-  window.excluir = excluir;
-  window.sairAdmin = sairAdmin;
-  window.copiarLink = copiarLink;
-  window.copiarPix = copiarPix;
-  window.resetCompletoSistema = resetCompletoSistema;
-  window.limparCacheComSenha = limparCacheComSenha;
-</script>
 </body>
 </html>
-    
-
-      
-
   
-    
 
+ 
+ 
   
   
+   
