@@ -275,7 +275,7 @@
     const posDiv = document.getElementById("minhasPosicoes");
     posDiv.innerHTML = `<div style="display:flex; gap:12px; flex-wrap:wrap;">
       ${positions.map((p, idx) => `<div class="position-item">Pos${idx+1}: ${p ? escapeHtml(p) : "❌ vaga"}</div>`).join('')}
-    </div><small>✔️ Ao indicar alguém, a pessoa na Posição 1 receberá R$20 e sua fila rodará automaticamente na nova rede.</small>`;
+    </div><small>✔️ Ao indicar alguém, todas as pessoas cadastradas receberão R$20 e sua fila rodará automaticamente na nova rede.</small>`;
 
     // Histórico de doações recebidas
     const trans = usuarioLogado.transactions || [];
@@ -375,7 +375,7 @@
     const msgDiv = document.getElementById("msgIndicacao");
     if (refParam) {
       const ind = usuarios.find(u => u.codigo === refParam);
-      msgDiv.innerHTML = ind ? `✨ Indicado por ${escapeHtml(ind.nome)}. Ao cadastrar, você doa R$20 para ele, e ele entra na posição 9 da sua fila.` : "Link inválido ou indicador não encontrado.";
+      msgDiv.innerHTML = ind ? `✨ Indicado por ${escapeHtml(ind.nome)}. Ao cadastrar, você doa R$20 para ele, e ele entra na posição 4 da sua fila.` : "Link inválido ou indicador não encontrado.";
     } else msgDiv.innerHTML = "Cadastre-se para começar. Se alguém te indicou, use o link especial.";
   }
   
