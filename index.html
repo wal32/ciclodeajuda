@@ -5,24 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Ciclo de Ajuda Mútua | Sistema de Doações</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   body {
     font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
     background: #0f172a;
     color: #fff;
     padding: 1rem;
   }
+
   .container {
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto;
     background: rgba(15, 23, 42, 0.95);
     border-radius: 1.5rem;
     padding: 1.5rem;
-    box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
   }
-  h1, h2, h3, h4, p, span, div, label, button, input, .card, .card * {
+
+  h1, h2, h3, h4, p, span, div, label, button, input, .card {
     color: #fff !important;
   }
+
   input, button, select, textarea {
     background-color: #1e293b;
     border: 1px solid #334155;
@@ -33,15 +41,34 @@
     margin: 8px 0;
     transition: 0.2s;
   }
+
   button {
     background: #22c55e;
     font-weight: bold;
     cursor: pointer;
   }
-  button:hover { background: #16a34a; transform: scale(0.98); }
-  button.secondary { background: #334155; }
-  button.danger { background: #dc2626; }
-  button.danger:hover { background: #b91c1c; }
+
+  button:hover {
+    background: #16a34a;
+    transform: scale(0.98);
+  }
+
+  button.secondary {
+    background: #334155;
+  }
+
+  button.secondary:hover {
+    background: #475569;
+  }
+
+  button.danger {
+    background: #dc2626;
+  }
+
+  button.danger:hover {
+    background: #b91c1c;
+  }
+
   .card {
     background: #1e293b;
     border-radius: 20px;
@@ -49,14 +76,61 @@
     margin: 0.75rem 0;
     border-left: 4px solid #22c55e;
   }
-  .hidden { display: none; }
-  .flex-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin: 15px 0; }
-  .info-link { background: #0f172a; padding: 12px; border-radius: 16px; margin-top: 20px; text-align: center; border: 1px solid #22c55e40; font-size: 0.9rem; }
-  .badge { background: #22c55e20; border-radius: 30px; padding: 4px 12px; font-size: 0.75rem; display: inline-block; margin-left: 8px; }
-  .positions-list { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-  .position-item { background: #0f172a; border-radius: 20px; padding: 4px 10px; font-size: 0.8rem; }
-  hr { border-color: #334155; margin: 1rem 0; }
-  .doacao { color: #86efac; font-weight: bold; }
+
+  .hidden {
+    display: none;
+  }
+
+  .flex-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+  }
+
+  .info-link {
+    background: #0f172a;
+    padding: 12px;
+    border-radius: 16px;
+    margin-top: 20px;
+    text-align: center;
+    border: 1px solid #22c55e40;
+    font-size: 0.9rem;
+  }
+
+  .badge {
+    background: #22c55e20;
+    border-radius: 30px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  .positions-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+
+  .position-item {
+    background: #0f172a;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+
+  hr {
+    border-color: #334155;
+    margin: 1rem 0;
+  }
+
+  .doacao {
+    color: #86efac;
+    font-weight: bold;
+  }
+
   .small-reset {
     font-size: 0.7rem;
     background: #1e293b;
@@ -68,14 +142,40 @@
     cursor: pointer;
     opacity: 0.7;
   }
-  .small-reset:hover { opacity: 1; background: #2d3a52; }
+
+  .small-reset:hover {
+    opacity: 1;
+    background: #2d3a52;
+  }
+
+  .refresh-btn {
+    background: #3b82f6;
+    margin-bottom: 12px;
+    width: auto;
+    display: inline-block;
+    padding: 8px 16px;
+  }
+
+  .refresh-btn:hover {
+    background: #2563eb;
+  }
+
+  .download-apk {
+    background: #ea580c;
+    margin-top: 15px;
+  }
+
+  .download-apk:hover {
+    background: #c2410c;
+  }
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div class="container" id="login">
-  <h2>✨ Ciclo de Ajuda Mútua</h2>
+  <h2>✨ Ciclo de Ajuda Mútua | Sistema de Doações</h2>
+  <p style="margin-bottom: 12px;">🌍 Sistema global de doações</p>
   <input type="text" id="loginWhatsapp" placeholder="WhatsApp (com DDD)" autocomplete="off">
   <input type="password" id="loginSenha" placeholder="Senha">
   <button onclick="logarUsuario()">Entrar</button>
@@ -83,7 +183,8 @@
     <button class="secondary" onclick="mostrarCadastro()">📝 Cadastrar</button>
     <button class="secondary" onclick="acessoAdmin()">🔐 Admin</button>
   </div>
-  <div class="info-link">💰 Sistema de posições: indique e ganhe R$20 a cada nova entrada na sua rede.</div>
+  <div class="info-link">💰 O cadastrado recebe R$20 de CADA novo membro até a 10ª geração. Após o nível 10, você sai da fila e os indicadores passam a receber.</div>
+  <button class="download-apk" onclick="baixarApk()">📲 Baixar APK (Android)</button>
   <div class="small-reset" onclick="limparCacheComSenha()">🗑️ Limpar cache (admin)</div>
 </div>
 
@@ -97,15 +198,19 @@
   <input type="password" id="senha" placeholder="Senha">
   <button onclick="cadastrarUsuario()">Cadastrar</button>
   <button class="secondary" onclick="voltarLogin()">Voltar</button>
+  <div class="info-link" style="margin-top: 16px;">🔹 Ao cadastrar, você doa R$20 para o participante (se estiver dentro da 10ª geração). O ADMIN é sempre a posição #1 da sua fila até o limite de níveis.</div>
 </div>
 
 <!-- PAINEL DO PARTICIPANTE -->
 <div class="container hidden" id="dashboard">
-  <h2>🤝 Sua rede de ajuda</h2>
+  <h2>🤝 Sua rede de ajuda global</h2>
+  <div style="text-align: right;">
+    <button class="refresh-btn" onclick="recarregarDashboard()">🔄 Atualizar dados</button>
+  </div>
   <div id="usuarioInfo"></div>
-  
+
   <h3>💰 Sua chave Pix</h3>
-  <div class="pix-copy-box" style="display:flex; gap:8px; align-items:center;">
+  <div style="display:flex; gap:8px; align-items:center;">
     <input type="text" id="minhaChavePix" readonly onclick="this.select()" style="flex:1;">
     <button onclick="copiarPix()" style="width:auto;">Copiar</button>
   </div>
@@ -121,13 +226,13 @@
   <input type="file" id="comprovante" accept="image/*">
   <button onclick="uploadComprovante()">Enviar comprovante</button>
 
-  <h3>📜 Posições da sua fila (quem recebe quando você indicar)</h3>
+  <h3>📜 Sua fila de doações (quem recebe quando você indicar alguém)</h3>
   <div id="minhasPosicoes" class="card"></div>
 
   <h3>💰 Histórico de doações recebidas</h3>
   <div id="historicoDoacoes" class="card"></div>
 
-  <h3>👥 Participantes do ciclo</h3>
+  <h3>👥 Participantes do ciclo (ilimitado)</h3>
   <div id="lista"></div>
 
   <button class="secondary" onclick="logoutSistema()" style="margin-top:20px;">🚪 Sair</button>
@@ -135,38 +240,111 @@
 
 <!-- ADMIN -->
 <div class="container hidden" id="adminPanel">
-  <h2>⚙️ Gestão + Posições</h2>
+  <h2>⚙️ Gestão Global + Posições</h2>
   <div id="adminLista"></div>
   <div class="flex-buttons">
     <button class="secondary" onclick="sairAdmin()">◀ Voltar</button>
-  
+    <button class="danger" onclick="resetCompletoSistema()">🔥 LIMPAR TODOS OS DADOS</button>
   </div>
+  <div class="info-link">📌 ADMIN configurado: nome "🌟 ADMIN GLOBAL", recebe R$20 de todos os cadastros até a 10ª geração. Após o nível 10, sai da fila automaticamente.</div>
 </div>
 
 <script>
-  // ---------- BANCO DE DADOS LOCAL (VERSÃO COMPATÍVEL COM WEBVIEW) ----------
-  var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  var usuarioLogado = null;
-  var refParam = null;
+  // ---------- SISTEMA ILIMITADO COM ADMIN NA FRENTE ATÉ 10ª GERAÇÃO ----------
+  let usuarios = [];
+  let usuarioLogado = null;
+  let refParam = null;
 
-  // Captura ref na URL
-  var urlParams = new URLSearchParams(window.location.search);
-  var codigoIndicacaoURL = urlParams.get('ref');
-  if (codigoIndicacaoURL) {
-    refParam = codigoIndicacaoURL;
-    sessionStorage.setItem('refIndicacao', refParam);
-  } else {
-    refParam = sessionStorage.getItem('refIndicacao');
+  // CONSTANTES
+  const ADMIN_CODIGO = "ADMIN_GLOBAL_2025";
+  const ADMIN_NOME = "🌟 ADMIN GLOBAL";
+  const ADMIN_WHATS = "41988228676";
+  const ADMIN_SENHA = "admin123";
+  const ADMIN_PIX = "41988228676";
+
+  // Carrega dados do localStorage e garante existência do ADMIN
+  function carregarUsuariosDoStorage() {
+    const dados = localStorage.getItem("usuarios");
+    if (dados) {
+      usuarios = JSON.parse(dados);
+    } else {
+      usuarios = [];
+    }
+    garantirAdminNoSistema();
+    migrarEstrutura();
+    salvarUsuariosNoStorage();
   }
 
-  // ---------- FUNÇÕES AUXILIARES ----------
+  function garantirAdminNoSistema() {
+    let adminExists = false;
+    for (let i = 0; i < usuarios.length; i++) {
+      if (usuarios[i].codigo === ADMIN_CODIGO) {
+        adminExists = true;
+        // Garantir que admin tenha dados corretos
+        usuarios[i].nome = ADMIN_NOME;
+        usuarios[i].whatsapp = ADMIN_WHATS;
+        usuarios[i].senha = ADMIN_SENHA;
+        usuarios[i].pix = ADMIN_PIX;
+        usuarios[i].nivel = 0;
+        usuarios[i].status = "aprovado";
+        if (!usuarios[i].positions) usuarios[i].positions = [];
+        if (!usuarios[i].transactions) usuarios[i].transactions = [];
+        break;
+      }
+    }
+    if (!adminExists) {
+      usuarios.push({
+        nome: ADMIN_NOME,
+        pix: ADMIN_PIX,
+        whatsapp: ADMIN_WHATS,
+        senha: ADMIN_SENHA,
+        status: "aprovado",
+        comprovante: "",
+        codigo: ADMIN_CODIGO,
+        positions: [],
+        transactions: [],
+        totalRecebido: 0,
+        indicadoPorCodigo: null,
+        indicadoPorNome: null,
+        nivel: 0
+      });
+    }
+  }
+
+  function migrarEstrutura() {
+    let mudou = false;
+    for (let i = 0; i < usuarios.length; i++) {
+      const u = usuarios[i];
+      if (!u.positions) { u.positions = []; mudou = true; }
+      if (!u.transactions) { u.transactions = []; mudou = true; }
+      if (u.totalRecebido === undefined) u.totalRecebido = 0;
+      if (!u.codigo) { u.codigo = gerarCodigoUnico(u.nome); mudou = true; }
+      if (!u.status) { u.status = "pendente"; mudou = true; }
+      if (u.indicadoPorCodigo === undefined) u.indicadoPorCodigo = null;
+      if (u.indicadoPorNome === undefined) u.indicadoPorNome = null;
+      if (u.nivel === undefined) u.nivel = calcularNivelUsuario(u);
+      if (!u.whatsapp) u.whatsapp = "";
+      if (!u.pix) u.pix = "";
+      if (!u.senha) u.senha = "";
+    }
+    if (mudou) salvarUsuariosNoStorage();
+  }
+
+  function calcularNivelUsuario(usuario) {
+    if (usuario.codigo === ADMIN_CODIGO) return 0;
+    if (!usuario.indicadoPorCodigo) return 1; // direto do admin
+    let indicador = encontrarUsuarioPorCodigo(usuario.indicadoPorCodigo);
+    if (indicador) return (indicador.nivel || 0) + 1;
+    return 1;
+  }
+
   function gerarCodigoUnico(nome) {
     return btoa(nome.toLowerCase().replace(/\s/g, '') + Date.now() + Math.random()).replace(/=/g, '').slice(0, 14);
   }
-  function salvarUsuarios() { localStorage.setItem("usuarios", JSON.stringify(usuarios)); }
-  function escapeHtml(str) { 
+
+  function escapeHtml(str) {
     if (!str) return "";
-    return str.replace(/[&<>]/g, function(m) {
+    return str.replace(/[&<>]/g, function (m) {
       if (m === '&') return '&amp;';
       if (m === '<') return '&lt;';
       if (m === '>') return '&gt;';
@@ -174,356 +352,413 @@
     });
   }
 
-  // Migração para garantir campos obrigatórios
-  function migrarEstrutura() {
-    var mudou = false;
-    for (var i = 0; i < usuarios.length; i++) {
-      var u = usuarios[i];
-      if (!u.positions) { u.positions = [null, null, null, null]; mudou = true; }
-      if (!u.transactions) { u.transactions = []; mudou = true; }
-      if (u.totalRecebido === undefined) u.totalRecebido = 0;
-      if (!u.codigo) { u.codigo = gerarCodigoUnico(u.nome); mudou = true; }
-      if (!u.status) { u.status = "pendente"; mudou = true; }
-      if (u.indicadoPorCodigo === undefined) u.indicadoPorCodigo = null;
-      if (u.indicadoPorNome === undefined) u.indicadoPorNome = null;
-      if (!u.whatsapp) u.whatsapp = "";
-      if (!u.pix) u.pix = "";
-      if (!u.senha) u.senha = "";
-    }
-    if (mudou) salvarUsuarios();
-  }
-
   function encontrarUsuarioPorCodigo(codigo) {
-    for (var i = 0; i < usuarios.length; i++) {
+    for (let i = 0; i < usuarios.length; i++) {
       if (usuarios[i].codigo === codigo) return usuarios[i];
     }
     return null;
   }
 
   function encontrarUsuarioPorWhatsapp(whats) {
-    for (var i = 0; i < usuarios.length; i++) {
+    for (let i = 0; i < usuarios.length; i++) {
       if (usuarios[i].whatsapp === whats) return usuarios[i];
     }
     return null;
   }
 
-  // Cria novo usuário
-  function criarNovoUsuario(nome, pix, whats, senha, indicadorObj) {
-    var codigo = gerarCodigoUnico(nome);
-    var positions = [null, null, null, null];
-    var transactions = [];
-    
-    if (indicadorObj) {
-      var indPos = indicadorObj.positions || [null, null, null, null];
-      positions = [indPos[0], indPos[1], indPos[2], indicadorObj.nome];
-      
-      var doacao = { de: nome, para: indicadorObj.nome, valor: 20, data: new Date().toLocaleString() };
-      if (!indicadorObj.transactions) indicadorObj.transactions = [];
-      indicadorObj.transactions.push(doacao);
-      indicadorObj.totalRecebido = (indicadorObj.totalRecebido || 0) + 20;
-      
-      var idxInd = -1;
-      for (var i = 0; i < usuarios.length; i++) {
-        if (usuarios[i].codigo === indicadorObj.codigo) { idxInd = i; break; }
-      }
-      if (idxInd !== -1) {
-        usuarios[idxInd] = indicadorObj;
-      }
-    }
-    
-    return {
-      nome: nome, pix: pix, whatsapp: whats, senha: senha, status: "pendente", comprovante: "",
-      codigo: codigo, positions: positions, transactions: transactions, totalRecebido: 0,
-      indicadoPorCodigo: indicadorObj ? indicadorObj.codigo : null,
-      indicadoPorNome: indicadorObj ? indicadorObj.nome : null
-    };
+  function salvarUsuariosNoStorage() {
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
   }
 
-  // Cadastro principal
+  // Cria novo usuário com regras: ADMIN na frente até 10ª geração, doação vai para ADMIN se nível <=10, senão para o indicador
+  function criarNovoUsuario(nome, pix, whats, senha, indicadorObj) {
+    const novoNivel = indicadorObj ? (indicadorObj.nivel + 1) : 1;
+    let positions = [];
+    let doacaoDestino = null;
+    let valorDoacao = 20;
+
+    // Decidir quem recebe a doação inicial
+    if (novoNivel <= 10) {
+      // ADMIN recebe
+      doacaoDestino = encontrarUsuarioPorCodigo(ADMIN_CODIGO);
+    } else {
+      // Indicador direto recebe (regra normal)
+      doacaoDestino = indicadorObj;
+    }
+
+    // Construir fila de posições (ilimitada)
+    if (indicadorObj && indicadorObj.positions) {
+      positions = [...indicadorObj.positions];
+    } else {
+      positions = [];
+    }
+
+    // REGRA PRINCIPAL: ADMIN na POSIÇÃO #1 da fila para todos os usuários com nível <= 10
+    if (novoNivel <= 10) {
+      // Inserir ADMIN no início da fila
+      positions.unshift(ADMIN_NOME);
+    } else {
+      // ADMIN já saiu da fila, sistema segue padrão: quem indicou entra na última posição
+      if (indicadorObj) {
+        positions.push(indicadorObj.nome);
+      }
+    }
+
+    // Criar objeto do usuário
+    const novoUsuario = {
+      nome: nome,
+      pix: pix,
+      whatsapp: whats,
+      senha: senha,
+      status: "pendente",
+      comprovante: "",
+      codigo: gerarCodigoUnico(nome),
+      positions: positions,
+      transactions: [],
+      totalRecebido: 0,
+      indicadoPorCodigo: indicadorObj ? indicadorObj.codigo : ADMIN_CODIGO,
+      indicadoPorNome: indicadorObj ? indicadorObj.nome : ADMIN_NOME,
+      nivel: novoNivel
+    };
+
+    // Registrar a doação
+    if (doacaoDestino) {
+      const doacaoRegistro = {
+        de: nome,
+        para: doacaoDestino.nome,
+        valor: valorDoacao,
+        data: new Date().toLocaleString()
+      };
+      if (!doacaoDestino.transactions) doacaoDestino.transactions = [];
+      doacaoDestino.transactions.push(doacaoRegistro);
+      doacaoDestino.totalRecebido = (doacaoDestino.totalRecebido || 0) + valorDoacao;
+
+      // Atualizar o array principal
+      const idxDestino = usuarios.findIndex(u => u.codigo === doacaoDestino.codigo);
+      if (idxDestino !== -1) usuarios[idxDestino] = doacaoDestino;
+    }
+
+    return novoUsuario;
+  }
+
+  // Cadastro com validação global e sem limite de participantes
   function cadastrarUsuario() {
-    if (usuarios.length >= 10) { alert("Limite de 10 participantes."); return; }
-    var nome = document.getElementById("nome").value.trim();
-    var pix = document.getElementById("pix").value.trim();
-    var whats = document.getElementById("whatsapp").value.trim();
-    var senha = document.getElementById("senha").value;
-    if (!nome || !pix || !whats || !senha) { alert("Todos os campos são obrigatórios."); return; }
-    
-    // Verifica nome duplicado
-    for (var i = 0; i < usuarios.length; i++) {
+    carregarUsuariosDoStorage();
+
+    const nome = document.getElementById("nome").value.trim();
+    const pix = document.getElementById("pix").value.trim();
+    const whats = document.getElementById("whatsapp").value.trim();
+    const senha = document.getElementById("senha").value;
+
+    if (!nome || !pix || !whats || !senha) {
+      alert("Todos os campos são obrigatórios.");
+      return;
+    }
+
+    // Verificar duplicatas
+    for (let i = 0; i < usuarios.length; i++) {
       if (usuarios[i].nome === nome) { alert("Nome já cadastrado."); return; }
       if (usuarios[i].whatsapp === whats) { alert("WhatsApp já cadastrado."); return; }
     }
 
-    var indicadorObj = null;
-    var codigoIndicador = refParam || sessionStorage.getItem('refIndicacao');
+    let indicadorObj = null;
+    let codigoIndicador = refParam || sessionStorage.getItem('refIndicacao');
+
     if (codigoIndicador) {
       indicadorObj = encontrarUsuarioPorCodigo(codigoIndicador);
-      if (!indicadorObj) alert("Link de indicação inválido. Cadastrando sem indicador.");
+      if (!indicadorObj) {
+        alert("Link de indicação inválido. Você será cadastrado diretamente pelo ADMIN.");
+        indicadorObj = encontrarUsuarioPorCodigo(ADMIN_CODIGO);
+      }
+    } else {
+      // Sem indicação, vincula ao ADMIN
+      indicadorObj = encontrarUsuarioPorCodigo(ADMIN_CODIGO);
     }
 
-    var novo = criarNovoUsuario(nome, pix, whats, senha, indicadorObj);
-    usuarios.push(novo);
-    salvarUsuarios();
+    const novoUsuario = criarNovoUsuario(nome, pix, whats, senha, indicadorObj);
+    usuarios.push(novoUsuario);
+    salvarUsuariosNoStorage();
 
-    if (indicadorObj) {
-      alert("✅ Cadastro via link de " + indicadorObj.nome + "! Você doou R$20 para ele. Agora ele está na posição 4 da sua fila.");
+    const usuarioSalvo = encontrarUsuarioPorWhatsapp(whats);
+    if (usuarioSalvo && usuarioSalvo.senha === senha) {
+      const nivelMsg = usuarioSalvo.nivel <= 10 ? `Você está no nível ${usuarioSalvo.nivel} (dentro da 10ª geração). ADMIN recebeu R$20.` : `Você está no nível ${usuarioSalvo.nivel} (fora da zona do ADMIN). Seu indicador direto recebeu R$20.`;
+      alert(`✅ Cadastro realizado com sucesso!\n${nivelMsg}\n\nAgora faça login com seu WhatsApp e senha.`);
       sessionStorage.removeItem('refIndicacao');
       refParam = null;
+      // Limpar campos
+      document.getElementById("nome").value = "";
+      document.getElementById("pix").value = "";
+      document.getElementById("whatsapp").value = "";
+      document.getElementById("senha").value = "";
+      voltarLogin();
     } else {
-      alert("✅ Cadastro realizado! Comece indicando amigos.");
+      alert("❌ Erro ao salvar. Tente novamente.");
     }
-    voltarLogin();
-    document.getElementById("nome").value = "";
-    document.getElementById("pix").value = "";
-    document.getElementById("whatsapp").value = "";
-    document.getElementById("senha").value = "";
   }
 
-  // ---------- DASHBOARD ----------
+  // LOGIN
+  function logarUsuario() {
+    carregarUsuariosDoStorage();
+    const whatsapp = document.getElementById("loginWhatsapp").value.trim();
+    const senha = document.getElementById("loginSenha").value;
+
+    if (!whatsapp || !senha) {
+      alert("Preencha WhatsApp e senha.");
+      return;
+    }
+
+    const user = usuarios.find(u => u.whatsapp === whatsapp && u.senha === senha);
+    if (user) {
+      usuarioLogado = user;
+      document.getElementById("login").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+      carregarDashboardCompleto();
+    } else {
+      alert("WhatsApp ou senha incorretos.");
+    }
+  }
+
+  function recarregarDashboard() {
+    if (!usuarioLogado) return;
+    carregarUsuariosDoStorage();
+    const atualizado = usuarios.find(u => u.whatsapp === usuarioLogado.whatsapp && u.senha === usuarioLogado.senha);
+    if (atualizado) {
+      usuarioLogado = atualizado;
+      carregarDashboardCompleto();
+      alert("Dados atualizados com sucesso!");
+    } else {
+      alert("Sessão expirada. Faça login novamente.");
+      logoutSistema();
+    }
+  }
+
   function carregarDashboardCompleto() {
     if (!usuarioLogado) return;
-    var infoDiv = document.getElementById("usuarioInfo");
-    var totalRecebido = 0;
+
+    let totalRecebido = 0;
     if (usuarioLogado.transactions) {
-      for (var i = 0; i < usuarioLogado.transactions.length; i++) {
-        totalRecebido += usuarioLogado.transactions[i].valor;
-      }
+      totalRecebido = usuarioLogado.transactions.reduce((acc, t) => acc + t.valor, 0);
     }
-    infoDiv.innerHTML = '<div class="card">' +
-      '<strong>👤 ' + escapeHtml(usuarioLogado.nome) + '</strong><br>' +
-      '💰 Pix: ' + escapeHtml(usuarioLogado.pix) + '<br>' +
-      '📱 WhatsApp: ' + escapeHtml(usuarioLogado.whatsapp) + '<br>' +
-      '🟢 Status: ' + (usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")) + '<br>' +
-      '💵 Total recebido em doações: <span class="doacao">R$ ' + totalRecebido.toFixed(2) + '</span>' +
-      '</div>';
-    
-    document.getElementById("minhaChavePix").value = usuarioLogado.pix;
-    var linkRef = window.location.origin + window.location.pathname + '?ref=' + usuarioLogado.codigo;
+
+    const infoDiv = document.getElementById("usuarioInfo");
+    infoDiv.innerHTML = `<div class="card">
+      <strong>👤 ${escapeHtml(usuarioLogado.nome)}</strong><br>
+      📊 Nível na rede: <strong>${usuarioLogado.nivel}</strong> ${usuarioLogado.nivel <= 10 ? '🎯 (ADMIN ativo na sua fila)' : '🚀 (ADMIN já saiu da sua fila)'}<br>
+      💰 Pix: ${escapeHtml(usuarioLogado.pix)}<br>
+      📱 WhatsApp: ${escapeHtml(usuarioLogado.whatsapp)}<br>
+      🟢 Status: ${usuarioLogado.status === "aprovado" ? "Aprovado ✅" : (usuarioLogado.status === "reprovado" ? "Reprovado ❌" : "Pendente ⏳")}<br>
+      💵 Total recebido: <span class="doacao">R$ ${totalRecebido.toFixed(2)}</span>
+    </div>`;
+
+    document.getElementById("minhaChavePix").value = usuarioLogado.pix || "";
+    const linkRef = window.location.origin + window.location.pathname + '?ref=' + usuarioLogado.codigo;
     document.getElementById("meuLinkRef").value = linkRef;
 
-    var positions = usuarioLogado.positions || [null, null, null, null];
-    var posDiv = document.getElementById("minhasPosicoes");
-    var posHtml = '<div style="display:flex; gap:12px; flex-wrap:wrap;">';
-    for (var i = 0; i < positions.length; i++) {
-      posHtml += '<div class="position-item">Pos' + (i+1) + ': ' + (positions[i] ? escapeHtml(positions[i]) : "❌ vaga") + '</div>';
+    // Exibir fila de posições (dinâmica, ilimitada)
+    const positions = usuarioLogado.positions || [];
+    let posHtml = '<div style="display:flex; gap:8px; flex-wrap:wrap;">';
+    if (positions.length === 0) {
+      posHtml += '<span>📭 Nenhuma posição na fila ainda. Ao indicar alguém, a fila será preenchida.</span>';
+    } else {
+      positions.forEach((pos, idx) => {
+        posHtml += `<div class="position-item">Pos${idx + 1}: ${escapeHtml(pos || "❌ vaga")}</div>`;
+      });
     }
-    posHtml += '</div><small>✔️ Ao indicar alguém, as pessoas cadastradas receberão R$20 e sua fila rodará automaticamente na nova rede.</small>';
-    posDiv.innerHTML = posHtml;
+    posHtml += '</div>';
+    if (usuarioLogado.nivel <= 10) {
+      posHtml += '<small>🔹 ADMIN está na posição #1 da sua fila (pois você está dentro da 10ª geração).</small>';
+    } else {
+      posHtml += '<small>🔸 ADMIN não está mais na sua fila. Agora você participa do sistema normalmente.</small>';
+    }
+    document.getElementById("minhasPosicoes").innerHTML = posHtml;
 
-    var trans = usuarioLogado.transactions || [];
-    var histDiv = document.getElementById("historicoDoacoes");
+    // Histórico de doações recebidas
+    const trans = usuarioLogado.transactions || [];
+    const histDiv = document.getElementById("historicoDoacoes");
     if (trans.length === 0) {
       histDiv.innerHTML = "<div>Nenhuma doação recebida ainda.</div>";
     } else {
-      var histHtml = "";
-      for (var i = 0; i < trans.length; i++) {
-        histHtml += "<div>💰 R$ " + trans[i].valor + " de " + escapeHtml(trans[i].de) + " em " + trans[i].data + "</div>";
-      }
+      let histHtml = "";
+      trans.forEach(t => {
+        histHtml += `<div>💰 R$ ${t.valor} de ${escapeHtml(t.de)} em ${t.data}</div>`;
+      });
       histDiv.innerHTML = histHtml;
     }
 
-    var listaDiv = document.getElementById("lista");
+    // Lista geral de participantes (ilimitada)
+    const listaDiv = document.getElementById("lista");
     listaDiv.innerHTML = "";
-    for (var i = 0; i < usuarios.length; i++) {
-      var u = usuarios[i];
-      listaDiv.innerHTML += '<div class="card">' +
-        '<strong>' + escapeHtml(u.nome) + '</strong> - ' + (u.status === "aprovado" ? "✅" : (u.status === "reprovado" ? "❌" : "⏳")) + '<br>' +
-        '<span class="pix-mini">💰 Pix: ' + escapeHtml(u.pix) + '</span>' +
-        '</div>';
-    }
+    usuarios.forEach(u => {
+      if (u.codigo === ADMIN_CODIGO) return;
+      listaDiv.innerHTML += `<div class="card">
+        <strong>${escapeHtml(u.nome)}</strong> (Nível ${u.nivel}) - ${u.status === "aprovado" ? "✅" : (u.status === "reprovado" ? "❌" : "⏳")}<br>
+        <span class="pix-mini">💰 Pix: ${escapeHtml(u.pix)}</span>
+      </div>`;
+    });
   }
 
   function uploadComprovante() {
-    var file = document.getElementById("comprovante").files[0];
+    const file = document.getElementById("comprovante").files[0];
     if (!file) { alert("Selecione um arquivo."); return; }
     if (usuarioLogado) {
       usuarioLogado.comprovante = file.name;
-      for (var i = 0; i < usuarios.length; i++) {
-        if (usuarios[i].codigo === usuarioLogado.codigo) {
-          usuarios[i].comprovante = file.name;
-          break;
-        }
-      }
-      salvarUsuarios();
+      const idx = usuarios.findIndex(u => u.codigo === usuarioLogado.codigo);
+      if (idx !== -1) usuarios[idx].comprovante = file.name;
+      salvarUsuariosNoStorage();
       alert("Comprovante anexado com sucesso.");
     }
     document.getElementById("comprovante").value = "";
   }
 
   function compartilharWhatsApp() {
-    var link = window.location.origin + window.location.pathname + '?ref=' + usuarioLogado.codigo;
-    var msg = "🌟 Participe do ciclo de ajuda mútua! Use meu link e entre na rede: " + link;
+    const link = window.location.origin + window.location.pathname + '?ref=' + usuarioLogado.codigo;
+    const msg = "🌟 Participe do ciclo de ajuda mútua GLOBAL! ADMIN na frente até a 10ª geração. Use meu link e entre na rede: " + link;
     window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
   }
+
   function copiarLink() {
-    var inp = document.getElementById("meuLinkRef");
+    const inp = document.getElementById("meuLinkRef");
     navigator.clipboard.writeText(inp.value);
     alert("Link copiado!");
   }
+
   function copiarPix() {
-    if(usuarioLogado) navigator.clipboard.writeText(usuarioLogado.pix);
+    if (usuarioLogado) navigator.clipboard.writeText(usuarioLogado.pix);
     alert("Pix copiado!");
   }
 
-  // ---------- LOGIN (AGORA COMPATÍVEL) ----------
-  function logarUsuario() {
-    var whatsappInput = document.getElementById("loginWhatsapp");
-    var senhaInput = document.getElementById("loginSenha");
-    
-    if (!whatsappInput || !senhaInput) {
-      alert("Erro interno. Recarregue a página.");
-      return;
-    }
-    
-    var whatsapp = whatsappInput.value.trim();
-    var senha = senhaInput.value;
-    
-    if (whatsapp === "" || senha === "") {
-      alert("Preencha WhatsApp e senha.");
-      return;
-    }
-    
-    // Busca manual (compatível)
-    var user = null;
-    for (var i = 0; i < usuarios.length; i++) {
-      if (usuarios[i].whatsapp === whatsapp && usuarios[i].senha === senha) {
-        user = usuarios[i];
-        break;
-      }
-    }
-    
-    if (user) {
-      usuarioLogado = user;
-      var loginDiv = document.getElementById("login");
-      var dashboardDiv = document.getElementById("dashboard");
-      if (loginDiv) loginDiv.classList.add("hidden");
-      if (dashboardDiv) dashboardDiv.classList.remove("hidden");
-      
-      carregarDashboardCompleto();
-    } else {
-      alert("WhatsApp ou senha incorretos. Verifique seus dados.");
-    }
-  }
-  
   function logoutSistema() {
     usuarioLogado = null;
     location.reload();
   }
-  
+
   function mostrarCadastro() {
     document.getElementById("login").classList.add("hidden");
     document.getElementById("cadastro").classList.remove("hidden");
-    var msgDiv = document.getElementById("msgIndicacao");
+    const msgDiv = document.getElementById("msgIndicacao");
     if (refParam) {
-      var ind = encontrarUsuarioPorCodigo(refParam);
-      msgDiv.innerHTML = ind ? "✨ Indicado por " + escapeHtml(ind.nome) + ". Ao cadastrar, você doa R$20 para ele, e ele entra na posição 4 da sua fila." : "Link inválido ou indicador não encontrado.";
-    } else msgDiv.innerHTML = "Cadastre-se para começar. Se alguém te indicou, use o link especial.";
+      const ind = encontrarUsuarioPorCodigo(refParam);
+      msgDiv.innerHTML = ind ? `✨ Indicado por ${escapeHtml(ind.nome)} (nível ${ind.nivel}). Ao cadastrar, se você estiver dentro da 10ª geração, ADMIN recebe R$20 e fica na posição #1 da sua fila.` : "Link inválido, será vinculado ao ADMIN.";
+    } else {
+      msgDiv.innerHTML = "📢 Sem link de indicação? Você será cadastrado diretamente pelo ADMIN Global. ADMIN estará na posição #1 da sua fila até a 10ª geração.";
+    }
   }
-  
+
   function voltarLogin() {
     document.getElementById("cadastro").classList.add("hidden");
     document.getElementById("login").classList.remove("hidden");
     document.getElementById("adminPanel").classList.add("hidden");
+    document.getElementById("loginWhatsapp").value = "";
+    document.getElementById("loginSenha").value = "";
   }
-  
+
+  // ADMIN PAINEL
   function acessoAdmin() {
-    var pwd = prompt("Senha admin:");
+    const pwd = prompt("Senha de administrador global:");
     if (pwd === "123456") {
+      carregarUsuariosDoStorage();
       document.getElementById("login").classList.add("hidden");
       document.getElementById("adminPanel").classList.remove("hidden");
       renderAdmin();
     } else alert("Senha incorreta.");
   }
-  
+
   function renderAdmin() {
-    var div = document.getElementById("adminLista");
+    carregarUsuariosDoStorage();
+    const div = document.getElementById("adminLista");
     if (!usuarios.length) { div.innerHTML = "<div class='card'>Nenhum usuário cadastrado</div>"; return; }
-    var html = "";
-    for (var i = 0; i < usuarios.length; i++) {
-      var u = usuarios[i];
-      var totalRecebido = 0;
-      if (u.transactions) {
-        for (var t = 0; t < u.transactions.length; t++) totalRecebido += u.transactions[t].valor;
-      }
-      var posTexto = "";
-      var posArr = u.positions || [null,null,null,null];
-      for (var p = 0; p < posArr.length; p++) {
-        posTexto += (p+1) + ":" + (posArr[p] ? escapeHtml(posArr[p]) : 'vaga') + (p < posArr.length-1 ? " | " : "");
-      }
-      html += '<div class="card">' +
-        '<strong>' + escapeHtml(u.nome) + '</strong> (' + u.codigo + ')<br>' +
-        'WhatsApp: ' + escapeHtml(u.whatsapp) + '<br>' +
-        'Pix: ' + escapeHtml(u.pix) + ' | Status: ' + u.status + '<br>' +
-        'Posições: ' + posTexto + '<br>' +
-        'Recebido total: R$ ' + totalRecebido.toFixed(2) + '<br>' +
-        'Indicado por: ' + (u.indicadoPorNome || '—') + '<br>' +
-        '<div class="flex-buttons">' +
-        '<button onclick="aprovar(' + i + ')">✅ Aprovar</button>' +
-        '<button onclick="reprovar(' + i + ')">⚠️ Reprovar</button>' +
-        '<button onclick="excluir(' + i + ')">🗑 Excluir</button>' +
-        '</div></div>';
-    }
+    let html = "";
+    usuarios.forEach((u, idx) => {
+      let totalRecebido = 0;
+      if (u.transactions) totalRecebido = u.transactions.reduce((s, t) => s + t.valor, 0);
+      const posTexto = (u.positions || []).map((p, i) => `${i + 1}:${p ? escapeHtml(p) : 'vaga'}`).join(" | ");
+      html += `<div class="card">
+        <strong>${escapeHtml(u.nome)}</strong> (${u.codigo}) | Nível: ${u.nivel}<br>
+        WhatsApp: ${escapeHtml(u.whatsapp)}<br>
+        Pix: ${escapeHtml(u.pix)} | Status: ${u.status}<br>
+        Fila: ${posTexto || "vazia"}<br>
+        Recebido: R$ ${totalRecebido.toFixed(2)}<br>
+        Indicado por: ${u.indicadoPorNome || '—'}<br>
+        <div class="flex-buttons">
+          <button onclick="aprovar(${idx})">✅ Aprovar</button>
+          <button onclick="reprovar(${idx})">⚠️ Reprovar</button>
+          <button onclick="excluir(${idx})">🗑 Excluir</button>
+        </div>
+      </div>`;
+    });
     div.innerHTML = html;
   }
-  
-  function aprovar(i) { usuarios[i].status = "aprovado"; salvarUsuarios(); renderAdmin(); if(usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status="aprovado"; }
-  function reprovar(i) { usuarios[i].status = "reprovado"; salvarUsuarios(); renderAdmin(); if(usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status="reprovado"; }
-  function excluir(i) { 
-    if(confirm("Excluir " + usuarios[i].nome + " permanentemente?")) { 
-      usuarios.splice(i,1); 
-      salvarUsuarios(); 
-      renderAdmin(); 
-      var aindaExiste = false;
-      if(usuarioLogado) {
-        for(var x=0; x<usuarios.length; x++) {
-          if(usuarios[x].codigo === usuarioLogado.codigo) { aindaExiste = true; break; }
-        }
-        if(!aindaExiste) logoutSistema();
-      }
-    } 
+
+  function aprovar(i) {
+    carregarUsuariosDoStorage();
+    if (usuarios[i]) { usuarios[i].status = "aprovado"; salvarUsuariosNoStorage(); renderAdmin(); if (usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status = "aprovado"; }
   }
-  function sairAdmin() { document.getElementById("adminPanel").classList.add("hidden"); document.getElementById("login").classList.remove("hidden"); }
-  
+  function reprovar(i) {
+    carregarUsuariosDoStorage();
+    if (usuarios[i]) { usuarios[i].status = "reprovado"; salvarUsuariosNoStorage(); renderAdmin(); if (usuarioLogado && usuarioLogado.codigo === usuarios[i].codigo) usuarioLogado.status = "reprovado"; }
+  }
+  function excluir(i) {
+    carregarUsuariosDoStorage();
+    if (confirm("Excluir " + usuarios[i].nome + " permanentemente?")) {
+      usuarios.splice(i, 1);
+      salvarUsuariosNoStorage();
+      renderAdmin();
+      if (usuarioLogado && !usuarios.some(u => u.codigo === usuarioLogado.codigo)) logoutSistema();
+    }
+  }
+
+  function sairAdmin() {
+    document.getElementById("adminPanel").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
+    carregarUsuariosDoStorage();
+  }
+
   function limparCacheCompleto() {
-    if(confirm("⚠️ ATENÇÃO: Isso vai APAGAR TODOS os dados (usuários, posições, transações). O sistema será resetado completamente. Confirmar?")) {
+    if (confirm("⚠️ ATENÇÃO: Apagará TODOS os dados (usuários, transações, filas). O ADMIN será recriado. Confirmar?")) {
       localStorage.clear();
       sessionStorage.clear();
       usuarios = [];
       usuarioLogado = null;
       refParam = null;
-      alert("Cache e dados limpos! A página será recarregada.");
+      alert("Dados limpos! A página será recarregada.");
       window.location.href = window.location.pathname;
     }
   }
-  
+
   function resetCompletoSistema() { limparCacheCompleto(); }
   function limparCacheComSenha() {
-    var pwd = prompt("Digite a senha de administrador para limpar todo o sistema:");
-    if(pwd === "123456") limparCacheCompleto();
-    else alert("Senha incorreta. Ação cancelada.");
+    const pwd = prompt("Digite a senha de administrador global para reset:");
+    if (pwd === "123456") limparCacheCompleto();
+    else alert("Ação cancelada.");
   }
-  
-  // ---------- INICIALIZAÇÃO ----------
-  migrarEstrutura();
-  for(var i=0; i<usuarios.length; i++) {
-    var u = usuarios[i];
-    if(!u.positions || u.positions.length !== 4) u.positions = [null, null, null, null];
-    if(!u.transactions) u.transactions = [];
-    if(typeof u.totalRecebido !== 'number') u.totalRecebido = 0;
+
+  function baixarApk() {
+    alert("📱 APK disponível em breve no repositório oficial:\nhttps://github.com/seu-usuario/ciclo-ajuda-mutua/releases\n\nCrie seu repositório, faça upload deste HTML como index.html, ative o GitHub Pages e gere um APK com ferramentas como PWA2APK ou Bubblewrap.");
+    window.open("https://github.com", "_blank");
   }
-  salvarUsuarios();
-  
+
+  // INICIALIZAÇÃO
+  carregarUsuariosDoStorage();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const codigoUrl = urlParams.get('ref');
+  if (codigoUrl) {
+    refParam = codigoUrl;
+    sessionStorage.setItem('refIndicacao', refParam);
+  } else {
+    refParam = sessionStorage.getItem('refIndicacao');
+  }
+  if (refParam && !encontrarUsuarioPorCodigo(refParam)) {
+    sessionStorage.removeItem('refIndicacao');
+    refParam = null;
+  }
+
   document.getElementById("login").classList.remove("hidden");
   document.getElementById("cadastro").classList.add("hidden");
   document.getElementById("dashboard").classList.add("hidden");
   document.getElementById("adminPanel").classList.add("hidden");
-  
-  if(refParam && !encontrarUsuarioPorCodigo(refParam)) {
-    sessionStorage.removeItem('refIndicacao');
-    refParam = null;
-  }
-  
-  // Expor funções globalmente
+
+  // Globals
   window.logarUsuario = logarUsuario;
   window.mostrarCadastro = mostrarCadastro;
   window.cadastrarUsuario = cadastrarUsuario;
@@ -540,13 +775,27 @@
   window.copiarPix = copiarPix;
   window.resetCompletoSistema = resetCompletoSistema;
   window.limparCacheComSenha = limparCacheComSenha;
+  window.recarregarDashboard = recarregarDashboard;
+  window.baixarApk = baixarApk;
 </script>
 </body>
 </html>
+
+   
+    
+   
  
+ 
+
+    
+
   
    
-  
+   
+ 
+       
+       
+    
   
   
     
